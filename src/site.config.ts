@@ -45,11 +45,11 @@ export const site = {
   // [PLATZHALTER: Einsatzorte] Ein Eintrag je Ort, zum Beispiel Heppenheim, Bensheim, Lorsch
   einsatzorte: ['Heppenheim und Umgebung'],
 
-  // Erreichbarkeit, so steht es auf der Seite (aus dem Webseiten-Entwurf von Hussain und Ali)
-  erreichbarkeit: 'Montag bis Freitag, 8 bis 18 Uhr',
-  erreichbarkeitKurz: 'Mo bis Fr, 8 bis 18 Uhr',
+  // Erreichbarkeit, so steht es auf der Seite (Montag bis Samstag, laut Rückmeldung vom 03.10.2026)
+  erreichbarkeit: 'Montag bis Samstag, 8 bis 18 Uhr',
+  erreichbarkeitKurz: 'Mo bis Sa, 8 bis 18 Uhr',
   // Dieselben Zeiten für Suchmaschinen. Tage: Mo Tu We Th Fr Sa Su
-  oeffnungszeiten: [{ tage: ['Mo', 'Tu', 'We', 'Th', 'Fr'], von: '08:00', bis: '18:00' }],
+  oeffnungszeiten: [{ tage: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'], von: '08:00', bis: '18:00' }],
 
   // Abrechnung über die Pflegekasse (Entlastungsbetrag nach § 45b SGB XI) für Alltagsbegleitung,
   // Hauswirtschaft und Trauerbegleitung. Laut Hussain und Ali möglich (03.10.2026).

@@ -38,7 +38,7 @@ const rueckruf = site.unterseiten
         <p class="fuss__zeiten">
           <Symbol name="uhr" />
           <span>
-            {site.erreichbarkeit}. Sind wir gerade bei Kunden, rufen wir Sie gern zurück.
+            <strong class="fuss__zeit">{site.erreichbarkeit}</strong>
             Lieber schriftlich? <a href={rueckruf}>Rückruf anfordern</a>
           </span>
         </p>
@@ -140,6 +140,10 @@ const rueckruf = site.unterseiten
     display: flex;
     gap: 0.75rem;
     margin: 0;
+  }
+  .fuss__zeit {
+    display: block;
+    color: var(--hell);
   }
   .fuss__zeiten > :global(.symbol) {
     margin-top: 0.15em;
