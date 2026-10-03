@@ -65,6 +65,14 @@ const kacheln = [
   },
 ];
 const Kachel = site.unterseiten ? 'a' : 'article';
+// Bildbreiten passend zum Raster: oben drei Kacheln je Zeile, unten zwei, auf dem Tablet zwei und die letzte breit
+const groessen = [
+  '(min-width: 80em) 26rem, (min-width: 64em) 31vw, (min-width: 48em) 47vw, 100vw',
+  '(min-width: 80em) 26rem, (min-width: 64em) 31vw, (min-width: 48em) 47vw, 100vw',
+  '(min-width: 80em) 26rem, (min-width: 64em) 31vw, (min-width: 48em) 47vw, 100vw',
+  '(min-width: 80em) 40rem, (min-width: 48em) 47vw, 100vw',
+  '(min-width: 80em) 40rem, (min-width: 64em) 47vw, 100vw',
+];
 
 // Blatt aus dem Logo, als ruhiges Zeichen im Hintergrund der Pflegekassen-Fläche
 const BLATT = 'M74 19C50 20 25.5 33.5 25.5 58.5 25.5 71.5 35.5 81 49 81 70.5 81 80.5 55 74 19Z';
@@ -183,7 +191,7 @@ const ADER = 'M37.5 70.5C47 57 57 44 66.5 30.5';
               bild={k.bild}
               format="3-2"
               ausschnitt={k.ausschnitt}
-              sizes="(min-width: 80em) 40rem, (min-width: 64em) 50vw, (min-width: 48em) 50vw, 100vw"
+              sizes={groessen[i]}
               alt={k.alt}
             />
             <div class="kachel__text">
