@@ -51,11 +51,11 @@ export const site = {
   // Dieselben Zeiten für Suchmaschinen. Tage: Mo Tu We Th Fr Sa Su
   oeffnungszeiten: [{ tage: ['Mo', 'Tu', 'We', 'Th', 'Fr'], von: '08:00', bis: '18:00' }],
 
-  // Erst auf true stellen, wenn die Anerkennung für den Entlastungsbetrag (§ 45b SGB XI) vorliegt.
-  // Dann erscheint der Hinweis bei Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung.
-  pflegekasse: false,
-  // [PLATZHALTER: aktueller Entlastungsbetrag in Euro je Monat, vor dem Freischalten prüfen]
-  entlastungsbetrag: '131',
+  // Abrechnung über die Pflegekasse (Entlastungsbetrag nach § 45b SGB XI) für Alltagsbegleitung,
+  // Hauswirtschaft und Trauerbegleitung. Laut Hussain und Ali möglich (03.10.2026).
+  // [PLATZHALTER: Anerkennung als Angebot zur Unterstützung im Alltag (Hessen) vorliegend? Stelle und Datum]
+  // Auf false stellen, falls die Anerkennung doch fehlt: Dann verschwinden alle Hinweise.
+  pflegekasse: true,
 };
 
 // Navigation im Kopf: höchstens sechs Punkte

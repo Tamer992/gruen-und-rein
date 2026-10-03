@@ -23,7 +23,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
   <section class="einstieg" aria-labelledby="einstieg-titel">
     <div class="behaelter einstieg__raster">
       <div class="einstieg__text">
-        <h1 id="einstieg-titel">Gut versorgt zu Hause.</h1>
+        <h1 id="einstieg-titel"><span class="einstieg__zeile">Alltag. Zuhause.</span> <span class="einstieg__zeile einstieg__zeile--gruen">Sauber. Gepflegt.</span></h1>
         <p class="einleitung">
           Wir begleiten, helfen im Haushalt, reinigen und pflegen den Garten. In {site.ort} und Umgebung.
         </p>
@@ -52,7 +52,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
     <div class="behaelter">
       <ul class="fakten" aria-label="Das ist uns wichtig">
         <li><Symbol name="haken" /> Eine feste Ansprechperson</li>
-        <li><Symbol name="haken" /> Erster Besuch bei Ihnen unverbindlich</li>
+        {site.pflegekasse && <li><Symbol name="haken" /> Abrechnung über die Pflegekasse</li>}
         <li><Symbol name="haken" /> Für Privat und Gewerbe</li>
       </ul>
     </div>
@@ -107,6 +107,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
           <div class="kachel__text">
             <h3>Alltagsbegleitung <Symbol name="pfeil" /></h3>
             <p>Gesellschaft, Spaziergänge, Einkäufe und Begleitung zum Arzt. Damit der Alltag wieder leichter wird.</p>
+            {site.pflegekasse && <p class="kachel__kasse"><Symbol name="haken" /> Über die Pflegekasse abrechenbar</p>}
           </div>
         </a>
 
@@ -121,6 +122,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
           <div class="kachel__text">
             <h3>Hauswirtschaft <Symbol name="pfeil" /></h3>
             <p>Wäsche, Küche, Bad, Einkaufen und alles, was im Haushalt anfällt.</p>
+            {site.pflegekasse && <p class="kachel__kasse"><Symbol name="haken" /> Über die Pflegekasse abrechenbar</p>}
           </div>
         </a>
 
@@ -157,6 +159,40 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
     </div>
   </section>
 
+  <!-- Abrechnung über die Pflegekasse -->
+  {site.pflegekasse && (
+    <section class="kasse" aria-labelledby="kasse-titel">
+      <div class="behaelter">
+        <div class="kasse__flaeche">
+          <div class="kasse__text">
+            <h2 id="kasse-titel">Wir rechnen mit Ihrer Pflegekasse ab.</h2>
+            <p>
+              Haben Sie einen Pflegegrad, zahlt die Pflegekasse für Alltagsbegleitung, Hauswirtschaft und
+              Trauerbegleitung. Dafür steht Ihnen jeden Monat der Entlastungsbetrag zu.
+            </p>
+            <p>
+              Um den Papierkram kümmern wir uns. Wir setzen uns für Sie mit Ihrer Kranken- und Pflegekasse
+              in Verbindung und rechnen direkt mit ihr ab.
+            </p>
+            <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
+              <Symbol name="telefon" kreis />
+              Jetzt anrufen
+            </a>
+          </div>
+          <div class="kasse__liste">
+            <p class="kasse__ueber">Über die Pflegekasse</p>
+            <ul>
+              <li><Symbol name="haken" /> Alltagsbegleitung und Betreuung</li>
+              <li><Symbol name="haken" /> Hauswirtschaft</li>
+              <li><Symbol name="haken" /> Trauerbegleitung</li>
+            </ul>
+            <p class="kasse__hinweis">Gebäudereinigung und Gartenpflege rechnen wir direkt mit Ihnen ab.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- Ablauf -->
   <section class="bereich ablauf" id="ablauf" aria-labelledby="ablauf-titel">
     <div class="behaelter">
@@ -187,9 +223,8 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
         </p>
         {site.pflegekasse && (
           <p>
-            Mit Pflegegrad können Sie für Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung den
-            Entlastungsbetrag von {site.entlastungsbetrag} Euro im Monat nutzen (§ 45b SGB XI). Wir rechnen
-            auf Wunsch direkt mit Ihrer Pflegekasse ab.
+            Haben Sie einen Pflegegrad, rechnen wir Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung
+            direkt mit Ihrer Pflegekasse ab.
           </p>
         )}
       </div>
@@ -233,6 +268,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
         <p>
           Nach einem Todesfall ist vieles schwer. Wir begleiten Sie in dieser Zeit: Wir hören zu,
           nehmen uns Zeit für Gespräche und unterstützen Sie im Alltag.
+          {site.pflegekasse && ' Auch die Trauerbegleitung können Sie über die Pflegekasse abrechnen.'}
         </p>
         <a href={p('/trauerbegleitung/')}>Über die Trauerbegleitung</a>
       </div>
@@ -252,6 +288,16 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
   }
   .einstieg h1 {
     margin-bottom: var(--a-3);
+  }
+  .einstieg h1 {
+    font-size: clamp(2.2rem, 1.3rem + 3.1vw, 4rem);
+  }
+  .einstieg__zeile {
+    display: block;
+    white-space: nowrap;
+  }
+  .einstieg__zeile--gruen {
+    color: var(--waldgruen);
   }
   .einstieg .einleitung {
     max-width: 30ch;
@@ -458,9 +504,98 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
     }
   }
 
+  /* Abrechnung */
+  .kasse__flaeche {
+    display: grid;
+    gap: var(--a-5);
+    padding: clamp(2rem, 1rem + 4vw, 4.5rem);
+    border-radius: var(--r-gross);
+    background: var(--waldgruen);
+    color: #e3ece6;
+  }
+  .kasse h2 {
+    color: #fff;
+    max-width: 16ch;
+    margin-bottom: var(--a-3);
+  }
+  .kasse__text p {
+    font-size: var(--text-gross);
+    line-height: 1.5;
+  }
+  .kasse__text .knopf {
+    margin-top: var(--a-2);
+  }
+  .kasse :focus-visible {
+    outline-color: #fff;
+  }
+  .kasse__liste {
+    align-self: center;
+    padding: var(--a-4);
+    border-radius: var(--r-bild);
+    background: rgb(255 255 255 / 0.08);
+  }
+  .kasse__ueber {
+    margin-bottom: var(--a-2);
+    font-weight: 700;
+    color: var(--blatt);
+  }
+  .kasse__liste ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--a-3);
+  }
+  .kasse__liste li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-block: 0.7rem;
+    font-family: var(--schrift-titel);
+    font-size: var(--titel-3);
+    font-weight: 700;
+    color: #fff;
+  }
+  .kasse__liste li + li {
+    border-top: 1px solid rgb(255 255 255 / 0.14);
+  }
+  .kasse__liste :global(.symbol) {
+    width: 1.9rem;
+    height: 1.9rem;
+    padding: 0.4rem;
+    border-radius: 50%;
+    background: var(--blatt);
+    color: var(--tanne);
+  }
+  .kasse__hinweis {
+    margin: 0;
+    font-size: var(--text-klein);
+  }
+  @media (min-width: 64em) {
+    .kasse__flaeche {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: var(--a-6);
+    }
+  }
+
+  .kachel__kasse {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: var(--a-2) !important;
+    font-size: var(--text-klein);
+    font-weight: 700;
+    color: var(--waldgruen) !important;
+  }
+  .kachel__kasse :global(.symbol) {
+    width: 1.35rem;
+    height: 1.35rem;
+    padding: 0.25rem;
+    border-radius: 50%;
+    background: var(--salbei);
+  }
+
   /* Ablauf */
   .ablauf {
-    padding-top: 0;
+    padding-top: var(--a-bereich);
   }
   .ablauf h2 {
     margin-bottom: var(--a-5);

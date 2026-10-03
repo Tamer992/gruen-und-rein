@@ -55,7 +55,7 @@ function logo({ text = F.tinte, et = F.waldgruen, zeileFarbe = F.leise, flaeche 
   const lu = G * 0.24;
   const b = setze(mittel, '&', G, x0 + a.breite + lu, linie, sp);
   const c = setze(fett, 'Rein', G, x0 + a.breite + lu + b.breite + lu, linie, sp);
-  const z = setze(zeile, 'Hilfe zu Hause', 14.5, x0 + 1, 51, 0.2);
+  const z = setze(zeile, 'Service mit Herz', 14.5, x0 + 1, 51, 0.2);
   const breite = Math.ceil(x0 + a.breite + lu * 2 + b.breite + c.breite + 2);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${breite} ${H}" width="${breite}" height="${H}" role="img" aria-labelledby="t"><title id="t">Grün &amp; Rein</title>${zeichen(0, 0, H, flaeche, blatt)}<path fill="${text}" d="${rund(a.d + c.d)}"/><path fill="${et}" d="${rund(b.d)}"/><path fill="${zeileFarbe}" d="${rund(z.d)}"/></svg>`;
   return { svg, breite, hoehe: H };
@@ -95,10 +95,10 @@ writeFileSync('public/icon-512.png', await png(512, voll));
 writeFileSync('public/favicon.ico', ico([{ groesse: 16, daten: await png(16) }, { groesse: 32, daten: await png(32) }]));
 
 // Vorschaubild 1200 x 630: links Tanne mit Logo und Satz, rechts das Foto vom Einstieg
-const satz1 = setze(fett, 'Gut versorgt', 74, 80, 360, -1.5);
-const satz2 = setze(fett, 'zu Hause.', 74, 80, 440, -1.5);
+const satz1 = setze(fett, 'Alltag. Zuhause.', 70, 80, 360, -1.5);
+const satz2 = setze(fett, 'Sauber. Gepflegt.', 70, 80, 440, -1.5);
 const flaeche = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="${F.tanne}"/><g transform="translate(80 90) scale(1.6)">${dunkel.svg.replace(/<svg[^>]*>|<\/svg>|<title[^>]*>.*?<\/title>/g, '')}</g><path fill="${F.grund}" d="${rund(satz1.d + satz2.d)}"/></svg>`;
-const foto = await sharp('src/bilder/gespraech-fotoalbum.jpg').resize(460, 630, { fit: 'cover', position: 'attention' }).toBuffer();
+const foto = await sharp('src/bilder/gespraech-fotoalbum.jpg').resize(460, 630, { fit: 'cover', position: 'right' }).toBuffer();
 writeFileSync(
   'public/og-bild.jpg',
   await sharp(Buffer.from(flaeche)).composite([{ input: foto, left: 740, top: 0 }]).jpeg({ quality: 84, mozjpeg: true }).toBuffer(),
