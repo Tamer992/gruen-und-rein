@@ -56,7 +56,7 @@ function logo({ text = F.tinte, et = F.waldgruen, zeileFarbe = F.leise, flaeche 
   const lu = G * 0.24;
   const b = setze(mittel, '&', G, x0 + a.breite + lu, linie, sp);
   const c = setze(fett, 'Rein', G, x0 + a.breite + lu + b.breite + lu, linie, sp);
-  const z = setze(zeile, 'Service mit Herz', 14.5, x0 + 1, 51, 0.2);
+  const z = setze(zeile, 'Alltag, Haus, Garten', 14.5, x0 + 1, 51, 0.2);
   const breite = Math.ceil(x0 + a.breite + lu * 2 + b.breite + c.breite + 2);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${breite} ${H}" width="${breite}" height="${H}" role="img" aria-labelledby="t"><title id="t">Grün &amp; Rein</title>${zeichen(0, 0, H, flaeche, blatt)}<path fill="${text}" d="${rund(a.d + c.d)}"/><path fill="${et}" d="${rund(b.d)}"/><path fill="${zeileFarbe}" d="${rund(z.d)}"/></svg>`;
   return { svg, breite, hoehe: H };

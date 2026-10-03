@@ -1,4 +1,4 @@
-// Listet alle Stellen mit [PLATZHALTER: ...] im Quelltext auf.
+// Listet alle Stellen mit [PLATZHALTER: ...] und [ERGÄNZEN: ...] im Quelltext auf.
 // Aufruf: npm run platzhalter
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
@@ -10,7 +10,7 @@ function durchsuche(ordner) {
     if (statSync(pfad).isDirectory()) durchsuche(pfad);
     else if (/\.(astro|ts|mjs|md|php)$/.test(name)) {
       readFileSync(pfad, 'utf8').split('\n').forEach((zeile, i) => {
-        const m = zeile.match(/\[PLATZHALTER:[^\]]*\]/g);
+        const m = zeile.match(/\[(?:PLATZHALTER|ERGÄNZEN):[^\]]*\]/g);
         if (m) m.forEach((t) => treffer.push(`${pfad}:${i + 1}  ${t}`));
       });
     }
