@@ -8,9 +8,6 @@ const jahr = new Date().getFullYear();
 // Solange es keine Seiten „Über uns“ und „Kontakt“ gibt, zeigen die Links auf die Startseite
 const ueberUns = site.unterseiten ? '/ueber-uns/' : '/#ueber-uns';
 const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
-const rueckruf = site.unterseiten
-  ? p('/kontakt/#rueckruf')
-  : `mailto:${site.email}?subject=${encodeURIComponent('Bitte um Rückruf')}`;
 ---
 <footer class="fuss" id="kontakt">
   <div class="behaelter">
@@ -37,10 +34,7 @@ const rueckruf = site.unterseiten
         )}
         <p class="fuss__zeiten">
           <Symbol name="uhr" />
-          <span>
-            <strong class="fuss__zeit">{site.erreichbarkeit}</strong>
-            Lieber schriftlich? <a href={rueckruf}>Rückruf anfordern</a>
-          </span>
+          <strong class="fuss__zeit">{site.erreichbarkeit}</strong>
         </p>
       </div>
     </div>
@@ -142,17 +136,11 @@ const rueckruf = site.unterseiten
     margin: 0;
   }
   .fuss__zeit {
-    display: block;
     color: var(--hell);
   }
   .fuss__zeiten > :global(.symbol) {
     margin-top: 0.15em;
     color: var(--messing-hell);
-  }
-  .fuss__zeiten a {
-    display: inline-block;
-    padding-block: 0.6rem;
-    margin-block: -0.6rem;
   }
 
   .fuss__raster {
