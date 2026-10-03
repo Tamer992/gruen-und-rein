@@ -5,9 +5,8 @@ import os
 FS = "node_modules/@fontsource-variable/"
 os.makedirs("scripts/_instanzen", exist_ok=True)
 for quelle, ziel, achsen in [
-    (FS + "schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2", "wort.ttf", {"wght": 800}),
-    (FS + "schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2", "et.ttf", {"wght": 500}),
-    (FS + "atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2", "zeile.ttf", {"wght": 400}),
+    # Wortmarke im Logo
+    (FS + "hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2", "wort.ttf", {"wght": 600}),
     # Überschriftenschrift für das Vorschaubild, wie auf der Seite
     (FS + "literata/files/literata-latin-opsz-normal.woff2", "titel.ttf", {"wght": 500, "opsz": 72}),
 ]:

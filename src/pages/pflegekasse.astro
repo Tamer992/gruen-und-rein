@@ -8,7 +8,7 @@ import Basis from '../layouts/Basis.astro';
 import Krumen from '../components/Krumen.astro';
 import Fragen from '../components/Fragen.astro';
 import Bild from '../components/Bild.astro';
-import Blatt from '../components/Blatt.astro';
+import Herz from '../components/Herz.astro';
 import Symbol from '../components/Symbol.astro';
 import { site, leistungen } from '../site.config';
 import { leistungsbilder } from '../leistungsbilder';
@@ -99,7 +99,7 @@ const daten = {
   <section class="kassenkopf" aria-labelledby="kassenkopf-titel">
     <div class="behaelter">
       <div class="kassenkopf__flaeche flaeche-tanne">
-        <div class="kassenkopf__zier" aria-hidden="true"><Blatt art="linie" /></div>
+        <div class="kassenkopf__zier" aria-hidden="true"><Herz art="linie" /></div>
         <div class="kassenkopf__text">
           <p class="etikett etikett--hell"><span>Entlastungsbetrag nach <span class="paragraf">{'§ 45b SGB XI'}</span></span></p>
           <h1 id="kassenkopf-titel">Wir rechnen direkt mit Ihrer Pflegekasse ab.</h1>
@@ -160,7 +160,7 @@ const daten = {
       <ul class="fakten__liste">
         {fakten.map((f, i) => (
           <li data-einblenden={i ? String(i + 1) : ''}>
-            <span class="blattpunkt"><Blatt /></span>
+            <span class="herzpunkt"><Herz /></span>
             <h3>{f.gross}</h3>
             <p>{f.text}</p>
           </li>
@@ -232,9 +232,9 @@ const daten = {
     width: 26rem;
     color: var(--messing-hell);
     opacity: 0.14;
-    --blatt-linie: 1.25px;
+    --herz-linie: 1.25px;
   }
-  .kassenkopf__zier :global(.blatt) {
+  .kassenkopf__zier :global(.herz) {
     width: 100%;
     height: auto;
   }
@@ -415,7 +415,7 @@ const daten = {
     padding-top: var(--a-3);
     border-top: 1px solid var(--sand-tief);
   }
-  .fakten__liste .blattpunkt {
+  .fakten__liste .herzpunkt {
     margin-bottom: var(--a-2);
     background: var(--papier);
   }

@@ -476,8 +476,8 @@ a:hover {
   background: rgb(255 255 255 / 0.12);
 }
 
-/* Blatt aus dem Logo als Aufzählungszeichen */
-.blattpunkt {
+/* Herz aus dem Logo als Aufzählungszeichen */
+.herzpunkt {
   display: inline-grid;
   place-items: center;
   flex: none;
@@ -487,7 +487,7 @@ a:hover {
   background: var(--salbei);
   color: var(--waldgruen);
 }
-.blattpunkt .blatt {
+.herzpunkt .herz {
   width: 1.05rem;
   height: 1.05rem;
 }
@@ -508,7 +508,7 @@ a:hover {
   height: 0.95rem;
 }
 
-/* Marke für Leistungen, die über die Pflegekasse möglich sind: leise Zeile mit Blatt */
+/* Marke für Leistungen, die über die Pflegekasse möglich sind: leise Zeile mit Herz */
 .kassenmarke {
   display: inline-flex;
   align-items: center;
@@ -519,7 +519,7 @@ a:hover {
   line-height: 1.3;
   color: var(--waldgruen);
 }
-.kassenmarke .blatt {
+.kassenmarke .herz {
   width: 1.15rem;
   height: 1.15rem;
   color: var(--messing);

@@ -1,5 +1,6 @@
 // Erzeugt Logo, Favicon und Vorschaubild für geteilte Links.
-// Die Schrift wird in Pfade umgewandelt, damit das Logo überall gleich aussieht.
+// Zeichen: ein Dach über einem Herz (Fürsorge zu Hause), von Hand auf einem 48er-Raster gezeichnet.
+// Die Schrift (Hanken Grotesk SemiBold) wird in Pfade umgewandelt, damit das Logo überall gleich aussieht.
 // Aufruf: python scripts/instanzen.py && node scripts/logo.mjs
 // Nach einer Änderung am Logo in Kopf.astro und Fuss.astro die Zahl hinter „?v=“ erhöhen, damit Browser es neu laden.
 import * as fontkit from 'fontkit';
@@ -7,29 +8,27 @@ import sharp from 'sharp';
 import { writeFileSync } from 'node:fs';
 
 const I = 'scripts/_instanzen/';
-const fett = fontkit.openSync(I + 'wort.ttf');
-const mittel = fontkit.openSync(I + 'et.ttf');
-const zeile = fontkit.openSync(I + 'zeile.ttf');
+const wort = fontkit.openSync(I + 'wort.ttf');
 const titel = fontkit.openSync(I + 'titel.ttf');
 
-// Wie in src/styles/global.css (:root)
+// Wie in src/styles/global.css (:root). Höchstens zwei Farben je Fassung.
 const F = {
   waldgruen: '#1D4733',
-  tanne: '#122519',
-  grund: '#F8F5EF',
-  blatt: '#D8BC88',
-  tinte: '#18231D',
-  leise: '#3E4842',
-  hellAufTanne: '#D6DDD5',
+  tinte: '#17221B',
+  leinen: '#F6F1E8',
+  salbei: '#A3C4AC', // Grün auf dunklem Grund
+  tanne: '#11231A',
+  messingHell: '#D6BB87',
 };
 
-// Zeichen: abgerundetes Quadrat, darin ein Blatt, das zugleich ein Tropfen ist
-const BLATT = 'M74 19C50 20 25.5 33.5 25.5 58.5 25.5 71.5 35.5 81 49 81 70.5 81 80.5 55 74 19Z';
-const ADER = 'M37.5 70.5C47 57 57 44 66.5 30.5';
-function zeichen(x, y, groesse, flaeche, blatt) {
-  const s = groesse / 100;
-  return `<g transform="translate(${x} ${y}) scale(${s})"><rect width="100" height="100" rx="28" fill="${flaeche}"/><path d="${BLATT}" fill="${blatt}"/><path d="${ADER}" fill="none" stroke="${flaeche}" stroke-width="4.5" stroke-linecap="round"/></g>`;
-}
+// Zeichen auf dem 48er-Raster: Dach (Linie, 5 stark) und Herz (Fläche)
+const DACH = 'M8 21L24 8L40 21';
+const HERZ = 'M24 40L14 30A5.66 5.66 0 0 1 22 22L24 24L26 22A5.66 5.66 0 0 1 34 30Z';
+const BOX = [5.5, 5.5, 42.5, 40]; // sichtbare Ausdehnung inkl. halber Strichstärke
+const zeichen = (dach, herz) =>
+  `<path d="${DACH}" fill="none" stroke="${dach}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="${HERZ}" fill="${herz}"/>`;
+
+const rund = (d) => d.replace(/-?\d*\.\d+/g, (z) => String(Math.round(parseFloat(z) * 10) / 10));
 
 function setze(font, text, groesse, x0, grundlinie, sperrung = 0) {
   const lauf = font.layout(text);
@@ -42,26 +41,32 @@ function setze(font, text, groesse, x0, grundlinie, sperrung = 0) {
     if (d) teile.push(d);
     x += pos.xAdvance * s + sperrung;
   });
-  return { d: teile.join(''), breite: x - x0 - sperrung };
+  return { d: rund(teile.join('')), breite: x - x0 - sperrung };
 }
-const rund = (d) => d.replace(/-?\d+\.\d+/g, (n) => (Math.round(parseFloat(n) * 10) / 10).toString());
 
-// Wortmarke mit Zeichen links
-function logo({ text = F.tinte, et = F.waldgruen, zeileFarbe = F.leise, flaeche = F.waldgruen, blatt = F.grund } = {}) {
-  const H = 56;
-  const G = 30;
-  const x0 = H + 14;
-  const linie = 30;
-  const sp = -G * 0.02;
-  const a = setze(fett, 'Grün', G, x0, linie, sp);
-  const lu = G * 0.24;
-  const b = setze(mittel, '&', G, x0 + a.breite + lu, linie, sp);
-  const c = setze(fett, 'Rein', G, x0 + a.breite + lu + b.breite + lu, linie, sp);
-  const z = setze(zeile, 'Alltag, Haus, Garten', 14.5, x0 + 1, 51, 0.2);
-  const breite = Math.ceil(x0 + a.breite + lu * 2 + b.breite + c.breite + 2);
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${breite} ${H}" width="${breite}" height="${H}" role="img" aria-labelledby="t"><title id="t">Grün &amp; Rein</title>${zeichen(0, 0, H, flaeche, blatt)}<path fill="${text}" d="${rund(a.d + c.d)}"/><path fill="${et}" d="${rund(b.d)}"/><path fill="${zeileFarbe}" d="${rund(z.d)}"/></svg>`;
+// Bild- plus Wortmarke: Zeichen 32 hoch, Versalhöhe der Schrift 17, „&“ in der Akzentfarbe
+function logo({ dach, herz, text, et }) {
+  const H = 32;
+  const VERSAL = 17;
+  const groesse = (VERSAL / wort.glyphForCodePoint(72).bbox.maxY) * wort.unitsPerEm;
+  const sp = -0.005 * groesse;
+  const s = H / (BOX[3] - BOX[1]);
+  const x0 = (BOX[2] - BOX[0]) * s + VERSAL * 0.68;
+  const linie = H / 2 + VERSAL / 2;
+  const raum = groesse * 0.26;
+  const a = setze(wort, 'Grün', groesse, x0, linie, sp);
+  const b = setze(wort, '&', groesse, x0 + a.breite + raum, linie, sp);
+  const c = setze(wort, 'Rein', groesse, x0 + a.breite + raum + b.breite + raum, linie, sp);
+  const breite = Math.ceil(x0 + a.breite + b.breite + c.breite + raum * 2 + 1);
+  const marke = `<g transform="translate(${rund((-BOX[0] * s).toFixed(2))} ${rund((-BOX[1] * s).toFixed(2))}) scale(${s.toFixed(4)})">${zeichen(dach, herz)}</g>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${breite} ${H}" width="${breite}" height="${H}" role="img" aria-labelledby="t"><title id="t">Grün &amp; Rein</title>${marke}<path fill="${text}" d="${a.d}${c.d}"/><path fill="${et}" d="${b.d}"/></svg>`;
   return { svg, breite, hoehe: H };
 }
+
+// Nur das Zeichen, knapp zugeschnitten
+const ANSICHT = '4 3 40 40';
+const marke = (dach, herz) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${ANSICHT}" width="40" height="40" role="img" aria-labelledby="t"><title id="t">Grün &amp; Rein</title>${zeichen(dach, herz)}</svg>`;
 
 function ico(pngs) {
   const kopf = Buffer.alloc(6 + 16 * pngs.length);
@@ -82,24 +87,41 @@ function ico(pngs) {
   return Buffer.concat([kopf, ...pngs.map((p) => p.daten)]);
 }
 
-const hell = logo();
-const dunkel = logo({ text: F.grund, et: F.blatt, zeileFarbe: F.hellAufTanne, flaeche: F.blatt, blatt: F.tanne });
-writeFileSync('public/logo.svg', hell.svg);
-writeFileSync('public/logo-hell.svg', dunkel.svg);
-writeFileSync('src/components/logo-mass.json', JSON.stringify({ breite: hell.breite, hoehe: hell.hoehe }));
+// Logo: dunkle Fassung für hellen Grund (Kopf), helle Fassung für dunklen Grund (Fuß)
+const dunkel = logo({ dach: F.tinte, herz: F.waldgruen, text: F.tinte, et: F.waldgruen });
+const hell = logo({ dach: F.leinen, herz: F.salbei, text: F.leinen, et: F.salbei });
+writeFileSync('public/logo.svg', dunkel.svg);
+writeFileSync('public/logo-hell.svg', hell.svg);
+writeFileSync('public/logo-mark.svg', marke(F.tinte, F.waldgruen));
+writeFileSync('public/logo-mark-hell.svg', marke(F.leinen, F.salbei));
+writeFileSync('src/components/logo-mass.json', JSON.stringify({ breite: dunkel.breite, hoehe: dunkel.hoehe }));
 
-const fav = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">${zeichen(0, 0, 100, F.waldgruen, F.grund)}</svg>`;
+// Favicon als SVG: passt sich hellem und dunklem Browser an
+const fav = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${ANSICHT}"><style>.d{stroke:${F.tinte}}.h{fill:${F.waldgruen}}@media (prefers-color-scheme:dark){.d{stroke:${F.leinen}}.h{fill:${F.salbei}}}</style><path class="d" d="${DACH}" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path class="h" d="${HERZ}"/></svg>`;
 writeFileSync('public/favicon.svg', fav);
-const png = (g, svg = fav) => sharp(Buffer.from(svg), { density: 400 }).resize(g, g).png().toBuffer();
-const voll = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="${F.waldgruen}"/><g transform="translate(14 14) scale(.72)"><path d="${BLATT}" fill="${F.grund}"/><path d="${ADER}" fill="none" stroke="${F.waldgruen}" stroke-width="4.5" stroke-linecap="round"/></g></svg>`;
-writeFileSync('public/apple-touch-icon.png', await png(180, voll));
-writeFileSync('public/icon-512.png', await png(512, voll));
-writeFileSync('public/favicon.ico', ico([{ groesse: 16, daten: await png(16) }, { groesse: 32, daten: await png(32) }]));
+
+// Feste Bilder (ICO, Apple, 512): Zeichen auf einer hellen Fläche, damit es auch auf dunklen Leisten sichtbar bleibt
+// Das Zeichen liegt auf dem Raster bei y 5,5 bis 40, also 1,25 über der Mitte: beim Verkleinern nachschieben
+const flaeche = (rundung, rand) => {
+  const k = (48 - 2 * rand) / 48;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="${rundung}" fill="${F.leinen}"/><g transform="translate(${rand} ${rand + 1.25 * k}) scale(${k})">${zeichen(F.tinte, F.waldgruen)}</g></svg>`;
+};
+const png = (g, svg) => sharp(Buffer.from(svg), { density: 600 }).resize(g, g).png().toBuffer();
+writeFileSync(
+  'public/favicon.ico',
+  ico([
+    { groesse: 16, daten: await png(16, flaeche(9, 2)) },
+    { groesse: 32, daten: await png(32, flaeche(9, 2)) },
+    { groesse: 48, daten: await png(48, flaeche(9, 2)) },
+  ]),
+);
+writeFileSync('public/apple-touch-icon.png', await png(180, flaeche(0, 7)));
+writeFileSync('public/icon-512.png', await png(512, flaeche(0, 7)));
 
 // Vorschaubild 1200 x 630: links Tanne mit Logo und Satz, rechts das Foto vom Einstieg
 const satz1 = setze(titel, 'Alltag. Zuhause.', 74, 80, 365, -1.5);
 const satz2 = setze(titel, 'Sauber. Gepflegt.', 74, 80, 448, -1.5);
-const flaeche = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="${F.tanne}"/><g transform="translate(80 90) scale(1.6)">${dunkel.svg.replace(/<svg[^>]*>|<\/svg>|<title[^>]*>.*?<\/title>/g, '')}</g><rect x="80" y="505" width="64" height="2" fill="${F.blatt}"/><path fill="${F.grund}" d="${rund(satz1.d)}"/><path fill="${F.blatt}" d="${rund(satz2.d)}"/></svg>`;
+const og = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="${F.tanne}"/><g transform="translate(80 110) scale(2.3)">${hell.svg.replace(/<svg[^>]*>|<\/svg>|<title[^>]*>.*?<\/title>/g, '')}</g><rect x="80" y="505" width="64" height="2" fill="${F.messingHell}"/><path fill="${F.leinen}" d="${satz1.d}"/><path fill="${F.messingHell}" d="${satz2.d}"/></svg>`;
 // Ausschnitt um die ältere Dame (etwa 60 % der Bildbreite), damit Gesicht und Tasse im Bild bleiben
 const fotoBreit = await sharp('src/bilder/einstieg-kaffee.jpg').resize({ height: 630 }).toBuffer();
 const breit = (await sharp(fotoBreit).metadata()).width;
@@ -107,6 +129,6 @@ const links = Math.max(0, Math.min(breit - 460, Math.round(breit * 0.6 - 230)));
 const foto = await sharp(fotoBreit).extract({ left: links, top: 0, width: 460, height: 630 }).toBuffer();
 writeFileSync(
   'public/og-bild.jpg',
-  await sharp(Buffer.from(flaeche)).composite([{ input: foto, left: 740, top: 0 }]).jpeg({ quality: 84, mozjpeg: true }).toBuffer(),
+  await sharp(Buffer.from(og)).composite([{ input: foto, left: 740, top: 0 }]).jpeg({ quality: 84, mozjpeg: true }).toBuffer(),
 );
-console.log('Logo', hell.breite, 'x', hell.hoehe);
+console.log('Logo', dunkel.breite, 'x', dunkel.hoehe);
