@@ -5,7 +5,8 @@ ohne Namensnennung. Sie sind ein Übergang, bis eigene Fotos von Grün & Rein vo
 
 | Datei | Unsplash |
 |---|---|
-| gespraech-fotoalbum.jpg | https://unsplash.com/photos/rQJ3xo-0WYE |
+| einstieg-kaffee.jpg | https://unsplash.com/photos/wLXJ1Q-_S88 |
+| gespraech-fotoalbum.jpg (nur noch für das Vorschaubild beim Teilen, scripts/logo.mjs) | https://unsplash.com/photos/rQJ3xo-0WYE |
 | haende.jpg | https://unsplash.com/photos/R1H2Y7T7m3I |
 | alltag-park.jpg | https://unsplash.com/photos/PHwjAQKOpiw |
 | hauswirtschaft-kueche.jpg | https://unsplash.com/photos/W9Vu-Cy2vtg |
