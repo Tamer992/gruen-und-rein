@@ -9,11 +9,11 @@ import { site, leistungen } from '../site.config';
 // Fotos: Unsplash-Lizenz (freie Nutzung), als Übergang bis zu eigenen Fotos. Quellen in src/bilder/QUELLEN.md
 import fotoEinstieg from '../bilder/gespraech-fotoalbum.jpg';
 import fotoHaende from '../bilder/haende.jpg';
-import fotoAlltag from '../bilder/alltag-arm-in-arm.jpg';
+import fotoAlltag from '../bilder/alltag-park.jpg';
 import fotoHaus from '../bilder/hauswirtschaft-kueche.jpg';
-import fotoRein from '../bilder/reinigung-kueche-hell.jpg';
-import fotoGarten from '../bilder/garten-pflanze.jpg';
-import fotoWeg from '../bilder/alltag-spaziergang.jpg';
+import fotoRein from '../bilder/reinigung-wischen.jpg';
+import fotoGarten from '../bilder/garten-rasen.jpg';
+import fotoWeg from '../bilder/weg-gruen.jpg';
 import fotoTrauer from '../bilder/trauer-blumen.jpg';
 
 // Leistungen: zuerst die drei, die über die Pflegekasse möglich sind.
@@ -27,8 +27,8 @@ const kacheln = [
     kasse: true,
     bild: fotoAlltag,
     format: '4-3' as const,
-    ausschnitt: 'ganz-oben' as const,
-    alt: 'Ein Begleiter geht Arm in Arm mit einer älteren Dame',
+    ausschnitt: 'oben' as const,
+    alt: 'Zwei Frauen gehen untergehakt und lachend durch einen Park',
   },
   {
     anker: 'hauswirtschaft',
@@ -58,7 +58,7 @@ const kacheln = [
     bild: fotoRein,
     format: '16-9' as const,
     ausschnitt: 'mitte' as const,
-    alt: 'Eine helle, aufgeräumte Küche mit großem Fenster',
+    alt: 'Eine Reinigungskraft wischt den Boden einer hellen Wohnung',
   },
   {
     anker: 'gartenpflege',
@@ -67,8 +67,8 @@ const kacheln = [
     kasse: false,
     bild: fotoGarten,
     format: '16-9' as const,
-    ausschnitt: 'oben' as const,
-    alt: 'Hände in Gartenhandschuhen setzen eine junge Pflanze in die Erde',
+    ausschnitt: 'mitte' as const,
+    alt: 'Ein Rasenmäher auf frisch gemähtem, sattgrünem Rasen',
   },
 ].map((k) => ({ ...k, punkte: leistungen.find((l) => l.anker === k.anker)?.punkte ?? [] }));
 const Kachel = site.unterseiten ? 'a' : 'article';
@@ -313,11 +313,12 @@ const groessen = [
           klasse="vorstellung__bild"
           bild={fotoWeg}
           format="4-3"
+          ausschnitt="unten"
           formatGross="4-5"
           form="blatt"
           parallaxe
           sizes="(min-width: 80em) 36rem, (min-width: 64em) 46vw, 100vw"
-          alt="Eine Begleiterin geht mit einer älteren Dame mit Gehstock die Straße entlang"
+          alt="Eine Begleiterin geht mit einer älteren Dame einen grünen Weg entlang"
         />
       </div>
       <div class="vorstellung__text" data-einblenden="2">
