@@ -8,10 +8,10 @@ const aktuell = Astro.url.pathname;
 ---
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
-<!-- Telefonleiste und Kopf kleben gemeinsam oben. Der Bereich ist um die Höhe der Leiste nach oben versetzt:
+<!-- Telefonleiste und Kopfzeile bilden zusammen den Kopf der Seite und kleben gemeinsam oben. Der Bereich ist um die Höhe der Leiste nach oben versetzt:
      Beim Scrollen gleitet die Leiste hinaus, die Kopfzeile mit dem Anrufknopf bleibt stehen.
      So wird der Kopf kompakter, ohne dass sich darunter etwas verschiebt. -->
-<div class="kopfbereich">
+<header class="kopfbereich">
   <div class="leiste">
     <div class="behaelter leiste__innen">
       <a class="leiste__telefon" href={`tel:${site.telefonLink}`}>
@@ -29,7 +29,7 @@ const aktuell = Astro.url.pathname;
     </div>
   </div>
 
-  <header class="kopf">
+  <div class="kopf">
     <div class="behaelter kopf__zeile">
       <a class="kopf__marke" href={p('/')}>
         <img src={p('/logo.svg')} alt={`${site.name}, zur Startseite`} width={logo.breite} height={logo.hoehe} />
@@ -65,8 +65,8 @@ const aktuell = Astro.url.pathname;
         <span class="kopf__menue-wort">Menü</span>
       </button>
     </div>
-  </header>
-</div>
+  </div>
+</header>
 
 <style>
   .kopfbereich {
