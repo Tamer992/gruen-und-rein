@@ -1,0 +1,100 @@
+---
+// Seite für Adressen, die es nicht gibt. Ruhig, mit dem Blatt aus dem Logo und zwei klaren Wegen zurück.
+import { p } from '../pfad';
+import Basis from '../layouts/Basis.astro';
+import Blatt from '../components/Blatt.astro';
+import Symbol from '../components/Symbol.astro';
+import { site } from '../site.config';
+---
+<Basis
+  titel={`Seite nicht gefunden | ${site.name}`}
+  beschreibung={`Diese Seite gibt es bei ${site.name} nicht. Zur Startseite oder direkt anrufen.`}
+  indexieren={false}
+>
+  <section class="bereich fehlt" aria-labelledby="fehlt-titel">
+    <div class="behaelter fehlt__raster">
+      <div class="fehlt__text">
+        <p class="etikett">Seite nicht gefunden</p>
+        <h1 id="fehlt-titel">Diese Seite gibt es leider nicht.</h1>
+        <p class="einleitung">
+          Vielleicht hat sich die Adresse geändert. Auf der Startseite finden Sie alle Leistungen.
+          Oder Sie rufen uns einfach an, wir helfen gern weiter.
+        </p>
+        <div class="fehlt__handeln">
+          <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
+            <Symbol name="telefon" kreis />
+            Jetzt anrufen
+          </a>
+          <a class="knopf knopf--neben" href={p('/')}>
+            Zur Startseite
+          </a>
+        </div>
+      </div>
+      <div class="fehlt__zeichen" aria-hidden="true">
+        <Blatt art="linie" />
+      </div>
+    </div>
+  </section>
+</Basis>
+
+<style>
+  .fehlt {
+    padding-block: var(--a-7) var(--a-bereich);
+  }
+  .fehlt__raster {
+    display: grid;
+    gap: var(--a-5);
+    align-items: center;
+  }
+  .fehlt h1 {
+    max-width: 14ch;
+    margin-bottom: var(--a-4);
+  }
+  .fehlt .einleitung {
+    max-width: 38ch;
+  }
+  .fehlt__handeln {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--a-2);
+    margin-top: var(--a-5);
+  }
+  @media (max-width: 29.99em) {
+    .fehlt__handeln .knopf {
+      flex: 1 1 100%;
+    }
+  }
+  /* Großes Blatt in feiner Messinglinie auf einer Sandfläche in Blattform */
+  .fehlt__zeichen {
+    display: grid;
+    place-items: center;
+    max-width: 26rem;
+    aspect-ratio: 1;
+    border-radius: var(--r-blatt) var(--r-bild);
+    background: var(--sand) var(--korn);
+    color: var(--messing);
+    --blatt-linie: 1.25px;
+  }
+  .fehlt__zeichen :global(.blatt) {
+    width: 55%;
+    height: auto;
+  }
+  @media (max-width: 47.99em) {
+    .fehlt__zeichen {
+      display: none;
+    }
+  }
+  @media (min-width: 48em) {
+    .fehlt__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--spalt);
+    }
+    .fehlt__text {
+      grid-column: 1 / span 7;
+    }
+    .fehlt__zeichen {
+      grid-column: 9 / -1;
+      width: 100%;
+    }
+  }
+</style>
