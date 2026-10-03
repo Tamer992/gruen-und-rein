@@ -1,0 +1,115 @@
+---
+import { p } from '../pfad';
+import schriftText from '../fonts/atkinson-next.woff2?url';
+import schriftTitel from '../fonts/fraunces.woff2?url';
+import '../styles/global.css';
+import { site, leistungen } from '../site.config';
+import Kopf from '../components/Kopf.astro';
+import Fuss from '../components/Fuss.astro';
+import Anrufleiste from '../components/Anrufleiste.astro';
+
+interface Props {
+  titel: string;
+  beschreibung: string;
+  ruhig?: boolean;
+  indexieren?: boolean;
+}
+const { titel, beschreibung, ruhig = false } = Astro.props;
+// In der Vorschau (GitHub Pages) nie in Suchmaschinen aufnehmen
+const vorschau = import.meta.env.PUBLIC_VORSCHAU === '1';
+const indexieren = (Astro.props.indexieren ?? true) && !vorschau;
+
+const adresse = new URL(Astro.url.pathname, Astro.site).href;
+const vorschaubild = new URL(p('/og-bild.jpg'), Astro.site).href;
+
+const tage = { Mo: 'Monday', Tu: 'Tuesday', We: 'Wednesday', Th: 'Thursday', Fr: 'Friday', Sa: 'Saturday', Su: 'Sunday' };
+const betrieb = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${site.domain}/#betrieb`,
+  name: site.name,
+  description: 'Alltagsbegleitung, Hauswirtschaft, Reinigung, Gartenpflege und Trauerbegleitung für ältere Menschen und ihre Familien.',
+  url: `${site.domain}/`,
+  telephone: site.telefonLink,
+  email: site.email,
+  image: vorschaubild,
+  logo: new URL('/icon-512.png', site.domain).href,
+  founder: { '@type': 'Person', name: site.inhaberin },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.adresse.strasse,
+    postalCode: site.adresse.plz,
+    addressLocality: site.adresse.ort,
+    addressCountry: site.adresse.land,
+  },
+  areaServed: site.einsatzorte.map((ort) => ({ '@type': 'City', name: ort })),
+  openingHoursSpecification: site.oeffnungszeiten.map((z) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: z.tage.map((t) => `https://schema.org/${tage[t as keyof typeof tage]}`),
+    opens: z.von,
+    closes: z.bis,
+  })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Leistungen',
+    itemListElement: leistungen.map((l) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: l.titel, url: new URL(l.pfad, site.domain).href },
+    })),
+  },
+};
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titel}</title>
+    <meta name="description" content={beschreibung} />
+    <link rel="canonical" href={adresse} />
+    {!indexieren && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content="#faf7f0" />
+
+    <link rel="preload" href={schriftText} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={schriftTitel} as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href={p('/favicon.ico')} sizes="32x32" />
+    <link rel="icon" href={p('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={p('/apple-touch-icon.png')} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={titel} />
+    <meta property="og:description" content={beschreibung} />
+    <meta property="og:url" content={adresse} />
+    <meta property="og:image" content={vorschaubild} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name}: Alltagshilfe, Haus und Garten`} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(betrieb)} />
+    <script is:inline src={p('/js/seite.js')} defer></script>
+    <noscript><link rel="stylesheet" href={p('/css/ohne-js.css')} /></noscript>
+  </head>
+  <body class:list={{ 'seite--ruhig': ruhig }}>
+    <Kopf />
+    <main id="inhalt" tabindex="-1">
+      <slot />
+    </main>
+    <Fuss />
+    <Anrufleiste ruhig={ruhig} />
+  </body>
+</html>
+
+<style is:global>
+  main:focus {
+    outline: none;
+  }
+  @media (max-width: 47.99em) {
+    body {
+      padding-bottom: 4.5rem;
+    }
+  }
+</style>

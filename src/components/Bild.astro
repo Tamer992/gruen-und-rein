@@ -1,0 +1,41 @@
+---
+// Großes Foto mit festem Seitenverhältnis.
+// Ohne „bild“ erscheint ein beschrifteter Platzhalter mit der Beschreibung, welches Foto hierher gehört.
+// Mit „bild“ (Import aus src/bilder/) entstehen automatisch AVIF und WebP in passenden Größen.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  bild?: ImageMetadata;
+  alt: string;
+  beschreibung: string;
+  format: '4-5' | '3-2' | '16-9' | '2-1' | '1-1';
+  sizes: string;
+  zuerst?: boolean;
+  unterschrift?: string;
+  klasse?: string;
+}
+const { bild, alt, beschreibung, format, sizes, zuerst = false, unterschrift, klasse } = Astro.props;
+---
+<figure class:list={['bild', klasse]}>
+  <div class:list={['bild__rahmen', `format-${format}`]}>
+    {bild ? (
+      <Picture
+        src={bild}
+        alt={alt}
+        formats={['avif', 'webp']}
+        widths={[480, 720, 960, 1280, 1600]}
+        sizes={sizes}
+        loading={zuerst ? 'eager' : 'lazy'}
+        fetchpriority={zuerst ? 'high' : 'auto'}
+        decoding="async"
+      />
+    ) : (
+      <div class="bild__platzhalter" role="img" aria-label={alt}>
+        <strong>[PLATZHALTER: Foto]</strong>
+        <span>{beschreibung}</span>
+      </div>
+    )}
+  </div>
+  {unterschrift && <figcaption>{unterschrift}</figcaption>}
+</figure>

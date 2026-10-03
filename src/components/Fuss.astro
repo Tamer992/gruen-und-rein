@@ -1,0 +1,174 @@
+---
+import { p } from '../pfad';
+import { site, leistungen } from '../site.config';
+import Zweig from './Zweig.astro';
+import logo from './logo-mass.json';
+
+const jahr = new Date().getFullYear();
+---
+<div class="behaelter fuss-trenner" aria-hidden="true">
+  <Zweig klasse="fuss-trenner__zweig" />
+</div>
+
+<footer class="fuss">
+  <div class="behaelter">
+    <div class="raster fuss__oben">
+      <div class="fuss__anruf">
+        <h2 class="fuss__frage">Rufen Sie uns an</h2>
+        <a class="fuss__nummer" href={`tel:${site.telefonLink}`}>{site.telefon}</a>
+        <p>{site.erreichbarkeit}</p>
+        <p>Wenn niemand abnimmt, rufen wir Sie zurück, sobald wir können.</p>
+        <p>
+          Lieber schriftlich: <a href={`https://wa.me/${site.whatsappLink}`}>per WhatsApp an {site.whatsapp}</a>
+          oder <a href={p('/kontakt/#rueckruf')}>Rückruf anfordern</a>
+        </p>
+      </div>
+
+      <div class="fuss__gebiet">
+        <h2 class="fuss__titel">Hier sind wir unterwegs</h2>
+        <p>Wir kommen zu Ihnen nach Hause, in:</p>
+        <ul class="fuss__orte">
+          {site.einsatzorte.map((ort) => <li>{ort}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="raster fuss__unten">
+      <div class="fuss__betrieb">
+        <img src={p('/logo-hell.svg')} alt={site.name} width={logo.breite} height={logo.hoehe} loading="lazy" />
+        <address>
+          {site.adresse.strasse}<br />
+          {site.adresse.plz} {site.adresse.ort}<br />
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </address>
+      </div>
+
+      <nav class="fuss__nav" aria-label="Leistungen">
+        <h2 class="fuss__titel">Leistungen</h2>
+        <ul>
+          {leistungen.map((l) => <li><a href={p(l.pfad)}>{l.titel}</a></li>)}
+        </ul>
+      </nav>
+
+      <nav class="fuss__nav" aria-label="Über den Betrieb">
+        <h2 class="fuss__titel">Betrieb</h2>
+        <ul>
+          <li><a href={p('/ueber-uns/')}>Über uns</a></li>
+          <li><a href={p('/kontakt/')}>Kontakt</a></li>
+          <li><a href={p('/impressum/')}>Impressum</a></li>
+          <li><a href={p('/datenschutz/')}>Datenschutz</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <p class="fuss__zeile">© {jahr} {site.name}, {site.inhaberin}</p>
+  </div>
+</footer>
+
+<style>
+  .fuss-trenner {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--a-2);
+    padding-top: var(--a-6);
+  }
+  .fuss-trenner::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--linie);
+    margin-bottom: 0.4rem;
+  }
+  .fuss-trenner :global(.fuss-trenner__zweig) {
+    width: 2.75rem;
+    margin-bottom: -1px;
+  }
+
+  .fuss {
+    background: var(--tanne);
+    color: var(--papier);
+    padding-block: var(--a-6) var(--a-4);
+  }
+  .fuss a {
+    color: var(--papier);
+  }
+  .fuss a:hover {
+    color: var(--papier);
+  }
+  .fuss :focus-visible {
+    outline-color: var(--papier);
+  }
+  .fuss h2 {
+    color: var(--papier);
+  }
+
+  .fuss__frage {
+    font-size: var(--titel-2);
+    margin-bottom: var(--a-1);
+  }
+  .fuss__nummer {
+    display: inline-block;
+    font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding-block: 0.25rem;
+    margin-bottom: var(--a-2);
+  }
+  .fuss__titel {
+    font-family: var(--schrift-text);
+    font-size: var(--text-klein);
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--hell-auf-tanne) !important;
+    margin-bottom: var(--a-2);
+  }
+  .fuss__orte {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0;
+  }
+  .fuss__orte li:not(:last-child)::after {
+    content: '·';
+    margin-inline: 0.6rem;
+    color: var(--hell-auf-tanne);
+  }
+
+  .fuss__unten {
+    margin-top: var(--a-5);
+    padding-top: var(--a-5);
+    border-top: 1px solid rgb(250 247 240 / 0.28);
+  }
+  .fuss__betrieb img {
+    width: 13rem;
+    margin-bottom: var(--a-3);
+  }
+  .fuss address {
+    font-style: normal;
+  }
+  .fuss__nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .fuss__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+  }
+
+  .fuss__zeile {
+    margin: var(--a-5) 0 0;
+    font-size: var(--text-klein);
+    color: var(--hell-auf-tanne);
+  }
+
+  @media (min-width: 48em) {
+    .fuss__anruf { grid-column: 1 / span 7; }
+    .fuss__gebiet { grid-column: 8 / span 5; padding-top: 0.6rem; }
+    .fuss__betrieb { grid-column: 1 / span 6; }
+    .fuss__nav { grid-column: span 3; }
+  }
+</style>

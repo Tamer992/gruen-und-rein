@@ -1,0 +1,60 @@
+---
+// Feste Leiste am unteren Rand, nur auf dem Handy.
+// „ruhig“ nimmt die Farbe zurück (für die Trauerbegleitung).
+import { site } from '../site.config';
+import Hoerer from './Hoerer.astro';
+const { ruhig = false } = Astro.props;
+---
+<div class:list={['anrufleiste', { 'anrufleiste--ruhig': ruhig }]}>
+  <a href={`tel:${site.telefonLink}`}>
+    <Hoerer klasse="anrufleiste__hoerer" />
+    <span>{ruhig ? 'Anrufen' : 'Jetzt anrufen'}</span>
+    <span class="anrufleiste__nummer">{site.telefon}</span>
+  </a>
+</div>
+
+<style>
+  .anrufleiste {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 50;
+    background: var(--ocker);
+    border-top: 1px solid var(--ocker-rand);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .anrufleiste a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0 0.6rem;
+    min-height: 3.75rem;
+    padding: 0.4rem var(--rand);
+    color: var(--tinte);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .anrufleiste a:focus-visible {
+    outline-offset: -5px;
+  }
+  .anrufleiste__nummer {
+    font-weight: 400;
+  }
+  .anrufleiste :global(.anrufleiste__hoerer) {
+    width: 1.2em;
+    height: 1.2em;
+  }
+  .anrufleiste--ruhig {
+    background: var(--papier);
+    border-top-color: var(--linie);
+  }
+  .anrufleiste--ruhig a {
+    color: var(--tanne);
+  }
+
+  @media (min-width: 48em) {
+    .anrufleiste {
+      display: none;
+    }
+  }
+</style>

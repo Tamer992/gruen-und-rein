@@ -1,0 +1,492 @@
+---
+import { p } from '../pfad';
+import Basis from '../layouts/Basis.astro';
+import Bild from '../components/Bild.astro';
+import Zweig from '../components/Zweig.astro';
+import Hoerer from '../components/Hoerer.astro';
+import { site } from '../site.config';
+
+// Eigene Fotos: Datei nach src/bilder/ legen, hier importieren und unten bei „bild={...}“ eintragen.
+// Beispiel: import fotoKueche from '../bilder/kuechentisch.jpg';
+---
+<Basis
+  titel={`Alltagshilfe für Senioren in ${site.ort}: Begleitung, Haushalt, Garten | ${site.name}`}
+  beschreibung={`${site.name} hilft älteren Menschen in ${site.ort} und Umgebung: Begleitung zum Arzt und zum Einkaufen, Hauswirtschaft, Reinigung, Gartenpflege und Trauerbegleitung. Rufen Sie uns an.`}
+>
+  <!-- Einstieg -->
+  <section class="einstieg" aria-labelledby="einstieg-titel">
+    <div class="behaelter raster">
+      <div class="einstieg__text">
+        <p class="vorzeile">Alltagshilfe in {site.ort} und Umgebung</p>
+        <h1 id="einstieg-titel">Einkaufen, putzen, die Hecke schneiden. Und jemand, der Zeit mitbringt.</h1>
+        <p class="einleitung">
+          Wir helfen älteren Menschen, damit sie gut in ihrer eigenen Wohnung leben können.
+          Wir kommen zu Ihnen nach Hause, jede Woche zur gleichen Zeit oder dann, wenn es gerade nötig ist.
+        </p>
+        <div class="einstieg__handeln">
+          <a class="knopf knopf--anruf" href={`tel:${site.telefonLink}`}>
+            <Hoerer />
+            Jetzt anrufen
+          </a>
+          <a class="einstieg__rueckruf" href={p('/kontakt/#rueckruf')}>Rückruf anfordern</a>
+        </div>
+        <p class="einstieg__nummer klein leise">
+          <span>{site.telefon}</span>
+          <span>{site.erreichbarkeit}</span>
+        </p>
+      </div>
+
+      <Bild
+        klasse="einstieg__bild"
+        format="4-5"
+        zuerst
+        sizes="(min-width: 78em) 30rem, (min-width: 48em) 40vw, 100vw"
+        alt={`${site.inhaberinVorname} von ${site.name} im Gespräch mit einer Kundin am Küchentisch`}
+        beschreibung="Inhaber im Gespräch mit einer älteren Kundin am Küchentisch. Beide sitzen, zwei Kaffeetassen, weiches Tageslicht vom Fenster. Echte Kundin mit Einverständnis, keine Pose. Hochformat 4:5."
+      />
+    </div>
+  </section>
+
+  <!-- Zwei Wege: selbst Betroffene und Angehörige -->
+  <section class="zwei-wege" aria-labelledby="zwei-wege-titel">
+    <div class="behaelter raster">
+      <h2 id="zwei-wege-titel" class="zwei-wege__titel">Hilfe für Sie selbst oder für Ihre Eltern</h2>
+
+      <div class="zwei-wege__weg">
+        <h3>Wenn Sie selbst Hilfe suchen</h3>
+        <p>
+          Vielleicht fällt Ihnen das Einkaufen schwerer als früher. Oder der Garten wächst Ihnen über den Kopf.
+          Rufen Sie uns an und erzählen Sie, was Sie brauchen. Danach besuchen wir Sie und schauen gemeinsam, was hilft.
+        </p>
+        <a class="weiter" href="#ablauf">So fängt es an</a>
+      </div>
+
+      <div class="zwei-wege__weg zwei-wege__weg--zweiter">
+        <h3>Wenn Sie Hilfe für Ihre Mutter oder Ihren Vater suchen</h3>
+        <p>
+          Sie wohnen weiter weg oder arbeiten tagsüber. Trotzdem soll niemand allein zurechtkommen müssen.
+          Wir sprechen mit Ihnen und mit Ihren Eltern. Auf Wunsch sagen wir Ihnen nach jedem Besuch kurz Bescheid, wie es war.
+        </p>
+        <a class="weiter" href={p('/kontakt/#rueckruf')}>Rückruf anfordern, wenn es tagsüber nicht passt</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leistungen, unterschiedlich gewichtet -->
+  <section class="bereich leistungen" aria-labelledby="leistungen-titel">
+    <div class="behaelter">
+      <div class="leistungen__kopf">
+        <h2 id="leistungen-titel">Was wir für Sie tun</h2>
+        <p class="einleitung leise">Fünf Leistungen, die man einzeln oder zusammen buchen kann. Sie entscheiden, wie oft wir kommen.</p>
+      </div>
+
+      <!-- Alltagsbegleitung: der größte Block -->
+      <article class="raster leistung leistung--gross" aria-labelledby="l-alltag">
+        <Bild
+          klasse="leistung__bild"
+          format="3-2"
+          sizes="(min-width: 78em) 44rem, (min-width: 48em) 58vw, 100vw"
+          alt="Begleitung eines älteren Herrn auf dem Weg zur Arztpraxis"
+          beschreibung="Begleiterin und ein älterer Herr mit Gehstock auf dem Gehweg vor einer Arztpraxis oder Apotheke im Ort. Von der Seite fotografiert, im Gehen, Tageslicht. Querformat 3:2."
+        />
+        <div class="leistung__text">
+          <p class="vorzeile" id="l-alltag">Alltagsbegleitung</p>
+          <h3 class="leistung__satz">Zum Arzt, zum Einkaufen, auf den Friedhof.</h3>
+          <p>
+            Wir begleiten Sie zu Terminen und auf Wegen, die allein mühsam geworden sind.
+            Wir warten mit Ihnen im Wartezimmer, tragen die Einkäufe und helfen bei Briefen und Formularen.
+            Oder wir haben einfach Zeit für Sie.
+          </p>
+          <ul class="linienliste">
+            <li>Arzttermine und Apotheke</li>
+            <li>Einkaufen und Besorgungen</li>
+            <li>Bank, Post und Ämter</li>
+            <li>Spaziergänge, Gespräche, Vorlesen</li>
+          </ul>
+          <a class="weiter" href={p('/alltagsbegleitung/')}>Alles zur Alltagsbegleitung</a>
+        </div>
+      </article>
+
+      <!-- Hauswirtschaft: gespiegelt, kleiner -->
+      <article class="raster leistung leistung--quer" aria-labelledby="l-haus">
+        <div class="leistung__text">
+          <p class="vorzeile" id="l-haus">Hauswirtschaft</p>
+          <h3 class="leistung__satz">Kochen, Wäsche und Ordnung im Haus.</h3>
+          <p>
+            Wir kochen mit Ihnen oder für Sie, waschen und bügeln, beziehen die Betten und räumen auf.
+            Sie sagen uns, wie Sie es gewohnt sind. So machen wir es dann auch.
+          </p>
+          <a class="weiter" href={p('/hauswirtschaft/')}>Alles zur Hauswirtschaft</a>
+        </div>
+        <Bild
+          klasse="leistung__bild"
+          format="2-1"
+          sizes="(min-width: 78em) 44rem, (min-width: 48em) 58vw, 100vw"
+          alt="Frische Wäsche wird im Garten auf die Leine gehängt"
+          beschreibung="Hände, die Bettwäsche auf eine Wäscheleine im Garten hängen, im Hintergrund unscharf ein Haus. Kein Gesicht nötig. Breites Querformat 2:1."
+        />
+      </article>
+
+      <!-- Reinigung und Gartenpflege: nur Text, ungleich breit -->
+      <div class="leistung-paar">
+        <article class="leistung-paar__teil" aria-labelledby="l-rein">
+          <h3 id="l-rein">Reinigung</h3>
+          <p>
+            Böden, Bad und Küche, Fenster und Gardinen. Wir putzen jede Woche oder einmal gründlich,
+            zum Beispiel vor einem Familienfest oder nach einem Umzug.
+          </p>
+          <a class="weiter" href={p('/reinigung/')}>Alles zur Reinigung</a>
+        </article>
+
+        <article class="leistung-paar__teil leistung-paar__teil--garten" aria-labelledby="l-garten">
+          <Zweig klasse="leistung-paar__zweig" />
+          <div>
+            <h3 id="l-garten">Gartenpflege</h3>
+            <p>
+              Rasen mähen, Hecken schneiden, Laub rechen und Beete in Ordnung halten.
+              Im Frühjahr machen wir den Garten fertig, im Herbst winterfest.
+              Auf Wunsch pflegen wir auch das Grab Ihrer Angehörigen.{' '}
+              <span class="leise">[PLATZHALTER: Grabpflege anbieten? Sonst diesen Satz streichen]</span>
+            </p>
+            <a class="weiter" href={p('/gartenpflege/')}>Alles zur Gartenpflege</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ablauf -->
+  <section class="bereich ablauf" id="ablauf" aria-labelledby="ablauf-titel">
+    <div class="behaelter raster">
+      <div class="ablauf__kopf">
+        <h2 id="ablauf-titel">So fängt es an</h2>
+        <p>Vom ersten Anruf bis zum ersten Termin vergehen meist nur wenige Tage. <span class="leise">[PLATZHALTER: realistische Zeit eintragen, zum Beispiel „eine Woche“]</span></p>
+        <p class="leise">Das Gespräch und der erste Besuch sind unverbindlich.</p>
+      </div>
+
+      <ol class="ablauf__schritte">
+        <li>
+          <span class="ablauf__zahl" aria-hidden="true">1</span>
+          <div>
+            <h3>Sie rufen an</h3>
+            <p>Sie erzählen uns, wobei Sie Hilfe brauchen. Wir fragen nach und beantworten Ihre Fragen.</p>
+          </div>
+        </li>
+        <li>
+          <span class="ablauf__zahl" aria-hidden="true">2</span>
+          <div>
+            <h3>Wir besuchen Sie</h3>
+            <p>Wir kommen zu Ihnen nach Hause und lernen Sie kennen. Gern sind Ihre Kinder oder andere Angehörige dabei. Sie erfahren, was es kostet, bevor wir anfangen.</p>
+          </div>
+        </li>
+        <li>
+          <span class="ablauf__zahl" aria-hidden="true">3</span>
+          <div>
+            <h3>Es geht los</h3>
+            <p>Wir vereinbaren feste Tage und Zeiten. Sie haben eine feste Ansprechperson, die Sie und Ihre Wünsche kennt.</p>
+          </div>
+        </li>
+      </ol>
+
+      {site.pflegekasse && (
+        <aside class="hinweis ablauf__kasse" aria-labelledby="kasse-titel">
+          <h3 id="kasse-titel">Abrechnung über die Pflegekasse</h3>
+          <p>
+            Wenn Sie einen Pflegegrad haben, können Sie den Entlastungsbetrag von {site.entlastungsbetrag} Euro im Monat
+            für unsere Hilfe nutzen (§ 45b SGB XI). Auf Wunsch rechnen wir direkt mit Ihrer Pflegekasse ab.
+          </p>
+          <p class="klein leise">[PLATZHALTER: Anerkennung nach Landesrecht, anerkennende Stelle und Datum]</p>
+        </aside>
+      )}
+    </div>
+  </section>
+
+  <!-- Wer zu Ihnen kommt -->
+  <section class="bereich vorstellung" aria-labelledby="vorstellung-titel">
+    <div class="behaelter raster">
+      <Bild
+        klasse="vorstellung__bild"
+        format="1-1"
+        sizes="(min-width: 78em) 24rem, (min-width: 48em) 34vw, 100vw"
+        alt={`${site.inhaberin}, ${site.inhaberTitel} von ${site.name}`}
+        beschreibung="Porträt des Inhabers, natürlich und freundlich, zum Beispiel vor einer Hecke oder im eigenen Garten. Brusthöhe, Blick in die Kamera, Tageslicht, kein Studio. Quadratisch 1:1."
+      />
+      <div class="vorstellung__text">
+        <p class="vorzeile">Über uns</p>
+        <h2 id="vorstellung-titel">Wer zu Ihnen kommt</h2>
+        <p class="vorstellung__worte">
+          [PLATZHALTER: Zwei bis drei Sätze des Inhabers in eigenen Worten. Zum Beispiel, warum er {site.name} gegründet hat,
+          was er vorher gemacht hat und was ihm bei der Arbeit in fremden Wohnungen wichtig ist.]
+        </p>
+        <p class="vorstellung__name">{site.inhaberin}, {site.inhaberTitel}</p>
+        <a class="weiter" href={p('/ueber-uns/')}>Über uns und unser Team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trauerbegleitung: still und zurückgenommen -->
+  <section class="trauer-hinweis" aria-labelledby="trauer-titel">
+    <div class="behaelter raster">
+      <div class="trauer-hinweis__text">
+        <p class="vorzeile">Trauerbegleitung</p>
+        <h2 id="trauer-titel">Wenn ein Mensch gestorben ist</h2>
+        <p>
+          Nach einem Todesfall ist vieles auf einmal zu tun, und vieles ist schwer.
+          Wir begleiten Sie in dieser Zeit. Wir hören zu, gehen mit Ihnen auf den Friedhof
+          und helfen bei dem, was jetzt erledigt werden muss.
+        </p>
+        <a href={p('/trauerbegleitung/')}>Über die Trauerbegleitung</a>
+      </div>
+    </div>
+  </section>
+</Basis>
+
+<style>
+  /* Einstieg */
+  .einstieg {
+    padding-top: var(--a-5);
+  }
+  .einstieg__text {
+    padding-bottom: var(--a-4);
+  }
+  .einstieg h1 {
+    max-width: 17ch;
+    margin-bottom: var(--a-3);
+  }
+  .einstieg__handeln {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--a-2) var(--a-4);
+    margin-top: var(--a-4);
+  }
+  .einstieg__rueckruf {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    font-weight: 700;
+  }
+  .einstieg__nummer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--a-3);
+    margin-top: var(--a-2);
+  }
+  .einstieg :global(.einstieg__bild) {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (min-width: 48em) {
+    .einstieg {
+      padding-top: var(--a-6);
+    }
+    .einstieg__text {
+      grid-column: 1 / span 7;
+      align-self: center;
+      padding-bottom: var(--a-6);
+    }
+    .einstieg :global(.einstieg__bild) {
+      grid-column: 8 / span 5;
+      align-self: end;
+      margin-bottom: calc(-1 * var(--a-6));
+    }
+  }
+
+  /* Zwei Wege */
+  .zwei-wege {
+    background: var(--blatt);
+    padding-block: var(--a-6);
+  }
+  .zwei-wege__titel {
+    max-width: 22ch;
+  }
+  .zwei-wege__weg h3 {
+    font-size: var(--titel-3);
+  }
+  .zwei-wege__weg--zweiter {
+    border-top: 1px solid var(--linie);
+    padding-top: var(--a-4);
+  }
+  @media (min-width: 48em) {
+    .zwei-wege {
+      padding-top: calc(var(--a-6) * 2);
+    }
+    .zwei-wege__titel {
+      grid-column: 1 / span 7;
+    }
+    .zwei-wege__weg {
+      grid-column: 1 / span 5;
+    }
+    .zwei-wege__weg--zweiter {
+      grid-column: 7 / span 6;
+      border-top: 0;
+      border-left: 1px solid var(--linie);
+      padding-top: 0;
+      padding-left: var(--spalt);
+    }
+  }
+
+  /* Leistungen */
+  .leistungen__kopf {
+    max-width: 44rem;
+    margin-bottom: var(--a-5);
+  }
+  .leistung {
+    align-items: center;
+  }
+  .leistung__satz {
+    font-size: var(--titel-2);
+    margin-bottom: var(--a-3);
+  }
+  .leistung--quer {
+    margin-top: var(--a-6);
+  }
+  @media (min-width: 48em) {
+    .leistung--gross :global(.leistung__bild) {
+      grid-column: 1 / span 7;
+    }
+    .leistung--gross .leistung__text {
+      grid-column: 8 / span 5;
+      padding-left: var(--spalt);
+    }
+    .leistung--quer .leistung__text {
+      grid-column: 1 / span 5;
+      grid-row: 1;
+    }
+    .leistung--quer :global(.leistung__bild) {
+      grid-column: 7 / span 6;
+      grid-row: 1;
+    }
+  }
+  @media (min-width: 48em) and (max-width: 63.99em) {
+    .leistung--gross .leistung__text {
+      padding-left: 0;
+    }
+  }
+
+  .leistung-paar {
+    display: grid;
+    gap: var(--a-4);
+    margin-top: var(--a-6);
+    padding-block: var(--a-4);
+    border-block: 1px solid var(--linie);
+  }
+  .leistung-paar__teil--garten {
+    border-top: 1px solid var(--linie);
+    padding-top: var(--a-4);
+  }
+  .leistung-paar :global(.leistung-paar__zweig) {
+    width: 3rem;
+    margin-bottom: var(--a-2);
+  }
+  @media (min-width: 48em) {
+    .leistung-paar {
+      grid-template-columns: 5fr 7fr;
+      gap: 0;
+    }
+    .leistung-paar__teil {
+      padding-right: var(--spalt);
+    }
+    .leistung-paar__teil--garten {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--a-3);
+      border-top: 0;
+      border-left: 1px solid var(--linie);
+      padding: 0 0 0 var(--spalt);
+    }
+    .leistung-paar :global(.leistung-paar__zweig) {
+      width: 3.5rem;
+    }
+  }
+
+  /* Ablauf */
+  .ablauf {
+    border-top: 1px solid var(--linie);
+  }
+  .ablauf__schritte {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: none;
+  }
+  .ablauf__schritte li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: var(--a-3);
+    padding-bottom: var(--a-4);
+  }
+  .ablauf__schritte li:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 1.2rem;
+    top: 3.6rem;
+    bottom: 0.75rem;
+    width: 1px;
+    background: var(--linie);
+  }
+  .ablauf__zahl {
+    font-family: var(--schrift-titel);
+    font-size: 3rem;
+    font-weight: 450;
+    line-height: 1;
+    color: var(--tanne);
+  }
+  .ablauf__schritte h3 {
+    margin-bottom: var(--a-1);
+    padding-top: 0.5rem;
+  }
+  @media (min-width: 48em) {
+    .ablauf__kopf {
+      grid-column: 1 / span 4;
+    }
+    .ablauf__schritte {
+      grid-column: 6 / span 7;
+    }
+    .ablauf__kasse {
+      grid-column: 6 / span 7;
+    }
+  }
+
+  /* Vorstellung */
+  .vorstellung {
+    padding-top: 0;
+  }
+  .vorstellung__worte {
+    font-family: var(--schrift-titel);
+    font-size: var(--titel-3);
+    line-height: 1.45;
+    font-weight: 400;
+  }
+  .vorstellung__name {
+    color: var(--tinte-leise);
+  }
+  @media (min-width: 48em) {
+    .vorstellung {
+      align-items: end;
+    }
+    .vorstellung :global(.vorstellung__bild) {
+      grid-column: 2 / span 4;
+    }
+    .vorstellung__text {
+      grid-column: 7 / span 6;
+    }
+  }
+
+  /* Trauerbegleitung */
+  .trauer-hinweis {
+    background: var(--stein);
+    padding-block: var(--a-6);
+  }
+  .trauer-hinweis h2 {
+    font-weight: 420;
+    font-size: var(--titel-3);
+  }
+  @media (min-width: 48em) {
+    .trauer-hinweis__text {
+      grid-column: 5 / span 6;
+    }
+  }
+</style>

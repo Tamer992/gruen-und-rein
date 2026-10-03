@@ -1,0 +1,3 @@
+/* Wird nur geladen, wenn JavaScript ausgeschaltet ist: Navigation immer zeigen */
+.hauptnav { display: block !important; }
+.kopf__menue { display: none !important; }
