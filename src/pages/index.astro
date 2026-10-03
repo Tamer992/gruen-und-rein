@@ -228,7 +228,7 @@ const groessen = [
         <div class="kasse__zier" aria-hidden="true"><Blatt /></div>
         <div class="kasse__raster">
           <div class="kasse__text" data-einblenden>
-            <p class="etikett etikett--hell">Entlastungsbetrag nach <span class="kasse__paragraf">{'§\u00a045b\u00a0SGB\u00a0XI'}</span></p>
+            <p class="etikett etikett--hell"><span>Entlastungsbetrag nach <span class="kasse__paragraf">{'§\u00a045b\u00a0SGB\u00a0XI'}</span></span></p>
             <h2 id="kasse-titel">Wir regeln das mit Ihrer Pflegekasse.</h2>
             <p>
               Mit einem Pflegegrad übernimmt Ihre Pflegekasse Alltagsbegleitung, Hauswirtschaft und
@@ -559,7 +559,8 @@ const groessen = [
       padding-top: var(--a-7);
     }
     .einstieg__text {
-      padding-top: var(--a-5);
+      align-self: center;
+      padding-top: 0;
     }
     .einstieg h1 {
       font-size: min(var(--titel-1), 5.6vw);
@@ -843,6 +844,7 @@ const groessen = [
   }
   .kasse__raster {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--a-6);
   }
   .kasse h2 {
@@ -1001,7 +1003,6 @@ const groessen = [
     --blatt-linie: 1.25px;
   }
   .angebot h3 {
-    max-width: 14ch;
     padding-right: var(--a-6);
     margin-bottom: var(--a-3);
     font-size: clamp(1.75rem, 1.45rem + 1.1vw, 2.375rem);
