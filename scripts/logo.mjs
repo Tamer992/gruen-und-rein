@@ -100,7 +100,11 @@ writeFileSync('public/favicon.ico', ico([{ groesse: 16, daten: await png(16) }, 
 const satz1 = setze(titel, 'Alltag. Zuhause.', 74, 80, 365, -1.5);
 const satz2 = setze(titel, 'Sauber. Gepflegt.', 74, 80, 448, -1.5);
 const flaeche = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="${F.tanne}"/><g transform="translate(80 90) scale(1.6)">${dunkel.svg.replace(/<svg[^>]*>|<\/svg>|<title[^>]*>.*?<\/title>/g, '')}</g><rect x="80" y="505" width="64" height="2" fill="${F.blatt}"/><path fill="${F.grund}" d="${rund(satz1.d)}"/><path fill="${F.blatt}" d="${rund(satz2.d)}"/></svg>`;
-const foto = await sharp('src/bilder/gespraech-fotoalbum.jpg').resize(460, 630, { fit: 'cover', position: 'right' }).toBuffer();
+// Ausschnitt um die ältere Dame (etwa 60 % der Bildbreite), damit Gesicht und Tasse im Bild bleiben
+const fotoBreit = await sharp('src/bilder/einstieg-kaffee.jpg').resize({ height: 630 }).toBuffer();
+const breit = (await sharp(fotoBreit).metadata()).width;
+const links = Math.max(0, Math.min(breit - 460, Math.round(breit * 0.6 - 230)));
+const foto = await sharp(fotoBreit).extract({ left: links, top: 0, width: 460, height: 630 }).toBuffer();
 writeFileSync(
   'public/og-bild.jpg',
   await sharp(Buffer.from(flaeche)).composite([{ input: foto, left: 740, top: 0 }]).jpeg({ quality: 84, mozjpeg: true }).toBuffer(),
