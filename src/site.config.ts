@@ -71,7 +71,8 @@ export const site = {
   unterseiten: true,
 };
 
-// Leistungen wie auf dem Flyer von Hussain und Ali.
+// Leistungen wie auf dem Flyer von Hussain und Ali, ergänzt am 03.10.2026 (Bügeln, Mahlzeiten, Rezepte und
+// Medikamente, Post und Termine, Behördengänge, Fenster und Gardinen). Mit Hussain und Ali bestätigen.
 // kasse: Abrechnung über die Pflegekasse möglich (nur sichtbar, wenn pflegekasse: true)
 export const leistungen = [
   {
@@ -80,7 +81,7 @@ export const leistungen = [
     pfad: '/alltagsbegleitung/',
     anker: 'alltagsbegleitung',
     kasse: true,
-    punkte: ['Gesellschaft', 'Spaziergänge', 'Einkäufe', 'Arztbegleitung', 'Entlastung im Alltag'],
+    punkte: ['Betreuung', 'Spaziergänge', 'Arztbegleitung', 'Rezepte und Medikamente', 'Post und Termine', 'Behördengänge'],
   },
   {
     titel: 'Hauswirtschaft',
@@ -88,7 +89,7 @@ export const leistungen = [
     pfad: '/hauswirtschaft/',
     anker: 'hauswirtschaft',
     kasse: true,
-    punkte: ['Reinigung', 'Wäsche', 'Einkaufen', 'Küche', 'Bad', 'Haushaltshilfe'],
+    punkte: ['Wohnungsreinigung', 'Waschen und Bügeln', 'Mahlzeiten', 'Einkaufen', 'Küche und Bad', 'Fenster'],
   },
   {
     titel: 'Trauerbegleitung',

@@ -18,7 +18,7 @@ const fragen = [
   {
     frage: 'Gehört Pflege auch dazu?',
     antwort:
-      'Alltagsbegleitung ergänzt die Pflege. Körperpflege und Medikamente übernimmt ein Pflegedienst. Wir kümmern uns um alles, was den Tag schön und leichter macht.',
+      'Alltagsbegleitung ergänzt die Pflege. Körperpflege und die Gabe von Medikamenten übernimmt ein Pflegedienst. Rezepte und Medikamente holen wir gern für Sie ab, und wir kümmern uns um alles, was den Tag schön und leichter macht.',
   },
   {
     frage: 'Können meine Angehörigen beim Kennenlernen dabei sein?',
@@ -41,7 +41,7 @@ const fragen = [
 <Leistungsseite
   anker="alltagsbegleitung"
   titel={`Alltagsbegleitung und Betreuung in ${site.ort} | ${site.name}`}
-  beschreibung={`Gesellschaft, Spaziergänge, Einkäufe und Begleitung zum Arzt. Alltagsbegleitung für Senioren in ${site.ort} und Umgebung, mit Pflegegrad über die Pflegekasse.`}
+  beschreibung={`Betreuung, Spaziergänge, Begleitung zum Arzt, Rezepte und Medikamente, Post und Behördengänge. Alltagsbegleitung für Senioren in ${site.ort} und Umgebung, mit Pflegegrad über die Pflegekasse.`}
   ueberschrift="Jemand, der mitgeht."
   einleitung="Wir gehen mit Ihnen spazieren, einkaufen oder zum Arzt. Wir trinken Kaffee, spielen Karten oder lesen Ihnen die Zeitung vor. Ganz so, wie es Ihnen Freude macht."
   bild={fotoKopf}
@@ -49,11 +49,13 @@ const fragen = [
   ausschnitt="oben"
   aufgabenTitel="Was wir gemeinsam unternehmen"
   aufgaben={[
-    { titel: 'Gesellschaft', text: 'Zeit für ein Gespräch, ein Kartenspiel oder einen Blick ins Fotoalbum. Bei einer Tasse Kaffee, in Ruhe.' },
+    { titel: 'Betreuung und Gesellschaft', text: 'Zeit für ein Gespräch, ein Kartenspiel oder einen Blick ins Fotoalbum. Bei einer Tasse Kaffee, in Ruhe.' },
     { titel: 'Spaziergänge', text: 'Eine Runde um den Block oder durch den Park. In Ihrem Tempo und mit einem sicheren Arm an Ihrer Seite.' },
     { titel: 'Einkäufe', text: 'Wir gehen mit Ihnen einkaufen oder erledigen den Einkauf nach Ihrer Liste und räumen alles ein.' },
     { titel: 'Begleitung zum Arzt', text: 'Wir gehen mit in die Praxis, warten mit im Wartezimmer und schreiben auf Wunsch mit, was besprochen wurde.' },
-    { titel: 'Erledigungen', text: 'Zur Post, zur Apotheke oder zum Friseur. Wir gehen mit oder übernehmen den Weg für Sie.' },
+    { titel: 'Rezepte und Medikamente', text: 'Wir bestellen Ihre Rezepte in der Praxis, holen sie ab und bringen die Medikamente aus der Apotheke zu Ihnen nach Hause.' },
+    { titel: 'Post und Termine', text: 'Wir lesen gemeinsam Ihre Briefe, helfen beim Ausfüllen von Formularen und behalten Ihre Termine im Blick.' },
+    { titel: 'Wege und Behördengänge', text: 'Zur Bank, zum Amt, zur Post oder zum Friseur. Wir gehen mit oder übernehmen den Weg für Sie.' },
     { titel: 'Entlastung für Angehörige', text: 'Sie haben ein paar Stunden für sich und wissen Ihre Mutter oder Ihren Vater in guter Gesellschaft.' },
   ]}
   mitte={{
