@@ -4,6 +4,7 @@ import Basis from '../layouts/Basis.astro';
 import Bild from '../components/Bild.astro';
 import Symbol from '../components/Symbol.astro';
 import Herz from '../components/Herz.astro';
+import Dach from '../components/Dach.astro';
 import { site, leistungen } from '../site.config';
 
 // Fotos: Unsplash-Lizenz (freie Nutzung), als Übergang bis zu eigenen Fotos. Quellen in src/bilder/QUELLEN.md
@@ -120,7 +121,7 @@ const groessen = [
         />
         {site.pflegekasse && (
           <a class="kassenkarte" href="#pflegekasse">
-            <span class="kassenkarte__zeichen"><Herz /></span>
+            <span class="kassenkarte__zeichen"><Symbol name="haken" /></span>
             <span class="kassenkarte__text">
               <strong>Mit der Pflegekasse möglich</strong>
               <span>Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung</span>
@@ -131,9 +132,9 @@ const groessen = [
       </div>
     </div>
     <ul class="behaelter fakten" aria-label="Das ist uns wichtig">
-      <li><span class="herzpunkt"><Herz /></span> Eine feste Ansprechperson</li>
-      {site.pflegekasse && <li><span class="herzpunkt"><Herz /></span> Wir rechnen mit der Pflegekasse ab</li>}
-      <li><span class="herzpunkt"><Herz /></span> Für Privathaushalte und Betriebe</li>
+      <li><span class="haken"><Symbol name="haken" /></span> Eine feste Ansprechperson</li>
+      {site.pflegekasse && <li><span class="haken"><Symbol name="haken" /></span> Wir rechnen mit der Pflegekasse ab</li>}
+      <li><span class="haken"><Symbol name="haken" /></span> Für Privathaushalte und Betriebe</li>
     </ul>
   </section>
 
@@ -206,7 +207,7 @@ const groessen = [
               <div class="kachel__text">
                 <h3>{k.titel} {site.unterseiten && <Symbol name="pfeil" />}</h3>
                 {site.pflegekasse && k.kasse && (
-                  <p class="kassenmarke kachel__kasse"><Herz /> Mit Pflegegrad über die Pflegekasse</p>
+                  <p class="kassenmarke kachel__kasse"><Symbol name="haken" /> Mit Pflegegrad über die Pflegekasse</p>
                 )}
                 <p class="kachel__beschreibung">{k.text}</p>
                 <ul class="kachel__punkte" aria-label={`${k.titel} im Einzelnen`}>
@@ -245,9 +246,9 @@ const groessen = [
           <div class="kasse__liste" data-einblenden="2">
             <p class="kasse__ueber">Mit Pflegegrad abrechenbar</p>
             <ul>
-              <li><span class="kasse__punkt"><Herz /></span> Alltagsbegleitung und Betreuung</li>
-              <li><span class="kasse__punkt"><Herz /></span> Hauswirtschaft</li>
-              <li><span class="kasse__punkt"><Herz /></span> Trauerbegleitung</li>
+              <li><span class="kasse__punkt"><Symbol name="haken" /></span> Alltagsbegleitung und Betreuung</li>
+              <li><span class="kasse__punkt"><Symbol name="haken" /></span> Hauswirtschaft</li>
+              <li><span class="kasse__punkt"><Symbol name="haken" /></span> Trauerbegleitung</li>
             </ul>
             <p class="kasse__hinweis">Gebäudereinigung und Gartenpflege rechnen wir direkt mit Ihnen ab.</p>
           </div>
@@ -288,7 +289,7 @@ const groessen = [
       </ol>
 
       <div class="angebot" data-einblenden>
-        <Herz art="linie" klasse="angebot__herz" />
+        <Dach klasse="angebot__dach" />
         <h3>Ihr persönliches Angebot</h3>
         <p>
           Wir stellen Ihre Unterstützung so zusammen, wie sie zu Ihnen passt: was Sie sich wünschen und wie oft wir
@@ -470,9 +471,9 @@ const groessen = [
     background: var(--waldgruen);
     color: var(--messing-hell);
   }
-  .kassenkarte__zeichen :global(.herz) {
-    width: 1.5rem;
-    height: 1.5rem;
+  .kassenkarte__zeichen :global(.symbol) {
+    width: 1.15rem;
+    height: 1.15rem;
   }
   .kassenkarte__text {
     display: grid;
@@ -807,7 +808,7 @@ const groessen = [
   }
 
   /* Pflegekasse: die hochwertigste Fläche der Seite.
-     Tanne mit Papierkorn, oben eine Zierlinie mit Herz, rechts ein großes Herz als feine Messingzeichnung,
+     Tanne mit Papierkorn, oben eine Zierlinie mit Herz, rechts das Dach aus dem Logo als feine Messingzeichnung,
      die Liste steht in einem Passepartout aus zwei Haarlinien. */
   .kasse {
     position: relative;
@@ -839,8 +840,8 @@ const groessen = [
     background: linear-gradient(90deg, rgb(214 187 135 / 0.5), transparent);
   }
   .kasse__zier :global(.herz) {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1rem;
+    height: 1rem;
   }
   .kasse__raster {
     display: grid;
@@ -913,7 +914,7 @@ const groessen = [
     box-shadow: inset 0 0 0 1px rgb(214 187 135 / 0.45);
     color: var(--messing-hell);
   }
-  .kasse__punkt :global(.herz) {
+  .kasse__punkt :global(.symbol) {
     width: 1.1rem;
     height: 1.1rem;
   }
@@ -983,7 +984,7 @@ const groessen = [
     color: var(--leise);
   }
 
-  /* Angebot: ruhige Papierkarte mit feinem Herz in der Ecke */
+  /* Angebot: ruhige Papierkarte mit feinem Dach in der Ecke */
   .angebot {
     position: relative;
     overflow: hidden;
@@ -992,14 +993,14 @@ const groessen = [
     background: var(--papier);
     box-shadow: inset 0 0 0 1px var(--linie-zart), var(--schatten-2);
   }
-  .angebot :global(.angebot__herz) {
+  .angebot :global(.angebot__dach) {
     position: absolute;
     right: var(--a-4);
     top: var(--a-4);
     width: 2.75rem;
     height: auto;
     color: var(--messing);
-    --herz-linie: 1.25px;
+    --dach-linie: 1.25px;
   }
   .angebot h3 {
     padding-right: var(--a-6);

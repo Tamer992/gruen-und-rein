@@ -1,0 +1,25 @@
+---
+// Das Dach aus dem Logo als feine Linie (für Wasserzeichen und Schmuck).
+// Bewusst ohne Herz: Das Herz steht nur im Logo und in den kleinen Zierlinien, sonst wirkt es schnell kitschig.
+// Rein dekorativ, für Vorleseprogramme unsichtbar.
+interface Props {
+  klasse?: string;
+}
+const { klasse } = Astro.props;
+
+// Derselbe Pfad wie im Logo (scripts/logo.mjs)
+const DACH = 'M8 21L24 8L40 21';
+---
+<svg class:list={['dach', klasse]} viewBox="7 7 34 15" aria-hidden="true" focusable="false">
+  <path d={DACH} fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+</svg>
+
+<style is:global>
+  .dach {
+    display: block;
+    flex: none;
+  }
+  .dach path {
+    stroke-width: var(--dach-linie, 1px);
+  }
+</style>

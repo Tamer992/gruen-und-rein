@@ -8,7 +8,7 @@ import Basis from '../layouts/Basis.astro';
 import Seitenkopf from './Seitenkopf.astro';
 import Fragen, { type Frage } from './Fragen.astro';
 import Bild from './Bild.astro';
-import Herz from './Herz.astro';
+import Dach from './Dach.astro';
 import Symbol from './Symbol.astro';
 import { site, leistungen } from '../site.config';
 import { leistungsbilder } from '../leistungsbilder';
@@ -64,7 +64,7 @@ const dienst = {
     alt={alt}
     ausschnitt={ausschnitt}
   >
-    {kasse && <p slot="zusatz" class="kassenmarke"><Herz /> Mit Pflegegrad über die Pflegekasse</p>}
+    {kasse && <p slot="zusatz" class="kassenmarke"><Symbol name="haken" /> Mit Pflegegrad über die Pflegekasse</p>}
   </Seitenkopf>
 
   <!-- Im Einzelnen: links die Überschrift, rechts die Aufgaben in zwei Spalten zwischen Haarlinien -->
@@ -77,7 +77,7 @@ const dienst = {
       <ul class="aufgaben__liste">
         {aufgaben.map((a, i) => (
           <li data-einblenden={i % 2 ? '2' : ''}>
-            <span class="herzpunkt"><Herz /></span>
+            <span class="haken"><Symbol name="haken" /></span>
             <div>
               <h3>{a.titel}</h3>
               <p>{a.text}</p>
@@ -114,7 +114,7 @@ const dienst = {
   <!-- Band in Tanne: Pflegekasse oder, bei Reinigung und Garten, das persönliche Angebot -->
   <section class="band flaeche-tanne" aria-labelledby="band-titel">
     <div class="behaelter band__raster">
-      <div class="band__zeichen" aria-hidden="true"><Herz art="linie" /></div>
+      <div class="band__zeichen" aria-hidden="true"><Dach /></div>
       <div class="band__text" data-einblenden>
         {kasse ? (
           <>
@@ -210,7 +210,7 @@ const dienst = {
     padding-block: var(--a-3) var(--a-4);
     border-top: 1px solid var(--sand-tief);
   }
-  .aufgaben__liste .herzpunkt {
+  .aufgaben__liste .haken {
     margin-top: 0.2rem;
     background: var(--papier);
   }
@@ -279,7 +279,7 @@ const dienst = {
     }
   }
 
-  /* Band in Tanne: links ein großes Herz als feine Messingzeichnung, daneben Text und Knopf */
+  /* Band in Tanne: links das Dach aus dem Logo als feine Messingzeichnung, daneben Text und Knopf */
   .band {
     position: relative;
     overflow: hidden;
@@ -298,10 +298,10 @@ const dienst = {
     transform: translateY(-50%);
     color: var(--messing-hell);
     opacity: 0.18;
-    --herz-linie: 1.25px;
+    --dach-linie: 1.25px;
     pointer-events: none;
   }
-  .band__zeichen :global(.herz) {
+  .band__zeichen :global(.dach) {
     width: 100%;
     height: auto;
   }

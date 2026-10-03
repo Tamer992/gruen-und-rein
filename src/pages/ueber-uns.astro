@@ -4,7 +4,6 @@ import { p } from '../pfad';
 import Basis from '../layouts/Basis.astro';
 import Seitenkopf from '../components/Seitenkopf.astro';
 import Bild from '../components/Bild.astro';
-import Herz from '../components/Herz.astro';
 import Symbol from '../components/Symbol.astro';
 import { site, leistungen } from '../site.config';
 import { leistungsbilder } from '../leistungsbilder';
@@ -45,7 +44,7 @@ const werte = [
     ausschnitt="oben"
   >
     {site.pflegekasse && (
-      <p slot="zusatz" class="kassenmarke"><Herz /> Anerkanntes Angebot zur Unterstützung im Alltag</p>
+      <p slot="zusatz" class="kassenmarke"><Symbol name="haken" /> Anerkanntes Angebot zur Unterstützung im Alltag</p>
     )}
   </Seitenkopf>
   <!-- [ERGÄNZEN: zwei, drei Sätze zu Hussain und Ali: was sie vorher gemacht haben und warum sie Grün & Rein gegründet haben] -->
@@ -60,7 +59,7 @@ const werte = [
       <ul class="werte__liste">
         {werte.map((w, i) => (
           <li data-einblenden={i % 2 ? '2' : ''}>
-            <span class="herzpunkt"><Herz /></span>
+            <span class="haken"><Symbol name="haken" /></span>
             <h3>{w.titel}</h3>
             <p>{w.text}</p>
           </li>
@@ -169,7 +168,7 @@ const werte = [
     padding-top: var(--a-3);
     border-top: 1px solid var(--sand-tief);
   }
-  .werte__liste .herzpunkt {
+  .werte__liste .haken {
     margin-bottom: var(--a-2);
     background: var(--papier);
   }

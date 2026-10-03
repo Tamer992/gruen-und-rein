@@ -3,7 +3,7 @@
 // Kein Formular: Telefon und WhatsApp sind für die Zielgruppe der kürzeste Weg, und es braucht keinen Server.
 import Basis from '../layouts/Basis.astro';
 import Seitenkopf from '../components/Seitenkopf.astro';
-import Herz from '../components/Herz.astro';
+import Dach from '../components/Dach.astro';
 import Symbol from '../components/Symbol.astro';
 import { site } from '../site.config';
 import fotoKopf from '../bilder/kontakt-telefon.jpg';
@@ -82,13 +82,13 @@ const vorbereitung = [
         <h2 id="vorbereitung-titel">Das hilft uns beim ersten Gespräch.</h2>
         <ul class="vorbereitung__liste">
           {vorbereitung.map((v) => (
-            <li><span class="herzpunkt"><Herz /></span> {v}</li>
+            <li><span class="haken"><Symbol name="haken" /></span> {v}</li>
           ))}
         </ul>
         <p class="leise">Alles andere klären wir gemeinsam. Auch Ihre Angehörigen können gern für Sie anrufen.</p>
       </div>
       <aside class="gebiet" aria-labelledby="gebiet-titel" data-einblenden="2">
-        <div class="gebiet__zier" aria-hidden="true"><Herz art="linie" /></div>
+        <div class="gebiet__zier" aria-hidden="true"><Dach /></div>
         <p class="etikett">Einsatzgebiet</p>
         <h2 id="gebiet-titel" class="gebiet__titel">Unterwegs in</h2>
         <ul class="gebiet__liste">
@@ -311,9 +311,9 @@ const vorbereitung = [
     width: 11rem;
     color: var(--messing);
     opacity: 0.35;
-    --herz-linie: 1.25px;
+    --dach-linie: 1.25px;
   }
-  .gebiet__zier :global(.herz) {
+  .gebiet__zier :global(.dach) {
     width: 100%;
     height: auto;
   }

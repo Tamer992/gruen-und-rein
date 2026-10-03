@@ -1,33 +1,22 @@
 ---
-// Das Herz aus dem Logo als wiederkehrendes, zurückhaltendes Zeichen.
-// „flaeche“: gefülltes Herz (für Aufzählungen und Marken)
-// „linie“: nur der Umriss in feiner Linie (für Wasserzeichen und Schmuck)
+// Das Herz aus dem Logo, nur klein in den Zierlinien (Fuß, Pflegekassen-Abschnitt).
+// Sparsam einsetzen: Mehr Herzen wirken kitschig (Tamer, 03.10.2026). Für Aufzählungen den Haken nehmen, für große Linien das Dach.
 // Rein dekorativ, für Vorleseprogramme unsichtbar.
 interface Props {
-  art?: 'flaeche' | 'linie';
   klasse?: string;
 }
-const { art = 'flaeche', klasse } = Astro.props;
+const { klasse } = Astro.props;
 
 // Derselbe Pfad wie im Logo (scripts/logo.mjs)
 const HERZ = 'M24 40L14 30A5.66 5.66 0 0 1 22 22L24 24L26 22A5.66 5.66 0 0 1 34 30Z';
 ---
-{art === 'flaeche' ? (
-  <svg class:list={['herz', klasse]} viewBox="12 19 24 22" aria-hidden="true" focusable="false">
-    <path d={HERZ} fill="currentColor" />
-  </svg>
-) : (
-  <svg class:list={['herz', 'herz--linie', klasse]} viewBox="11.5 18.5 25 23" aria-hidden="true" focusable="false">
-    <path d={HERZ} fill="none" stroke="currentColor" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
-  </svg>
-)}
+<svg class:list={['herz', klasse]} viewBox="12 19 24 22" aria-hidden="true" focusable="false">
+  <path d={HERZ} fill="currentColor" />
+</svg>
 
 <style is:global>
   .herz {
     display: block;
     flex: none;
-  }
-  .herz--linie path {
-    stroke-width: var(--herz-linie, 1px);
   }
 </style>
