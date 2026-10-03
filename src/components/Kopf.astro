@@ -56,7 +56,6 @@ const aktuell = Astro.url.pathname;
                     <li>
                       <a href={p(u.pfad)} aria-current={aktuell === p(u.pfad) ? 'page' : undefined}>
                         <span class="hauptnav__untertitel">{u.titel}</span>
-                        {site.pflegekasse && u.kasse && <span class="hauptnav__kasse">Mit Pflegegrad über die Pflegekasse</span>}
                       </a>
                     </li>
                   ))}
@@ -357,11 +356,6 @@ const aktuell = Astro.url.pathname;
     font-weight: 700;
     line-height: 1.3;
   }
-  .hauptnav__kasse {
-    font-size: var(--text-klein);
-    font-weight: 400;
-    color: var(--leise);
-  }
 
   /* Ab Tablet: Anrufknopf immer in der Kopfzeile */
   @media (min-width: 48em) {
@@ -558,9 +552,6 @@ const aktuell = Astro.url.pathname;
       border-radius: 12px;
       outline-offset: -3px;
       box-shadow: none;
-    }
-    .hauptnav__kasse {
-      font-size: var(--text-klein);
     }
     .kopf__anruf {
       flex: none;

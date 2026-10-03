@@ -118,9 +118,9 @@ export function leistungsPfad(l: { pfad: string; anker: string }): string {
 }
 
 // Navigation im Kopf. „unter“ erscheint auf dem Desktop als aufklappende Liste, im Handy-Menü direkt darunter.
-type Navigationspunkt = { titel: string; pfad: string; unter?: { titel: string; pfad: string; kasse?: boolean }[] };
+type Navigationspunkt = { titel: string; pfad: string; unter?: { titel: string; pfad: string }[] };
 const navigationUnterseiten: Navigationspunkt[] = [
-  { titel: 'Leistungen', pfad: '/#leistungen', unter: leistungen.map((l) => ({ titel: l.kurz, pfad: l.pfad, kasse: l.kasse })) },
+  { titel: 'Leistungen', pfad: '/#leistungen', unter: leistungen.map((l) => ({ titel: l.kurz, pfad: l.pfad })) },
   ...(site.pflegekasse ? [{ titel: 'Pflegekasse', pfad: '/pflegekasse/' }] : []),
   { titel: 'Über uns', pfad: '/ueber-uns/' },
   { titel: 'Kontakt', pfad: '/kontakt/' },
