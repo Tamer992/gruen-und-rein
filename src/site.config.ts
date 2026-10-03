@@ -56,10 +56,15 @@ export const site = {
   // [PLATZHALTER: Anerkennung als Angebot zur Unterstützung im Alltag (Hessen) vorliegend? Stelle und Datum]
   // Auf false stellen, falls die Anerkennung doch fehlt: Dann verschwinden alle Hinweise.
   pflegekasse: true,
+
+  // Gibt es schon eigene Unterseiten für die Leistungen und „Über uns“?
+  // Solange false, zeigen Navigation, Kacheln und Fuß auf die Abschnitte der Startseite,
+  // damit kein Link ins Leere führt. Auf true stellen, sobald die Seiten in src/pages/ liegen.
+  unterseiten: false,
 };
 
 // Navigation im Kopf: höchstens sechs Punkte
-export const navigation = [
+const navigationUnterseiten = [
   { titel: 'Alltagsbegleitung', pfad: '/alltagsbegleitung/' },
   { titel: 'Hauswirtschaft', pfad: '/hauswirtschaft/' },
   { titel: 'Gebäudereinigung', pfad: '/gebaeudereinigung/' },
@@ -67,6 +72,15 @@ export const navigation = [
   { titel: 'Über uns', pfad: '/ueber-uns/' },
   { titel: 'Kontakt', pfad: '/kontakt/' },
 ];
+// Solange es keine Unterseiten gibt: Sprungmarken auf der Startseite
+const navigationStartseite = [
+  { titel: 'Leistungen', pfad: '/#leistungen' },
+  ...(site.pflegekasse ? [{ titel: 'Pflegekasse', pfad: '/#pflegekasse' }] : []),
+  { titel: 'Ablauf', pfad: '/#ablauf' },
+  { titel: 'Über uns', pfad: '/#ueber-uns' },
+  { titel: 'Kontakt', pfad: '/#kontakt' },
+];
+export const navigation = site.unterseiten ? navigationUnterseiten : navigationStartseite;
 
 // Leistungen wie auf dem Flyer von Hussain und Ali.
 // kasse: Abrechnung über die Pflegekasse möglich (nur sichtbar, wenn pflegekasse: true)
@@ -75,6 +89,7 @@ export const leistungen = [
     titel: 'Alltagsbegleitung und Betreuung',
     kurz: 'Alltagsbegleitung',
     pfad: '/alltagsbegleitung/',
+    anker: 'alltagsbegleitung',
     kasse: true,
     punkte: ['Gesellschaft', 'Spaziergänge', 'Einkäufe', 'Arztbegleitung', 'Entlastung im Alltag'],
   },
@@ -82,6 +97,7 @@ export const leistungen = [
     titel: 'Trauerbegleitung',
     kurz: 'Trauerbegleitung',
     pfad: '/trauerbegleitung/',
+    anker: 'trauerbegleitung',
     kasse: true,
     punkte: ['Zuhören', 'Gespräche', 'Unterstützung im Alltag', 'Begleitung in schweren Zeiten'],
   },
@@ -89,6 +105,7 @@ export const leistungen = [
     titel: 'Hauswirtschaft',
     kurz: 'Hauswirtschaft',
     pfad: '/hauswirtschaft/',
+    anker: 'hauswirtschaft',
     kasse: true,
     punkte: ['Reinigung', 'Wäsche', 'Einkaufen', 'Küche', 'Bad', 'Haushaltshilfe'],
   },
@@ -96,6 +113,7 @@ export const leistungen = [
     titel: 'Gebäudereinigung',
     kurz: 'Gebäudereinigung',
     pfad: '/gebaeudereinigung/',
+    anker: 'gebaeudereinigung',
     kasse: false,
     punkte: ['Wohnungsreinigung', 'Hausreinigung', 'Büroreinigung', 'Treppenhaus', 'Grundreinigung'],
   },
@@ -103,7 +121,13 @@ export const leistungen = [
     titel: 'Gartenpflege',
     kurz: 'Gartenpflege',
     pfad: '/gartenpflege/',
+    anker: 'gartenpflege',
     kasse: false,
     punkte: ['Rasenpflege', 'Unkraut entfernen', 'Laub entfernen', 'Beetpflege', 'Außenanlagen'],
   },
 ];
+
+// Ziel eines Links auf eine Leistung: Unterseite oder Kachel auf der Startseite
+export function leistungsPfad(l: { pfad: string; anker: string }): string {
+  return site.unterseiten ? l.pfad : `/#${l.anker}`;
+}

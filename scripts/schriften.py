@@ -21,8 +21,10 @@ def baue(quelle, ziel, achsen):
     font.save(ziel)
     print(ziel)
 
-baue(FS + "schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2", "src/fonts/schibsted.woff2",
-     {"wght": (500, 800)})
+# Fraunces für Überschriften: optischer Größenausgleich (opsz) und Gewicht bleiben variabel,
+# weiche Formen (SOFT 50) und ohne schiefe Zierbuchstaben (WONK 0), damit sie ruhig lesbar bleibt
+baue(FS + "fraunces/files/fraunces-latin-full-normal.woff2", "src/fonts/fraunces.woff2",
+     {"wght": (400, 700), "opsz": (9, 144), "SOFT": 50, "WONK": 0})
 baue(FS + "atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2",
      "src/fonts/atkinson-next.woff2", {"wght": (400, 700)})
 baue(FS + "atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-italic.woff2",

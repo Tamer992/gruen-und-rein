@@ -39,7 +39,22 @@ const aktuell = Astro.url.pathname;
           </li>
         ))}
       </ul>
+      <div class="hauptnav__handeln">
+        <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
+          <Symbol name="telefon" kreis />
+          Jetzt anrufen
+        </a>
+        <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
+          <Symbol name="whatsapp" kreis />
+          WhatsApp schreiben
+        </a>
+      </div>
     </nav>
+
+    <a class="knopf knopf--haupt kopf__anruf" href={`tel:${site.telefonLink}`}>
+      <Symbol name="telefon" kreis />
+      Jetzt anrufen
+    </a>
 
     <button class="kopf__menue" type="button" aria-expanded="false" aria-controls="hauptnavigation">
       <span class="kopf__menue-striche" aria-hidden="true"></span>
@@ -52,7 +67,7 @@ const aktuell = Astro.url.pathname;
   /* Dunkle Leiste mit Telefon */
   .leiste {
     background: var(--tanne);
-    color: var(--hell-auf-tanne);
+    color: var(--auf-tanne);
     font-size: var(--text-klein);
   }
   .leiste__innen {
@@ -63,32 +78,29 @@ const aktuell = Astro.url.pathname;
     min-height: 3.25rem;
   }
   .leiste a {
-    color: #fff;
+    color: var(--hell);
     text-decoration: none;
   }
   .leiste a:hover {
     text-decoration: underline;
+    text-decoration-color: var(--messing-hell);
   }
   .leiste :focus-visible {
-    outline-color: #fff;
+    outline-color: var(--hell);
   }
   .leiste__telefon,
   .leiste__zeiten,
   .leiste__whatsapp {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.6rem;
     min-height: 3rem;
   }
   .leiste__telefon {
     font-size: 1.1875rem;
   }
-  .leiste__telefon strong {
-    letter-spacing: 0.01em;
-  }
-  .leiste__telefon :global(.symbol),
-  .leiste__whatsapp :global(.symbol) {
-    color: var(--blatt);
+  .leiste :global(.symbol) {
+    color: var(--messing-hell);
   }
   .leiste__zeiten,
   .leiste__whatsapp {
@@ -103,6 +115,8 @@ const aktuell = Astro.url.pathname;
     .leiste__zeiten {
       display: inline-flex;
       margin-right: auto;
+      padding-left: var(--a-3);
+      border-left: 1px solid var(--linie-auf-tanne);
     }
   }
   @media (max-width: 29.99em) {
@@ -116,41 +130,56 @@ const aktuell = Astro.url.pathname;
     background: var(--grund);
     border-bottom: 1px solid var(--linie);
   }
+  /* Auf kleinen Bildschirmen ein Raster: Das Logo darf schmaler werden, der Menü-Knopf bleibt daneben */
   .kopf__zeile {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
-    gap: 0 var(--a-3);
-    min-height: 4.75rem;
+    gap: 0 var(--a-2);
+    min-height: 5rem;
   }
   .kopf__marke {
     display: inline-flex;
-    flex: none;
-    padding-block: 0.9rem;
+    justify-self: start;
+    min-width: 0;
+    padding-block: 1rem;
+    border-radius: var(--r-feld);
   }
   .kopf__marke img {
-    height: 2.75rem;
     width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 2.75rem;
+  }
+  .kopf__anruf {
+    display: none;
   }
 
   .kopf__menue {
+    grid-column: 2;
+    grid-row: 1;
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.65rem;
     min-height: 3rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.15rem;
     font: inherit;
     font-weight: 700;
     color: var(--waldgruen);
-    background: var(--salbei);
+    background: var(--flaeche);
     border: 0;
     border-radius: var(--r-knopf);
+    box-shadow: inset 0 0 0 1.5px var(--linie-knopf);
     cursor: pointer;
-    transition: background-color var(--uebergang);
+    transition: background-color var(--uebergang), box-shadow var(--uebergang);
   }
   .kopf__menue:hover {
-    background: var(--salbei-tief);
+    background: var(--sand);
+    box-shadow: inset 0 0 0 1.5px var(--waldgruen);
+  }
+  .kopf__menue:focus-visible {
+    border-radius: var(--r-knopf);
+    outline-offset: 4px;
   }
   .kopf__menue-striche,
   .kopf__menue-striche::before,
@@ -163,6 +192,7 @@ const aktuell = Astro.url.pathname;
   }
   .kopf__menue-striche {
     position: relative;
+    transition: background-color var(--uebergang);
   }
   .kopf__menue-striche::before,
   .kopf__menue-striche::after {
@@ -180,39 +210,67 @@ const aktuell = Astro.url.pathname;
   /* Navigation: auf kleinen Bildschirmen aufklappbar unter der Zeile */
   .hauptnav {
     display: none;
-    order: 3;
-    flex-basis: 100%;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding-bottom: var(--a-4);
   }
   .hauptnav:global(.ist-offen) {
     display: block;
   }
+  @media (prefers-reduced-motion: no-preference) {
+    .hauptnav:global(.ist-offen) {
+      animation: menue-auf var(--uebergang-lang) both;
+    }
+  }
+  @keyframes menue-auf {
+    from {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+    }
+  }
   .hauptnav__liste {
     list-style: none;
-    margin: 0;
-    padding: 0 0 var(--a-2);
+    margin: 0 0 var(--a-3);
+    padding: 0;
     max-width: none;
-  }
-  .hauptnav__liste li + li {
     border-top: 1px solid var(--linie);
   }
-  .hauptnav a {
+  .hauptnav__liste li {
+    border-bottom: 1px solid var(--linie);
+  }
+  .hauptnav a:not(.knopf) {
     display: flex;
     align-items: center;
-    min-height: 3.5rem;
-    font-weight: 700;
+    min-height: 3.75rem;
+    font-family: var(--schrift-titel);
+    font-size: var(--titel-3);
+    font-weight: 500;
     color: var(--tinte);
     text-decoration: none;
   }
-  .hauptnav a:hover,
+  .hauptnav a:not(.knopf):hover,
   .hauptnav a[aria-current='page'] {
     color: var(--waldgruen);
+  }
+  .hauptnav__handeln {
+    display: grid;
+    gap: var(--a-2);
   }
 
   /* Ab Desktop: Navigation in einer Zeile neben dem Logo */
   @media (min-width: 64em) {
     .kopf__zeile {
-      flex-wrap: nowrap;
-      min-height: 5rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0 var(--a-3);
+      min-height: 5.5rem;
+    }
+    .kopf__marke {
+      flex: none;
+    }
+    .kopf__marke img {
+      height: 2.75rem;
+      max-height: none;
     }
     .kopf__menue {
       display: none;
@@ -220,44 +278,56 @@ const aktuell = Astro.url.pathname;
     .hauptnav,
     .hauptnav:global(.ist-offen) {
       display: block;
-      order: 0;
-      flex-basis: auto;
+      margin-left: auto;
+      padding-bottom: 0;
+      animation: none;
+    }
+    .hauptnav__handeln {
+      display: none;
     }
     .hauptnav__liste {
       display: flex;
-      gap: clamp(1rem, 0.1rem + 1.5vw, 2rem);
-      padding: 0;
-    }
-    .hauptnav__liste li + li {
+      gap: clamp(1rem, 0.1rem + 1.6vw, 2.25rem);
+      margin: 0;
       border-top: 0;
     }
-    .hauptnav a {
+    .hauptnav__liste li {
+      border-bottom: 0;
+    }
+    .hauptnav a:not(.knopf) {
       position: relative;
       min-height: 3rem;
+      font-family: var(--schrift-text);
       font-size: 1.0625rem;
+      font-weight: 700;
       white-space: nowrap;
     }
-    .hauptnav a::after {
+    .hauptnav a:not(.knopf)::after {
       content: '';
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 0.4rem;
-      height: 2px;
-      border-radius: 2px;
-      background: var(--waldgruen);
+      bottom: 0.45rem;
+      height: 1.5px;
+      background: var(--messing);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform var(--uebergang);
     }
-    .hauptnav a:hover::after,
+    .hauptnav a:not(.knopf):hover::after,
     .hauptnav a[aria-current='page']::after {
       transform: scaleX(1);
+    }
+    .kopf__anruf {
+      display: inline-flex;
+      flex: none;
+      min-height: 3.25rem;
+      font-size: 1.0625rem;
     }
   }
   @media (min-width: 64em) and (max-width: 74.99em) {
     .kopf__marke img {
-      height: 2.35rem;
+      height: 2.4rem;
     }
   }
 </style>

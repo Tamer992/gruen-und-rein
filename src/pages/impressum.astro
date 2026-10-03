@@ -1,0 +1,32 @@
+---
+import Textseite from '../components/Textseite.astro';
+import { site } from '../site.config';
+// Solange hier Platzhalter stehen, nicht in Suchmaschinen aufnehmen
+---
+<Textseite
+  titel={`Impressum | ${site.name}`}
+  beschreibung={`Impressum von ${site.name}, ${site.adresse.ort}.`}
+  ueberschrift="Impressum"
+  etikett="Rechtliches"
+  indexieren={false}
+>
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <address>
+    {site.name}<br />
+    {site.inhaberTitel}: {site.inhaberin}<br />
+    {site.adresse.strasse}<br />
+    {site.adresse.plz} {site.adresse.ort}
+  </address>
+
+  <h2>Kontakt</h2>
+  <p>
+    Telefon: <a href={`tel:${site.telefonLink}`}><span class="nummer">{site.telefon}</span></a><br />
+    E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
+  </p>
+
+  <p class="platzhalter">
+    [PLATZHALTER: Impressum vervollständigen] Vollständige Namen der Inhaber, Rechtsform,
+    gegebenenfalls Umsatzsteuer-Identifikationsnummer und Anerkennung als Angebot zur Unterstützung im Alltag.
+    Bitte rechtlich prüfen lassen.
+  </p>
+</Textseite>

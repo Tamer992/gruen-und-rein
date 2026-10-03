@@ -1,0 +1,49 @@
+---
+// Schlichte Seite für Rechtstexte (Impressum, Datenschutz): Etikett, Überschrift, Fließtext
+import Basis from '../layouts/Basis.astro';
+
+interface Props {
+  titel: string;
+  beschreibung: string;
+  ueberschrift: string;
+  etikett?: string;
+  indexieren?: boolean;
+}
+const { titel, beschreibung, ueberschrift, etikett, indexieren } = Astro.props;
+---
+<Basis titel={titel} beschreibung={beschreibung} indexieren={indexieren}>
+  <article class="bereich textseite">
+    <div class="behaelter">
+      {etikett && <p class="etikett">{etikett}</p>}
+      <h1>{ueberschrift}</h1>
+      <div class="textseite__inhalt">
+        <slot />
+      </div>
+    </div>
+  </article>
+</Basis>
+
+<style>
+  .textseite h1 {
+    font-size: var(--titel-2);
+    margin-bottom: var(--a-5);
+  }
+  .textseite__inhalt {
+    max-width: var(--mass);
+  }
+  .textseite__inhalt :global(h2) {
+    font-size: var(--titel-3);
+    font-weight: 600;
+    margin-top: var(--a-5);
+  }
+  .textseite__inhalt :global(address) {
+    font-style: normal;
+    margin-bottom: var(--a-2);
+  }
+  .textseite__inhalt :global(.platzhalter) {
+    padding: var(--a-3);
+    border-radius: var(--r-feld);
+    background: var(--sand);
+    box-shadow: inset 0 0 0 1px var(--linie);
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+import Textseite from '../components/Textseite.astro';
+import { site } from '../site.config';
+// Solange hier Platzhalter stehen, nicht in Suchmaschinen aufnehmen
+---
+<Textseite
+  titel={`Datenschutz | ${site.name}`}
+  beschreibung={`Datenschutzerklärung von ${site.name}, ${site.adresse.ort}.`}
+  ueberschrift="Datenschutz"
+  etikett="Rechtliches"
+  indexieren={false}
+>
+  <h2>Verantwortlich</h2>
+  <address>
+    {site.name}, {site.inhaberin}<br />
+    {site.adresse.strasse}, {site.adresse.plz} {site.adresse.ort}<br />
+    <a href={`mailto:${site.email}`}>{site.email}</a>
+  </address>
+
+  <p class="platzhalter">
+    [PLATZHALTER: Datenschutzerklärung] Text einfügen und rechtlich prüfen lassen.
+    Hinweis zur Technik: Die Seite setzt keine Cookies, lädt keine Schriften oder Skripte von fremden Servern
+    und nutzt keine Analyse-Werkzeuge. Anbieter des Webhostings und dessen Server-Protokolle ergänzen.
+  </p>
+</Textseite>

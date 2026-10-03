@@ -1,23 +1,26 @@
 ---
 // Foto mit festem Seitenverhältnis. Es entstehen automatisch AVIF und WebP in passenden Größen.
+// „formatGross“ wählt ab Desktop-Breite einen anderen Zuschnitt (Art Direction ohne zweites Foto).
 // Ohne „bild“ erscheint eine ruhige Fläche (nur für den Notfall, nicht als Dauerlösung).
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
+type Format = '4-5' | '5-4' | '4-3' | '3-2' | '16-9' | '1-1' | 'frei';
 interface Props {
   bild?: ImageMetadata;
   alt: string;
-  format: '4-5' | '4-3' | '3-2' | '16-9' | '1-1' | 'frei';
+  format: Format;
+  formatGross?: Format;
   sizes: string;
   zuerst?: boolean;
   // Bildausschnitt ohne Inline-Stil (Sicherheitsrichtlinie): mitte, oben, unten, links, rechts
   ausschnitt?: 'mitte' | 'oben' | 'unten' | 'links' | 'rechts';
   klasse?: string;
 }
-const { bild, alt, format, sizes, zuerst = false, ausschnitt = 'mitte', klasse } = Astro.props;
+const { bild, alt, format, formatGross, sizes, zuerst = false, ausschnitt = 'mitte', klasse } = Astro.props;
 ---
 <figure class:list={['bild', klasse]}>
-  <div class:list={['bild__rahmen', `format-${format}`, `ausschnitt-${ausschnitt}`]}>
+  <div class:list={['bild__rahmen', `format-${format}`, formatGross && `format-gross-${formatGross}`, `ausschnitt-${ausschnitt}`]}>
     {bild && (
       <Picture
         src={bild}

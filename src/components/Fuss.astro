@@ -1,34 +1,48 @@
 ---
 import { p } from '../pfad';
-import { site, leistungen } from '../site.config';
+import { site, leistungen, leistungsPfad } from '../site.config';
 import Symbol from './Symbol.astro';
 import logo from './logo-mass.json';
 
 const jahr = new Date().getFullYear();
+// Solange es keine Seiten „Über uns“ und „Kontakt“ gibt, zeigen die Links auf die Startseite
+const ueberUns = site.unterseiten ? '/ueber-uns/' : '/#ueber-uns';
+const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
+const rueckruf = site.unterseiten
+  ? p('/kontakt/#rueckruf')
+  : `mailto:${site.email}?subject=${encodeURIComponent('Bitte um Rückruf')}`;
 ---
-<footer class="fuss">
+<footer class="fuss" id="kontakt">
   <div class="behaelter">
     <div class="fuss__anruf">
-      <h2 class="fuss__titel">Rufen Sie uns an. Wir nehmen uns Zeit für Ihre Fragen.</h2>
-      <div class="fuss__handeln">
-        <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
-          <Symbol name="telefon" kreis />
-          <span class="nummer">{site.telefon}</span>
-        </a>
-        <a class="knopf knopf--rahmen" href={`https://wa.me/${site.whatsappLink}`}>
-          <Symbol name="whatsapp" kreis />
-          WhatsApp schreiben
-        </a>
+      <div class="fuss__kopf">
+        <p class="etikett etikett--hell">Kontakt</p>
+        <h2 class="fuss__titel">Rufen Sie uns an. Wir nehmen uns Zeit für Ihre Fragen.</h2>
       </div>
-      {site.telefon2 && (
-        <p class="fuss__zweite">
-          Zweite Nummer: <a href={`tel:${site.telefon2Link}`}><span class="nummer">{site.telefon2}</span></a>
+      <div class="fuss__wege">
+        <div class="fuss__handeln">
+          <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
+            <Symbol name="telefon" kreis />
+            <span class="nummer">{site.telefon}</span>
+          </a>
+          <a class="knopf knopf--rahmen" href={`https://wa.me/${site.whatsappLink}`}>
+            <Symbol name="whatsapp" kreis />
+            WhatsApp schreiben
+          </a>
+        </div>
+        {site.telefon2 && (
+          <p class="fuss__zweite">
+            Zweite Nummer: <a href={`tel:${site.telefon2Link}`}><span class="nummer">{site.telefon2}</span></a>
+          </p>
+        )}
+        <p class="fuss__zeiten">
+          <Symbol name="uhr" />
+          <span>
+            {site.erreichbarkeit}. Sind wir gerade bei Kunden, rufen wir Sie gern zurück.
+            Lieber schriftlich? <a href={rueckruf}>Rückruf anfordern</a>
+          </span>
         </p>
-      )}
-      <p class="fuss__zeiten">
-        {site.erreichbarkeit}. Sind wir gerade bei Kunden, rufen wir Sie gern zurück.
-        Lieber schriftlich? <a href={p('/kontakt/#rueckruf')}>Rückruf anfordern</a>
-      </p>
+      </div>
     </div>
 
     <div class="fuss__raster">
@@ -51,15 +65,15 @@ const jahr = new Date().getFullYear();
       <nav class="fuss__spalte" aria-label="Leistungen">
         <h2 class="fuss__ueber">Leistungen</h2>
         <ul class="fuss__liste">
-          {leistungen.map((l) => <li><a href={p(l.pfad)}>{l.titel}</a></li>)}
+          {leistungen.map((l) => <li><a href={p(leistungsPfad(l))}>{l.titel}</a></li>)}
         </ul>
       </nav>
 
       <nav class="fuss__spalte" aria-label="Über den Betrieb">
         <h2 class="fuss__ueber">Betrieb</h2>
         <ul class="fuss__liste">
-          <li><a href={p('/ueber-uns/')}>Über uns</a></li>
-          <li><a href={p('/kontakt/')}>Kontakt</a></li>
+          <li><a href={p(ueberUns)}>Über uns</a></li>
+          <li><a href={p(kontakt)}>Kontakt</a></li>
           <li><a href={p('/impressum/')}>Impressum</a></li>
           <li><a href={p('/datenschutz/')}>Datenschutz</a></li>
         </ul>
@@ -72,26 +86,45 @@ const jahr = new Date().getFullYear();
 
 <style>
   .fuss {
+    position: relative;
     background: var(--tanne);
-    color: var(--hell-auf-tanne);
-    padding-block: var(--a-6) var(--a-4);
-    margin-top: var(--a-bereich);
+    color: var(--auf-tanne);
+    padding-block: var(--a-bereich) var(--a-4);
+  }
+  /* Feine Messinglinie als oberer Abschluss */
+  .fuss::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(var(--breite), calc(100% - 2 * var(--rand)));
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, var(--messing), transparent);
+    opacity: 0.6;
   }
   .fuss a:not(.knopf) {
-    color: #fff;
+    color: var(--hell);
+    text-decoration-color: rgb(255 253 249 / 0.4);
+  }
+  .fuss a:not(.knopf):hover {
+    text-decoration-color: var(--messing-hell);
   }
   .fuss :focus-visible {
-    outline-color: #fff;
+    outline-color: var(--hell);
   }
 
   .fuss__anruf {
+    display: grid;
+    gap: var(--a-4);
     padding-bottom: var(--a-6);
-    border-bottom: 1px solid rgb(255 255 255 / 0.14);
+    border-bottom: 1px solid var(--linie-auf-tanne);
   }
   .fuss__titel {
-    color: #fff;
-    max-width: 20ch;
-    margin-bottom: var(--a-4);
+    color: var(--hell);
+    font-size: var(--titel-2);
+    max-width: 18ch;
+    margin: 0;
   }
   .fuss__handeln {
     display: flex;
@@ -104,7 +137,18 @@ const jahr = new Date().getFullYear();
     min-height: 4rem;
   }
   .fuss__zeiten {
+    display: flex;
+    gap: 0.75rem;
     margin: 0;
+  }
+  .fuss__zeiten > :global(.symbol) {
+    margin-top: 0.15em;
+    color: var(--messing-hell);
+  }
+  .fuss__zeiten a {
+    display: inline-block;
+    padding-block: 0.6rem;
+    margin-block: -0.6rem;
   }
 
   .fuss__raster {
@@ -120,12 +164,17 @@ const jahr = new Date().getFullYear();
   .fuss address {
     font-style: normal;
   }
+  .fuss address a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
   .fuss__ueber {
     font-family: var(--schrift-text);
     font-size: var(--text-klein);
     font-weight: 700;
-    letter-spacing: 0;
-    color: #fff;
+    letter-spacing: 0.02em;
+    color: var(--messing-hell);
     margin-bottom: var(--a-1);
   }
   .fuss__liste {
@@ -139,13 +188,19 @@ const jahr = new Date().getFullYear();
     align-items: center;
   }
   .fuss__liste a {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
     text-decoration: none;
   }
   .fuss__liste a:hover {
     text-decoration: underline;
   }
   .fuss__zeile {
+    max-width: none;
     margin: var(--a-5) 0 0;
+    padding-top: var(--a-3);
+    border-top: 1px solid var(--linie-auf-tanne);
     font-size: var(--text-klein);
   }
 
@@ -155,8 +210,19 @@ const jahr = new Date().getFullYear();
     }
   }
   @media (min-width: 64em) {
+    .fuss__anruf {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: var(--a-6);
+    }
     .fuss__raster {
-      grid-template-columns: 2fr 1fr 1fr 1fr;
+      grid-template-columns: 2fr 1fr 1.4fr 1fr;
+    }
+  }
+  /* Platz für die feste Anrufleiste auf dem Handy */
+  @media (max-width: 47.99em) {
+    .fuss {
+      padding-bottom: calc(var(--a-4) + 4.75rem + env(safe-area-inset-bottom));
     }
   }
 </style>
