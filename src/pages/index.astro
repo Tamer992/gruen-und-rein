@@ -772,6 +772,84 @@ const groessen = [
     }
   }
 
+  /* Kacheln einer Reihe teilen sich die Zeilen (Foto, Überschrift, Etikett, Beschreibung, Stichpunkte).
+     So liegen die Linien über den Stichpunkten immer auf einer Höhe, egal wie lang die Beschreibung ist. */
+  @supports (grid-template-rows: subgrid) {
+    @media (min-width: 48em) {
+      .kacheln {
+        row-gap: 0;
+      }
+      .kachel {
+        margin-bottom: var(--a-6);
+      }
+      .kachel:not(.kachel--5) {
+        display: grid;
+        grid-row: span 5;
+        grid-template-rows: subgrid;
+      }
+      .kachel:not(.kachel--5) .kachel__innen {
+        grid-row: 1 / -1;
+        grid-template-rows: subgrid;
+        row-gap: 0;
+      }
+      .kachel:not(.kachel--5) :global(.kachel__bild) {
+        margin-bottom: var(--a-3);
+      }
+      .kachel:not(.kachel--5) .kachel__text {
+        display: grid;
+        grid-row: 2 / -1;
+        grid-template-rows: subgrid;
+      }
+      .kachel:not(.kachel--5) .kachel__text > h3 {
+        grid-row: 1;
+      }
+      .kachel:not(.kachel--5) .kachel__kasse {
+        grid-row: 2;
+        align-self: start;
+      }
+      .kachel:not(.kachel--5) .kachel__beschreibung {
+        grid-row: 3;
+      }
+      .kachel:not(.kachel--5) .kachel__punkte {
+        grid-row: 4;
+        align-self: start;
+      }
+    }
+    @media (min-width: 64em) {
+      .kachel {
+        margin-bottom: var(--a-7);
+      }
+      .kachel--5 {
+        display: grid;
+        grid-row: span 5;
+        grid-template-rows: subgrid;
+      }
+      .kachel--5 .kachel__innen {
+        grid-row: 1 / -1;
+        grid-template-rows: subgrid;
+        row-gap: 0;
+      }
+      .kachel--5 :global(.kachel__bild) {
+        margin-bottom: var(--a-3);
+      }
+      .kachel--5 .kachel__text {
+        display: grid;
+        grid-row: 2 / -1;
+        grid-template-rows: subgrid;
+      }
+      .kachel--5 .kachel__text > h3 {
+        grid-row: 1;
+      }
+      .kachel--5 .kachel__beschreibung {
+        grid-row: 3;
+      }
+      .kachel--5 .kachel__punkte {
+        grid-row: 4;
+        align-self: start;
+      }
+    }
+  }
+
   /* Pflegekasse: die hochwertigste Fläche der Seite.
      Tanne mit Papierkorn, oben eine Zierlinie mit Dach, rechts das Dach aus dem Logo als feine Messingzeichnung,
      die Liste steht in einem Passepartout aus zwei Haarlinien. */
