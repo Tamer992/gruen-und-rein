@@ -23,7 +23,7 @@ const kacheln = [
   {
     anker: 'alltagsbegleitung',
     titel: 'Alltagsbegleitung',
-    text: 'Gesellschaft, Spaziergänge, Einkäufe und Begleitung zum Arzt. So wird der Alltag wieder leichter.',
+    text: 'Wir gehen mit Ihnen spazieren oder einkaufen. Zum Arzt begleiten wir Sie und warten mit im Wartezimmer.',
     kasse: true,
     bild: fotoAlltag,
     format: '4-5' as const,
@@ -33,7 +33,7 @@ const kacheln = [
   {
     anker: 'hauswirtschaft',
     titel: 'Hauswirtschaft',
-    text: 'Wäsche, Küche, Bad, Einkaufen und alles, was Ihren Haushalt leichter macht.',
+    text: 'Wir kümmern uns um die Wäsche, putzen Küche und Bad und bringen den Einkauf mit.',
     kasse: true,
     bild: fotoHaus,
     format: '1-1' as const,
@@ -43,7 +43,7 @@ const kacheln = [
   {
     anker: 'trauerbegleitung',
     titel: 'Trauerbegleitung',
-    text: 'Zuhören, Gespräche und Unterstützung im Alltag. Wir begleiten Sie behutsam durch diese Zeit.',
+    text: 'Wir hören zu und haben Zeit für Gespräche. Und wir helfen bei dem, was im Alltag gerade liegen bleibt.',
     kasse: true,
     bild: fotoTrauer,
     format: '4-5' as const,
@@ -53,7 +53,7 @@ const kacheln = [
   {
     anker: 'gebaeudereinigung',
     titel: 'Gebäudereinigung',
-    text: 'Wohnung, Haus, Büro und Treppenhaus. Regelmäßig oder als gründliche Grundreinigung.',
+    text: 'Wohnungen, Häuser, Büros und Treppenhäuser. Regelmäßig oder einmal ganz gründlich.',
     kasse: false,
     bild: fotoRein,
     format: '4-3' as const,
@@ -63,7 +63,7 @@ const kacheln = [
   {
     anker: 'gartenpflege',
     titel: 'Gartenpflege',
-    text: 'Gepflegter Rasen, schöne Beete und ordentliche Außenanlagen. Laub und Unkraut nehmen wir gleich mit.',
+    text: 'Wir mähen den Rasen, jäten die Beete und halten Wege und Hof in Ordnung. Das Laub nehmen wir mit.',
     kasse: false,
     bild: fotoGarten,
     format: '16-9' as const,
@@ -93,7 +93,7 @@ const groessen = [
         <p class="etikett">{site.einsatzorte.join(', ')}</p>
         <h1 id="einstieg-titel"><span class="einstieg__zeile">Alltag. Zuhause.</span> <span class="einstieg__zeile einstieg__zeile--gruen">Sauber. Gepflegt.</span></h1>
         <p class="einleitung">
-          Wir begleiten, helfen im Haushalt, reinigen und pflegen den Garten. In {site.ort} und Umgebung.
+          Wir begleiten Sie zum Arzt, helfen im Haushalt, putzen und machen den Garten. In {site.ort} und Umgebung.
         </p>
         <div class="einstieg__handeln">
           <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
@@ -134,8 +134,8 @@ const groessen = [
     </div>
     <ul class="behaelter fakten" aria-label="Das ist uns wichtig">
       <li><span class="blattpunkt"><Blatt /></span> Eine feste Ansprechperson</li>
-      {site.pflegekasse && <li><span class="blattpunkt"><Blatt /></span> Wir regeln alles mit der Pflegekasse</li>}
-      <li><span class="blattpunkt"><Blatt /></span> Für Privat und Gewerbe</li>
+      {site.pflegekasse && <li><span class="blattpunkt"><Blatt /></span> Wir rechnen mit der Pflegekasse ab</li>}
+      <li><span class="blattpunkt"><Blatt /></span> Für Privathaushalte und Betriebe</li>
     </ul>
   </section>
 
@@ -148,20 +148,22 @@ const groessen = [
           <div class="zwei-wege__weg" data-einblenden>
             <h3>Für Sie selbst</h3>
             <p>
-              Sie möchten weiter selbstständig zu Hause leben und wünschen sich etwas Unterstützung, beim Einkaufen,
-              im Haushalt oder im Garten. Erzählen Sie uns, was Ihnen gut tun würde. Wir kommen vorbei und finden
-              gemeinsam den richtigen Weg.
+              Sie leben gern in Ihrer Wohnung und wollen das auch weiter. Nur manches geht nicht mehr so leicht wie
+              früher, der Wocheneinkauf, das Bettenbeziehen, der Rasen. Erzählen Sie uns, was Ihnen fehlt. Wir kommen
+              vorbei, schauen es uns zusammen an und besprechen, wie oft wir kommen.
             </p>
           </div>
           <div class="zwei-wege__weg" data-einblenden="2">
             <h3>Für Ihre Mutter oder Ihren Vater</h3>
             <p>
-              Sie möchten Ihre Eltern gut versorgt wissen, auch wenn Sie weiter weg wohnen oder tagsüber arbeiten.
-              Wir sprechen mit Ihnen und Ihren Eltern und geben Ihnen auf Wunsch nach jedem Besuch kurz Bescheid.
+              Sie wohnen weiter weg oder arbeiten tagsüber. Trotzdem wollen Sie wissen, wie es Ihren Eltern geht.
+              Wir setzen uns mit Ihnen und Ihren Eltern zusammen, Sie können auch per Telefon dabei sein. Auf Wunsch
+              melden wir uns nach jedem Besuch kurz bei Ihnen.
+              <!-- [ERGÄNZEN: wie die Rückmeldung nach dem Besuch läuft, Anruf, SMS oder WhatsApp] -->
             </p>
           </div>
         </div>
-        <a class="weiter" href="#ablauf"><span>So einfach geht der Start</span> <Symbol name="pfeil" /></a>
+        <a class="weiter" href="#ablauf"><span>Wie es losgeht</span> <Symbol name="pfeil" /></a>
       </div>
       <div class="zwei-wege__bildbereich" data-einblenden="2">
         <Bild
@@ -183,7 +185,7 @@ const groessen = [
     <div class="behaelter">
       <div class="bereich__kopf leistungen__kopf" data-einblenden>
         <p class="etikett">Leistungen</p>
-        <h2 id="leistungen-titel">Wobei wir Sie unterstützen</h2>
+        <h2 id="leistungen-titel">Wobei wir helfen</h2>
       </div>
 
       <div class="kacheln">
@@ -207,7 +209,7 @@ const groessen = [
               <div class="kachel__text">
                 <h3>{k.titel} {site.unterseiten && <Symbol name="pfeil" />}</h3>
                 {site.pflegekasse && k.kasse && (
-                  <p class="kassenmarke kachel__kasse"><Blatt /> Über die Pflegekasse möglich</p>
+                  <p class="kassenmarke kachel__kasse"><Blatt /> Mit Pflegegrad über die Pflegekasse</p>
                 )}
                 <p class="kachel__beschreibung">{k.text}</p>
                 <ul class="kachel__punkte" aria-label={`${k.titel} im Einzelnen`}>
@@ -229,14 +231,14 @@ const groessen = [
         <div class="kasse__raster">
           <div class="kasse__text" data-einblenden>
             <p class="etikett etikett--hell"><span>Entlastungsbetrag nach <span class="kasse__paragraf">{'§\u00a045b\u00a0SGB\u00a0XI'}</span></span></p>
-            <h2 id="kasse-titel">Wir regeln das mit Ihrer Pflegekasse.</h2>
+            <h2 id="kasse-titel">Wir rechnen mit Ihrer Pflegekasse ab.</h2>
             <p>
-              Mit einem Pflegegrad übernimmt Ihre Pflegekasse Alltagsbegleitung, Hauswirtschaft und
-              Trauerbegleitung. Dafür steht Ihnen jeden Monat der Entlastungsbetrag zur Verfügung.
+              Mit einem Pflegegrad bekommen Sie von der Pflegekasse jeden Monat den Entlastungsbetrag. Den können Sie
+              für unsere Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung einsetzen.
             </p>
             <p>
-              Die Abrechnung erledigen wir für Sie. Wir stimmen alles mit Ihrer Kranken- und Pflegekasse ab,
-              Sie lehnen sich zurück.
+              Die Rechnung schicken wir direkt an Ihre Pflegekasse. Was der Entlastungsbetrag nicht abdeckt,
+              besprechen wir vorher mit Ihnen.
             </p>
             <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
               <Symbol name="telefon" kreis />
@@ -244,13 +246,13 @@ const groessen = [
             </a>
           </div>
           <div class="kasse__liste" data-einblenden="2">
-            <p class="kasse__ueber">Mit der Pflegekasse möglich</p>
+            <p class="kasse__ueber">Mit Pflegegrad abrechenbar</p>
             <ul>
               <li><span class="kasse__punkt"><Blatt /></span> Alltagsbegleitung und Betreuung</li>
               <li><span class="kasse__punkt"><Blatt /></span> Hauswirtschaft</li>
               <li><span class="kasse__punkt"><Blatt /></span> Trauerbegleitung</li>
             </ul>
-            <p class="kasse__hinweis">Gebäudereinigung und Gartenpflege vereinbaren wir direkt mit Ihnen.</p>
+            <p class="kasse__hinweis">Gebäudereinigung und Gartenpflege rechnen wir direkt mit Ihnen ab.</p>
           </div>
         </div>
       </div>
@@ -262,42 +264,43 @@ const groessen = [
     <div class="behaelter ablauf__raster">
       <div class="bereich__kopf ablauf__kopf" data-einblenden>
         <p class="etikett">Ablauf</p>
-        <h2 id="ablauf-titel">So einfach fängt es an</h2>
+        <h2 id="ablauf-titel">So fangen wir an</h2>
       </div>
       <ol class="schritte">
         <li data-einblenden>
           <span class="schritte__zahl" aria-hidden="true">1</span>
           <div>
             <h3>Anrufen</h3>
-            <p>Sie erzählen uns, was Sie sich wünschen. Wir beantworten Ihre Fragen in aller Ruhe.</p>
+            <p>Sie erzählen uns, wobei Sie Hilfe brauchen. Fragen Sie ruhig alles, auch die kleinen Dinge.</p>
           </div>
         </li>
         <li data-einblenden>
           <span class="schritte__zahl" aria-hidden="true">2</span>
           <div>
             <h3>Kennenlernen</h3>
-            <p>Wir besuchen Sie zu Hause, gern gemeinsam mit Ihren Angehörigen. Sie erhalten ein klares Angebot.</p>
+            <p>Wir besuchen Sie zu Hause, gern zusammen mit Ihren Angehörigen, und schauen uns alles in Ruhe an.</p>
           </div>
         </li>
         <li data-einblenden>
           <span class="schritte__zahl" aria-hidden="true">3</span>
           <div>
             <h3>Loslegen</h3>
-            <p>Wir vereinbaren feste Tage und Zeiten. Ihre Ansprechperson kennt Sie und Ihre Wünsche.</p>
+            <p>Wir machen feste Tage und Uhrzeiten aus. Ihre Ansprechperson weiß bald, wo bei Ihnen die Handtücher liegen.</p>
           </div>
         </li>
       </ol>
 
       <div class="angebot" data-einblenden>
         <Blatt art="linie" klasse="angebot__blatt" />
-        <h3>Ihr persönliches Angebot</h3>
+        <h3>Was es kostet</h3>
         <p>
-          Wir stellen Ihr Angebot so zusammen, wie es zu Ihnen passt: was Sie sich wünschen und wie oft wir kommen.
-          Beim ersten Besuch erhalten Sie einen festen, fairen Preis und entscheiden ganz in Ruhe.
+          Der Preis hängt davon ab, was wir für Sie tun und wie oft wir kommen. Beim ersten Besuch nennen wir Ihnen
+          einen festen Preis. Entscheiden müssen Sie sich nicht sofort.
         </p>
         {site.pflegekasse && (
           <p>
-            Mit Pflegegrad regeln wir Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung direkt mit Ihrer Pflegekasse.
+            Mit Pflegegrad rechnen wir Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung mit Ihrer Pflegekasse ab,
+            soweit der Entlastungsbetrag reicht.
           </p>
         )}
       </div>
@@ -324,8 +327,9 @@ const groessen = [
         <p class="etikett">Über uns</p>
         <h2 id="vorstellung-titel">Jemand, der Zeit mitbringt.</h2>
         <p class="vorstellung__satz">
-          Hinter {site.name} {site.mehrereInhaber ? 'stehen' : 'steht'} {site.inhaberin}. Bei uns haben Sie eine feste Ansprechperson,
-          die Sie kennt, pünktlich kommt und gern zuhört.
+          {site.name}, das {site.mehrereInhaber ? 'sind' : 'ist'} {site.inhaberin}. Sie haben bei uns eine feste Ansprechperson,
+          die nach ein paar Besuchen weiß, was Ihnen wichtig ist.
+          <!-- [ERGÄNZEN: ein Satz zu Hussain und Ali, zum Beispiel was sie vorher gemacht haben oder warum sie den Betrieb gegründet haben] -->
         </p>
         <dl class="vorstellung__fakten">
           <div>
