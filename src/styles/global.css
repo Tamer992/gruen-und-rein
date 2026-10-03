@@ -476,37 +476,19 @@ a:hover {
   background: rgb(255 255 255 / 0.12);
 }
 
-/* Haken im Kreis, für Aufzählungen */
-.haken {
-  display: inline-grid;
-  place-items: center;
-  flex: none;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: 50%;
-  background: var(--salbei);
-  color: var(--waldgruen);
-}
-.haken .symbol {
-  width: 0.95rem;
-  height: 0.95rem;
-}
-
-/* Marke für Leistungen, die über die Pflegekasse möglich sind: leise Zeile mit Haken */
+/* Marke für Leistungen, die über die Pflegekasse möglich sind: zartes Etikett mit feinem Rand, ohne Symbol */
 .kassenmarke {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  width: fit-content;
   margin: 0;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--waldgruen) 28%, transparent);
+  border-radius: 0.5rem;
   font-size: var(--text-klein);
   font-weight: 700;
   line-height: 1.3;
   color: var(--waldgruen);
-}
-.kassenmarke .symbol {
-  width: 1.15rem;
-  height: 1.15rem;
-  color: var(--messing);
 }
 
 /* Telefonnummern: in der Überschriftenschrift, deren Null nicht durchgestrichen ist */

@@ -44,7 +44,7 @@ const werte = [
     ausschnitt="oben"
   >
     {site.pflegekasse && (
-      <p slot="zusatz" class="kassenmarke"><Symbol name="haken" /> Anerkanntes Angebot zur Unterstützung im Alltag</p>
+      <p slot="zusatz" class="kassenmarke">Anerkanntes Angebot zur Unterstützung im Alltag</p>
     )}
   </Seitenkopf>
   <!-- [ERGÄNZEN: zwei, drei Sätze zu Hussain und Ali: was sie vorher gemacht haben und warum sie Grün & Rein gegründet haben] -->
@@ -59,7 +59,6 @@ const werte = [
       <ul class="werte__liste">
         {werte.map((w, i) => (
           <li data-einblenden={i % 2 ? '2' : ''}>
-            <span class="haken"><Symbol name="haken" /></span>
             <h3>{w.titel}</h3>
             <p>{w.text}</p>
           </li>
@@ -167,10 +166,6 @@ const werte = [
   .werte__liste li {
     padding-top: var(--a-3);
     border-top: 1px solid var(--sand-tief);
-  }
-  .werte__liste .haken {
-    margin-bottom: var(--a-2);
-    background: var(--papier);
   }
   .werte__liste h3 {
     margin-bottom: 0.4rem;

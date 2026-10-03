@@ -160,7 +160,6 @@ const daten = {
       <ul class="fakten__liste">
         {fakten.map((f, i) => (
           <li data-einblenden={i ? String(i + 1) : ''}>
-            <span class="haken"><Symbol name="haken" /></span>
             <h3>{f.gross}</h3>
             <p>{f.text}</p>
           </li>
@@ -414,10 +413,6 @@ const daten = {
   .fakten__liste li {
     padding-top: var(--a-3);
     border-top: 1px solid var(--sand-tief);
-  }
-  .fakten__liste .haken {
-    margin-bottom: var(--a-2);
-    background: var(--papier);
   }
   .fakten__liste h3 {
     margin-bottom: var(--a-1);

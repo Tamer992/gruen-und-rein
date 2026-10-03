@@ -2,7 +2,7 @@
 import { p } from '../pfad';
 import { site, leistungen, leistungsPfad } from '../site.config';
 import Symbol from './Symbol.astro';
-import Herz from './Herz.astro';
+import Dach from './Dach.astro';
 import logo from './logo-mass.json';
 
 const jahr = new Date().getFullYear();
@@ -40,7 +40,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
       </div>
     </div>
 
-    <div class="fuss__zier" aria-hidden="true"><Herz /></div>
+    <div class="fuss__zier" aria-hidden="true"><Dach /></div>
 
     <div class="fuss__raster">
       <div class="fuss__betrieb">
@@ -129,7 +129,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
     color: var(--messing-hell);
   }
 
-  /* Zierlinie mit Herz, wie auf der Pflegekassen-Fläche */
+  /* Zierlinie mit dem Dach aus dem Logo, wie auf der Pflegekassen-Fläche */
   .fuss__zier {
     display: flex;
     align-items: center;
@@ -147,9 +147,9 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
   .fuss__zier::after {
     background: linear-gradient(90deg, rgb(214 187 135 / 0.45), transparent);
   }
-  .fuss__zier :global(.herz) {
-    width: 0.875rem;
-    height: 0.875rem;
+  .fuss__zier :global(.dach) {
+    width: 1.25rem;
+    height: auto;
   }
 
   .fuss__raster {
