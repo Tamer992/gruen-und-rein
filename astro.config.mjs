@@ -15,6 +15,11 @@ export default defineConfig({
     // Kein CSS im HTML, damit die Sicherheitsrichtlinie (CSP) streng bleiben kann
     inlineStylesheets: 'never',
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // Impressum und Datenschutz sind mit noindex markiert, solange dort Platzhalter stehen
+      filter: (seite) => !/\/(impressum|datenschutz)\/$/.test(seite),
+    }),
+  ],
   devToolbar: { enabled: false },
 });
