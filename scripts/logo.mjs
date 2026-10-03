@@ -1,6 +1,7 @@
 // Erzeugt Logo, Favicon und Vorschaubild für geteilte Links.
 // Die Schrift wird in Pfade umgewandelt, damit das Logo überall gleich aussieht.
 // Aufruf: python scripts/instanzen.py && node scripts/logo.mjs
+// Nach einer Änderung am Logo in Kopf.astro und Fuss.astro die Zahl hinter „?v=“ erhöhen, damit Browser es neu laden.
 import * as fontkit from 'fontkit';
 import sharp from 'sharp';
 import { writeFileSync } from 'node:fs';
