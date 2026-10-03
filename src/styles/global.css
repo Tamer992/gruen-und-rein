@@ -6,19 +6,19 @@
    Knöpfe ganz rund, Felder und Etiketten 12px, Fotos und Kacheln 24px, große Flächen 32px. */
 
 @font-face {
-  font-family: 'Fraunces';
-  src: url('../fonts/fraunces.woff2') format('woff2');
+  font-family: 'Literata';
+  src: url('../fonts/literata.woff2') format('woff2');
   font-weight: 400 700;
   font-style: normal;
   font-display: swap;
 }
 /* Ersatz mit angepassten Maßen, damit beim Nachladen der Schrift nichts springt */
 @font-face {
-  font-family: 'Fraunces Ersatz';
+  font-family: 'Literata Ersatz';
   src: local('Georgia');
-  size-adjust: 96.8%;
-  ascent-override: 101%;
-  descent-override: 26.3%;
+  size-adjust: 106.7%;
+  ascent-override: 110.3%;
+  descent-override: 28.9%;
   line-gap-override: 0%;
 }
 @font-face {
@@ -64,7 +64,7 @@
   --messing-hell-tief: #e6d0a6;
 
   /* Schriften */
-  --schrift-titel: 'Fraunces', 'Fraunces Ersatz', Georgia, 'Times New Roman', serif;
+  --schrift-titel: 'Literata', 'Literata Ersatz', Georgia, 'Times New Roman', serif;
   --schrift-text: 'Atkinson Hyperlegible Next', 'Segoe UI', Verdana, sans-serif;
 
   /* Schriftgrößen */
