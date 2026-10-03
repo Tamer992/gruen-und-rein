@@ -305,6 +305,32 @@ a:hover {
   width: 100%;
   height: 100%;
 }
+.symbol svg {
+  fill: currentColor;
+}
+/* Symbol im Kreis, für Knöpfe */
+.symbol--kreis {
+  width: 2.125rem;
+  height: 2.125rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+.knopf:has(.symbol--kreis) {
+  padding-left: 0.7rem;
+  gap: 0.75rem;
+}
+.knopf--haupt .symbol--kreis {
+  background: rgb(255 255 255 / 0.14);
+}
+.knopf--neben .symbol--kreis {
+  background: #fff;
+}
+.knopf--hell .symbol--kreis {
+  background: rgb(18 41 29 / 0.1);
+}
+.knopf--rahmen .symbol--kreis {
+  background: rgb(255 255 255 / 0.12);
+}
 
 /* Telefonnummern: in der Überschriftenschrift, deren Null nicht durchgestrichen ist */
 .nummer {

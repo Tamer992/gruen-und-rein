@@ -17,7 +17,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
 ---
 <Basis
   titel={`Alltagsbegleitung, Hauswirtschaft und Reinigung in ${site.ort} | ${site.name}`}
-  beschreibung={`${site.name} in ${site.ort}: Alltagsbegleitung und Betreuung, Trauerbegleitung, Hauswirtschaft, Gebäudereinigung und Gartenwirtschaft. Für Senioren, Familien und Betriebe.`}
+  beschreibung={`${site.name} in ${site.ort}: Alltagsbegleitung und Betreuung, Trauerbegleitung, Hauswirtschaft, Gebäudereinigung und Gartenpflege. Für Senioren, Familien und Betriebe.`}
 >
   <!-- Einstieg -->
   <section class="einstieg" aria-labelledby="einstieg-titel">
@@ -29,11 +29,11 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
         </p>
         <div class="einstieg__handeln">
           <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
-            <Symbol name="telefon" />
+            <Symbol name="telefon" kreis />
             Jetzt anrufen
           </a>
           <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
-            <Symbol name="whatsapp" />
+            <Symbol name="whatsapp" kreis />
             WhatsApp schreiben
           </a>
         </div>
@@ -138,7 +138,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
           </div>
         </a>
 
-        <a class="kachel kachel--breit" href={p('/gartenwirtschaft/')}>
+        <a class="kachel kachel--breit" href={p('/gartenpflege/')}>
           <Bild
             klasse="kachel__bild"
             bild={fotoGarten}
@@ -147,7 +147,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
             alt="Hände in Gartenhandschuhen setzen eine junge Pflanze in die Erde"
           />
           <div class="kachel__text">
-            <h3>Gartenwirtschaft <Symbol name="pfeil" /></h3>
+            <h3>Gartenpflege <Symbol name="pfeil" /></h3>
             <p>
               Rasenpflege, Unkraut und Laub entfernen, Beete pflegen und Außenanlagen in Ordnung halten.
             </p>

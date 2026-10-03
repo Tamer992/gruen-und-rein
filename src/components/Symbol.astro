@@ -1,19 +1,21 @@
 ---
-// Symbole aus Phosphor Icons (MIT-Lizenz), direkt ins HTML eingesetzt.
+// Symbole aus Phosphor Icons (MIT-Lizenz), feine Linienform, direkt ins HTML eingesetzt.
 // Rein dekorativ: Die Beschriftung steht immer daneben.
-import telefon from '@phosphor-icons/core/assets/fill/phone-fill.svg?raw';
-import whatsapp from '@phosphor-icons/core/assets/fill/whatsapp-logo-fill.svg?raw';
+// „kreis“ setzt das Symbol in einen dezenten Kreis (für Knöpfe).
+import telefon from '@phosphor-icons/core/assets/regular/phone.svg?raw';
+import whatsapp from '@phosphor-icons/core/assets/regular/whatsapp-logo.svg?raw';
+import uhr from '@phosphor-icons/core/assets/regular/clock.svg?raw';
+import ort from '@phosphor-icons/core/assets/regular/map-pin.svg?raw';
 import pfeil from '@phosphor-icons/core/assets/bold/arrow-right-bold.svg?raw';
 import haken from '@phosphor-icons/core/assets/bold/check-bold.svg?raw';
-import uhr from '@phosphor-icons/core/assets/fill/clock-fill.svg?raw';
-import ort from '@phosphor-icons/core/assets/fill/map-pin-fill.svg?raw';
 
 const symbole = { telefon, whatsapp, pfeil, haken, uhr, ort };
 interface Props {
   name: keyof typeof symbole;
+  kreis?: boolean;
   klasse?: string;
 }
-const { name, klasse } = Astro.props;
+const { name, kreis = false, klasse } = Astro.props;
 const svg = symbole[name].replace('<svg ', '<svg aria-hidden="true" focusable="false" ');
 ---
-<span class:list={['symbol', klasse]} set:html={svg} />
+<span class:list={['symbol', { 'symbol--kreis': kreis }, klasse]} set:html={svg} />

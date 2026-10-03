@@ -7,11 +7,11 @@ const { ruhig = false } = Astro.props;
 ---
 <div class:list={['anrufleiste', { 'anrufleiste--ruhig': ruhig }]}>
   <a class="anrufleiste__anruf" href={`tel:${site.telefonLink}`}>
-    <Symbol name="telefon" />
+    <Symbol name="telefon" kreis />
     Jetzt anrufen
   </a>
   <a class="anrufleiste__whatsapp" href={`https://wa.me/${site.whatsappLink}`}>
-    <Symbol name="whatsapp" />
+    <Symbol name="whatsapp" kreis />
     WhatsApp
   </a>
 </div>
@@ -45,6 +45,12 @@ const { ruhig = false } = Astro.props;
   .anrufleiste__whatsapp {
     background: var(--salbei);
     color: var(--waldgruen);
+  }
+  .anrufleiste__anruf :global(.symbol--kreis) {
+    background: rgb(255 255 255 / 0.14);
+  }
+  .anrufleiste__whatsapp :global(.symbol--kreis) {
+    background: #fff;
   }
   .anrufleiste--ruhig .anrufleiste__anruf {
     background: var(--salbei);

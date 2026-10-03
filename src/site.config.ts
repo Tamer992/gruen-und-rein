@@ -63,7 +63,7 @@ export const navigation = [
   { titel: 'Alltagsbegleitung', pfad: '/alltagsbegleitung/' },
   { titel: 'Hauswirtschaft', pfad: '/hauswirtschaft/' },
   { titel: 'Gebäudereinigung', pfad: '/gebaeudereinigung/' },
-  { titel: 'Gartenwirtschaft', pfad: '/gartenwirtschaft/' },
+  { titel: 'Gartenpflege', pfad: '/gartenpflege/' },
   { titel: 'Über uns', pfad: '/ueber-uns/' },
   { titel: 'Kontakt', pfad: '/kontakt/' },
 ];
@@ -100,9 +100,9 @@ export const leistungen = [
     punkte: ['Wohnungsreinigung', 'Hausreinigung', 'Büroreinigung', 'Treppenhaus', 'Grundreinigung'],
   },
   {
-    titel: 'Gartenwirtschaft',
-    kurz: 'Gartenwirtschaft',
-    pfad: '/gartenwirtschaft/',
+    titel: 'Gartenpflege',
+    kurz: 'Gartenpflege',
+    pfad: '/gartenpflege/',
     kasse: false,
     punkte: ['Rasenpflege', 'Unkraut entfernen', 'Laub entfernen', 'Beetpflege', 'Außenanlagen'],
   },
