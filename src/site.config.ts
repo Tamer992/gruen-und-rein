@@ -56,6 +56,10 @@ export const site = {
   // Anerkennung als Angebot zur Unterstützung im Alltag (Hessen) liegt vor, auch für die Trauerbegleitung
   // (Rückmeldung vom 03.10.2026).
   // Auf false stellen, falls die Anerkennung doch fehlt: Dann verschwinden alle Hinweise.
+  // OFFEN (Tamer, 03.10.2026): Wer abrechnet, ist noch nicht geklärt (direkt mit der Pflegekasse über eine
+  // Abtretungserklärung, oder Kundin/Kunde reicht die Rechnung selbst ein). Alle Texte sind bis dahin neutral
+  // formuliert. Die früheren Sätze stehen als Kommentar mit [ERGÄNZEN: Abrechnung …] an Ort und Stelle,
+  // Liste aller Stellen: npm run platzhalter
   pflegekasse: true,
 
   // Entlastungsbetrag nach § 45b SGB XI in Euro pro Monat (seit 1.1.2025, gilt auch 2026).

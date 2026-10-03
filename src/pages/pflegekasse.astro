@@ -1,6 +1,6 @@
 ---
 // Pflegekasse: Entlastungsbetrag nach § 45b SGB XI einfach erklärt.
-// Kopf in Tanne mit dem Monatsbetrag im Passepartout, darunter die vier Schritte,
+// Kopf in Tanne mit Text (der Betrag steht bewusst klein im Text, nicht als große Zahl), darunter die vier Schritte,
 // drei Fakten, die Leistungen mit Pflegekasse und häufige Fragen.
 // Ohne Anerkennung (site.pflegekasse: false) verschwindet die Seite aus Navigation und Fuß; dann die Datei löschen.
 import { p } from '../pfad';
@@ -24,15 +24,17 @@ const schritte = [
   },
   {
     titel: 'Kennenlernen',
-    text: 'Wir besuchen Sie zu Hause und besprechen, wobei wir Sie unterstützen. Mit einer Unterschrift auf der Abtretungserklärung dürfen wir direkt mit Ihrer Pflegekasse abrechnen.',
+    // [ERGÄNZEN: Abrechnung offen, ob Grün & Rein direkt mit der Pflegekasse abrechnet. Bis zur Klärung neutral formuliert. Frühere Fassung: „… Mit einer Unterschrift auf der Abtretungserklärung dürfen wir direkt mit Ihrer Pflegekasse abrechnen.“]
+    text: 'Wir besuchen Sie zu Hause und besprechen, wobei wir Sie unterstützen. Dabei klären wir gemeinsam, wie die Abrechnung mit Ihrer Pflegekasse läuft.',
   },
   {
     titel: 'Loslegen',
     text: 'Wir kommen an festen Tagen zu festen Zeiten. Zu Ihnen kommt immer dieselbe Ansprechperson.',
   },
   {
-    titel: 'Wir rechnen ab',
-    text: 'Die Rechnung geht jeden Monat direkt an Ihre Pflegekasse. Was über den Entlastungsbetrag hinausgeht, besprechen wir vorher mit Ihnen.',
+    // [ERGÄNZEN: Abrechnung offen, ob Grün & Rein direkt mit der Pflegekasse abrechnet. Bis zur Klärung neutral formuliert. Frühere Fassung: Titel „Wir rechnen ab“, Text „Die Rechnung geht jeden Monat direkt an Ihre Pflegekasse. …“]
+    titel: 'Immer im Blick',
+    text: 'Jeden Monat sehen Sie genau, wann wir bei Ihnen waren. Was über den Entlastungsbetrag hinausgeht, besprechen wir vorher mit Ihnen.',
   },
 ];
 
@@ -58,9 +60,10 @@ const fragen = [
       'Den Pflegegrad beantragen Sie bei Ihrer Pflegekasse, das geht auch formlos per Telefon. Danach kommt eine Gutachterin oder ein Gutachter zu Ihnen nach Hause. Wir erklären Ihnen gern, wie es abläuft.',
   },
   {
-    frage: 'Bekomme ich eine Rechnung?',
+    frage: 'Wie läuft die Abrechnung?',
+    // [ERGÄNZEN: Abrechnung offen, ob Grün & Rein direkt mit der Pflegekasse abrechnet. Bis zur Klärung neutral formuliert. Frühere Fassung: Frage „Bekomme ich eine Rechnung?“, Antwort „Mit der Abtretungserklärung geht die Rechnung direkt an Ihre Pflegekasse. Darum kümmern wir uns.“]
     antwort:
-      'Mit der Abtretungserklärung geht die Rechnung direkt an Ihre Pflegekasse. Darum kümmern wir uns.',
+      'Das besprechen wir beim ersten Besuch gemeinsam mit Ihnen. So wissen Sie von Anfang an genau, woran Sie sind.',
   },
   {
     frage: 'Ich bin privat versichert. Geht das auch?',
@@ -83,13 +86,14 @@ const daten = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   name: 'Abrechnung über die Pflegekasse',
-  description: `Mit Pflegegrad den Entlastungsbetrag für Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung einsetzen. ${site.name} rechnet direkt mit der Pflegekasse ab.`,
+  // [ERGÄNZEN: Abrechnung offen, ob Grün & Rein direkt mit der Pflegekasse abrechnet. Bis zur Klärung neutral formuliert. Frühere Fassung: „… ${site.name} rechnet direkt mit der Pflegekasse ab.“]
+  description: `Mit Pflegegrad den Entlastungsbetrag für Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung von ${site.name} einsetzen.`,
   about: { '@id': `${site.domain}/#betrieb` },
 };
 ---
 <Basis
   titel={`Pflegekasse und Entlastungsbetrag: so einfach geht es | ${site.name}`}
-  beschreibung={`Mit Pflegegrad ${betrag} Euro im Monat für Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung. ${site.name} rechnet direkt mit Ihrer Pflegekasse ab, in ${site.ort} und Umgebung.`}
+  beschreibung={`Mit Pflegegrad den Entlastungsbetrag für Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung einsetzen. ${site.name} in ${site.ort} und Umgebung.`}
 >
   <Fragment slot="kopf"><script type="application/ld+json" set:html={JSON.stringify(daten)} /></Fragment>
 
@@ -102,11 +106,12 @@ const daten = {
         <div class="kassenkopf__zier" aria-hidden="true"><Dach /></div>
         <div class="kassenkopf__text">
           <p class="etikett etikett--hell"><span>Entlastungsbetrag nach <span class="paragraf">{'§ 45b SGB XI'}</span></span></p>
-          <h1 id="kassenkopf-titel">Wir rechnen direkt mit Ihrer Pflegekasse ab.</h1>
+          {/* [ERGÄNZEN: Abrechnung offen, ob Grün & Rein direkt mit der Pflegekasse abrechnet. Bis zur Klärung neutral formuliert. Frühere Fassung: Überschrift „Wir rechnen direkt mit Ihrer Pflegekasse ab.“, letzter Satz „Die Abrechnung übernehmen wir.“] */}
+          <h1 id="kassenkopf-titel">Mit Pflegegrad über Ihre Pflegekasse.</h1>
           <p class="kassenkopf__einleitung">
             Mit einem Pflegegrad stehen Ihnen jeden Monat {betrag} Euro für Unterstützung im Alltag zur Verfügung.
             Diesen Betrag setzen Sie für unsere Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung ein.
-            Die Abrechnung übernehmen wir.
+            Wie die Abrechnung bei Ihnen läuft, besprechen wir gern persönlich mit Ihnen.
           </p>
           <div class="kassenkopf__handeln">
             <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
@@ -118,11 +123,6 @@ const daten = {
               WhatsApp schreiben
             </a>
           </div>
-        </div>
-        <div class="betrag">
-          <p class="betrag__ueber">Ihr Entlastungsbetrag</p>
-          <p class="betrag__zahl"><span class="betrag__wert">{betrag}</span> <span class="betrag__einheit">Euro</span></p>
-          <p class="betrag__unter">jeden Monat, ab Pflegegrad 1</p>
         </div>
       </div>
     </div>
@@ -210,7 +210,7 @@ const daten = {
 </Basis>
 
 <style>
-  /* Kopf: Tannenfläche als große Karte mit runden Ecken, daneben der Monatsbetrag im Passepartout */
+  /* Kopf: Tannenfläche als große Karte mit runden Ecken */
   .kassenkopf {
     padding-block: var(--a-2) var(--a-bereich);
   }
@@ -263,57 +263,6 @@ const daten = {
       flex: 1 1 100%;
     }
   }
-  /* Betrag: Passepartout aus zwei Haarlinien in Messing, wie auf der Startseite */
-  .betrag {
-    position: relative;
-    align-self: center;
-    padding: clamp(1.75rem, 1rem + 2.5vw, 3rem);
-    border-radius: var(--r-gross);
-    background: var(--tanne-hell) var(--korn-hell);
-    box-shadow: inset 0 0 0 1px rgb(214 187 135 / 0.4), 0 30px 60px -30px rgb(0 0 0 / 0.6);
-    text-align: center;
-  }
-  .betrag::before {
-    content: '';
-    position: absolute;
-    inset: 0.6rem;
-    border-radius: calc(var(--r-gross) - 0.6rem);
-    box-shadow: inset 0 0 0 1px rgb(214 187 135 / 0.16);
-    pointer-events: none;
-  }
-  .betrag p {
-    max-width: none;
-    margin: 0;
-  }
-  .betrag__ueber {
-    font-size: var(--text-klein);
-    font-weight: 700;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    color: var(--messing-hell);
-  }
-  .betrag .betrag__zahl {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-block: var(--a-2) var(--a-1);
-    font-family: var(--schrift-titel);
-    color: var(--hell);
-  }
-  .betrag__wert {
-    font-size: clamp(5rem, 3rem + 7vw, 8.5rem);
-    font-weight: 400;
-    font-variant-numeric: lining-nums;
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-  }
-  .betrag__einheit {
-    font-size: var(--titel-3);
-  }
-  .betrag__unter {
-    color: var(--auf-tanne);
-  }
   @media (min-width: 64em) {
     .kassenkopf__flaeche {
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -321,10 +270,7 @@ const daten = {
       align-items: center;
     }
     .kassenkopf__text {
-      grid-column: 1 / span 7;
-    }
-    .betrag {
-      grid-column: 9 / -1;
+      grid-column: 1 / span 8;
     }
   }
 
@@ -416,7 +362,7 @@ const daten = {
   }
   .fakten__liste h3 {
     margin-bottom: var(--a-1);
-    font-size: clamp(1.6rem, 1.35rem + 0.9vw, 2.125rem);
+    font-size: clamp(1.35rem, 1.25rem + 0.4vw, 1.6rem);
     font-weight: 450;
   }
   .fakten__liste p {

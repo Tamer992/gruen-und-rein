@@ -118,10 +118,11 @@ const dienst = {
         {kasse ? (
           <>
             <p class="etikett etikett--hell">Pflegekasse</p>
-            <h2 id="band-titel">Mit Pflegegrad rechnen wir direkt mit Ihrer Pflegekasse ab.</h2>
+            {/* [ERGÄNZEN: Abrechnung offen, ob Grün & Rein direkt mit der Pflegekasse abrechnet. Bis zur Klärung neutral formuliert. Frühere Fassung: Überschrift „Mit Pflegegrad rechnen wir direkt mit Ihrer Pflegekasse ab.“, Text „Die Abrechnung übernehmen wir für Sie und stimmen alles mit Ihrer Pflegekasse ab.“] */}
+            <h2 id="band-titel">Mit Pflegegrad über Ihre Pflegekasse.</h2>
             <p>
-              Für die {leistung.kurz} setzen Sie Ihren monatlichen Entlastungsbetrag ein. Die Abrechnung übernehmen wir
-              für Sie und stimmen alles mit Ihrer Pflegekasse ab.
+              Für die {leistung.kurz} setzen Sie Ihren monatlichen Entlastungsbetrag ein. Wie die Abrechnung bei
+              Ihnen läuft, besprechen wir gern persönlich mit Ihnen.
             </p>
           </>
         ) : (
