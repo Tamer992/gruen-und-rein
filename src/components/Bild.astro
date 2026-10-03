@@ -1,6 +1,8 @@
 ---
 // Foto mit festem Seitenverhältnis. Es entstehen automatisch AVIF und WebP in passenden Größen.
 // „formatGross“ wählt ab Desktop-Breite einen anderen Zuschnitt (Art Direction ohne zweites Foto).
+// „form“ gibt dem Foto die Blattform aus dem Logo (zwei große, zwei kleine Ecken).
+// „parallaxe“ lässt das Foto beim Scrollen ganz leicht gleiten (nur mit JavaScript und erwünschter Bewegung).
 // Ohne „bild“ erscheint eine ruhige Fläche (nur für den Notfall, nicht als Dauerlösung).
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
@@ -15,12 +17,17 @@ interface Props {
   zuerst?: boolean;
   // Bildausschnitt ohne Inline-Stil (Sicherheitsrichtlinie): mitte, oben, unten, links, rechts
   ausschnitt?: 'mitte' | 'oben' | 'unten' | 'links' | 'rechts';
+  form?: 'blatt' | 'blatt-gespiegelt';
+  parallaxe?: boolean;
   klasse?: string;
 }
-const { bild, alt, format, formatGross, sizes, zuerst = false, ausschnitt = 'mitte', klasse } = Astro.props;
+const { bild, alt, format, formatGross, sizes, zuerst = false, ausschnitt = 'mitte', form, parallaxe = false, klasse } = Astro.props;
 ---
-<figure class:list={['bild', klasse]}>
-  <div class:list={['bild__rahmen', `format-${format}`, formatGross && `format-gross-${formatGross}`, `ausschnitt-${ausschnitt}`]}>
+<figure class:list={['bild', form && `form-${form}`, klasse]}>
+  <div
+    class:list={['bild__rahmen', `format-${format}`, formatGross && `format-gross-${formatGross}`, `ausschnitt-${ausschnitt}`]}
+    data-parallaxe={parallaxe ? '' : undefined}
+  >
     {bild && (
       <Picture
         src={bild}

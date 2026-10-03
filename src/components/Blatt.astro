@@ -1,0 +1,40 @@
+---
+// Das Blatt aus dem Logo als wiederkehrendes, zurückhaltendes Zeichen.
+// „flaeche“: gefülltes Blatt mit Ader (für Aufzählungen und Marken)
+// „linie“: nur der Umriss in feiner Linie (für Wasserzeichen und Schmuck)
+// Rein dekorativ, für Vorleseprogramme unsichtbar.
+interface Props {
+  art?: 'flaeche' | 'linie';
+  klasse?: string;
+}
+const { art = 'flaeche', klasse } = Astro.props;
+
+// Dieselben Pfade wie im Logo (scripts/logo.mjs)
+const BLATT = 'M74 19C50 20 25.5 33.5 25.5 58.5 25.5 71.5 35.5 81 49 81 70.5 81 80.5 55 74 19Z';
+const ADER = 'M37.5 70.5C47 57 57 44 66.5 30.5';
+---
+{art === 'flaeche' ? (
+  <svg class:list={['blatt', klasse]} viewBox="20 14 62 72" aria-hidden="true" focusable="false">
+    <path d={BLATT} fill="currentColor" />
+    <path class="blatt__ader" d={ADER} fill="none" stroke-width="5" stroke-linecap="round" />
+  </svg>
+) : (
+  <svg class:list={['blatt', 'blatt--linie', klasse]} viewBox="20 14 62 72" aria-hidden="true" focusable="false">
+    <path d={BLATT} fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" />
+    <path d={ADER} fill="none" stroke="currentColor" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+  </svg>
+)}
+
+<style is:global>
+  .blatt {
+    display: block;
+    flex: none;
+  }
+  /* Die Ader schneidet die Fläche des Untergrunds aus dem Blatt */
+  .blatt__ader {
+    stroke: var(--blatt-ader, var(--leinen));
+  }
+  .blatt--linie path {
+    stroke-width: var(--blatt-linie, 1px);
+  }
+</style>
