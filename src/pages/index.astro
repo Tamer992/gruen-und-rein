@@ -52,7 +52,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
     <div class="behaelter">
       <ul class="fakten" aria-label="Das ist uns wichtig">
         <li><Symbol name="haken" /> Eine feste Ansprechperson</li>
-        {site.pflegekasse && <li><Symbol name="haken" /> Abrechnung über die Pflegekasse</li>}
+        {site.pflegekasse && <li><Symbol name="haken" /> Wir regeln alles mit der Pflegekasse</li>}
         <li><Symbol name="haken" /> Für Privat und Gewerbe</li>
       </ul>
     </div>
@@ -71,20 +71,21 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
       <div class="zwei-wege__text">
         <h2 id="zwei-wege-titel">Für Sie selbst. Oder für Ihre Eltern.</h2>
         <div class="zwei-wege__weg">
-          <h3>Sie möchten selbst Hilfe</h3>
+          <h3>Für Sie selbst</h3>
           <p>
-            Das Einkaufen wird mühsam, der Garten wächst Ihnen über den Kopf. Rufen Sie an und erzählen Sie,
-            was Sie brauchen. Wir kommen vorbei und schauen gemeinsam, was hilft.
+            Sie möchten weiter selbstständig zu Hause leben und wünschen sich etwas Unterstützung, beim Einkaufen,
+            im Haushalt oder im Garten. Erzählen Sie uns, was Ihnen gut tun würde. Wir kommen vorbei und finden
+            gemeinsam den richtigen Weg.
           </p>
         </div>
         <div class="zwei-wege__weg">
-          <h3>Sie suchen Hilfe für Mutter oder Vater</h3>
+          <h3>Für Ihre Mutter oder Ihren Vater</h3>
           <p>
-            Sie wohnen weiter weg oder arbeiten tagsüber. Wir sprechen mit Ihnen und mit Ihren Eltern.
-            Auf Wunsch geben wir Ihnen nach jedem Besuch kurz Bescheid.
+            Sie möchten Ihre Eltern gut versorgt wissen, auch wenn Sie weiter weg wohnen oder tagsüber arbeiten.
+            Wir sprechen mit Ihnen und Ihren Eltern und geben Ihnen auf Wunsch nach jedem Besuch kurz Bescheid.
           </p>
         </div>
-        <a class="weiter" href="#ablauf">So läuft der Anfang ab <Symbol name="pfeil" /></a>
+        <a class="weiter" href="#ablauf">So einfach geht der Start <Symbol name="pfeil" /></a>
       </div>
     </div>
   </section>
@@ -92,10 +93,10 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
   <!-- Leistungen als Fotokacheln -->
   <section class="bereich leistungen" aria-labelledby="leistungen-titel">
     <div class="behaelter">
-      <h2 id="leistungen-titel" class="leistungen__titel">Wobei wir Ihnen helfen</h2>
+      <h2 id="leistungen-titel" class="leistungen__titel">Wobei wir Sie unterstützen</h2>
 
       <div class="kacheln">
-        <a class="kachel kachel--gross" href={p('/alltagsbegleitung/')}>
+        <a class="kachel kachel--alltag" href={p('/alltagsbegleitung/')}>
           <Bild
             klasse="kachel__bild"
             bild={fotoAlltag}
@@ -106,12 +107,12 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
           />
           <div class="kachel__text">
             <h3>Alltagsbegleitung <Symbol name="pfeil" /></h3>
-            <p>Gesellschaft, Spaziergänge, Einkäufe und Begleitung zum Arzt. Damit der Alltag wieder leichter wird.</p>
-            {site.pflegekasse && <p class="kachel__kasse"><Symbol name="haken" /> Über die Pflegekasse abrechenbar</p>}
+            <p>Gesellschaft, Spaziergänge, Einkäufe und Begleitung zum Arzt. So wird der Alltag wieder leichter.</p>
+            {site.pflegekasse && <p class="kachel__kasse"><Symbol name="haken" /> Über die Pflegekasse möglich</p>}
           </div>
         </a>
 
-        <a class="kachel" href={p('/hauswirtschaft/')}>
+        <a class="kachel kachel--haus" href={p('/hauswirtschaft/')}>
           <Bild
             klasse="kachel__bild"
             bild={fotoHaus}
@@ -121,12 +122,12 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
           />
           <div class="kachel__text">
             <h3>Hauswirtschaft <Symbol name="pfeil" /></h3>
-            <p>Wäsche, Küche, Bad, Einkaufen und alles, was im Haushalt anfällt.</p>
-            {site.pflegekasse && <p class="kachel__kasse"><Symbol name="haken" /> Über die Pflegekasse abrechenbar</p>}
+            <p>Wäsche, Küche, Bad, Einkaufen und alles, was Ihren Haushalt leichter macht.</p>
+            {site.pflegekasse && <p class="kachel__kasse"><Symbol name="haken" /> Über die Pflegekasse möglich</p>}
           </div>
         </a>
 
-        <a class="kachel" href={p('/gebaeudereinigung/')}>
+        <a class="kachel kachel--rein" href={p('/gebaeudereinigung/')}>
           <Bild
             klasse="kachel__bild"
             bild={fotoRein}
@@ -136,43 +137,56 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
           />
           <div class="kachel__text">
             <h3>Gebäudereinigung <Symbol name="pfeil" /></h3>
-            <p>Wohnung, Haus, Büro und Treppenhaus. Regelmäßig oder als Grundreinigung.</p>
+            <p>Wohnung, Haus, Büro und Treppenhaus. Regelmäßig oder als gründliche Grundreinigung.</p>
           </div>
         </a>
 
-        <a class="kachel kachel--breit" href={p('/gartenpflege/')}>
+        <a class="kachel kachel--trauer" href={p('/trauerbegleitung/')}>
+          <Bild
+            klasse="kachel__bild"
+            bild={fotoTrauer}
+            format="4-3"
+            sizes="(min-width: 64em) 30rem, 100vw"
+            alt="Blumen im warmen Abendlicht"
+          />
+          <div class="kachel__text">
+            <h3>Trauerbegleitung <Symbol name="pfeil" /></h3>
+            <p>Zuhören, Gespräche und Unterstützung im Alltag. Wir begleiten Sie behutsam durch diese Zeit.</p>
+            {site.pflegekasse && <p class="kachel__kasse"><Symbol name="haken" /> Über die Pflegekasse möglich</p>}
+          </div>
+        </a>
+
+        <a class="kachel kachel--garten" href={p('/gartenpflege/')}>
           <Bild
             klasse="kachel__bild"
             bild={fotoGarten}
-            format="frei"
-            sizes="(min-width: 64em) 30rem, 100vw"
+            format="16-9"
+            sizes="(min-width: 64em) 44rem, 100vw"
             alt="Hände in Gartenhandschuhen setzen eine junge Pflanze in die Erde"
           />
           <div class="kachel__text">
             <h3>Gartenpflege <Symbol name="pfeil" /></h3>
-            <p>
-              Rasenpflege, Unkraut und Laub entfernen, Beete pflegen und Außenanlagen in Ordnung halten.
-            </p>
+            <p>Gepflegter Rasen, schöne Beete und ordentliche Außenanlagen. Laub und Unkraut nehmen wir gleich mit.</p>
           </div>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Abrechnung über die Pflegekasse -->
+  <!-- Unterstützung durch die Pflegekasse -->
   {site.pflegekasse && (
     <section class="kasse" aria-labelledby="kasse-titel">
       <div class="behaelter">
         <div class="kasse__flaeche">
           <div class="kasse__text">
-            <h2 id="kasse-titel">Wir rechnen mit Ihrer Pflegekasse ab.</h2>
+            <h2 id="kasse-titel">Wir regeln das mit Ihrer Pflegekasse.</h2>
             <p>
-              Haben Sie einen Pflegegrad, zahlt die Pflegekasse für Alltagsbegleitung, Hauswirtschaft und
-              Trauerbegleitung. Dafür steht Ihnen jeden Monat der Entlastungsbetrag zu.
+              Mit einem Pflegegrad übernimmt Ihre Pflegekasse Alltagsbegleitung, Hauswirtschaft und
+              Trauerbegleitung. Dafür steht Ihnen jeden Monat der Entlastungsbetrag zur Verfügung.
             </p>
             <p>
-              Um den Papierkram kümmern wir uns. Wir setzen uns für Sie mit Ihrer Kranken- und Pflegekasse
-              in Verbindung und rechnen direkt mit ihr ab.
+              Die Abrechnung erledigen wir für Sie. Wir stimmen alles mit Ihrer Kranken- und Pflegekasse ab,
+              Sie lehnen sich zurück.
             </p>
             <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
               <Symbol name="telefon" kreis />
@@ -180,13 +194,13 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
             </a>
           </div>
           <div class="kasse__liste">
-            <p class="kasse__ueber">Über die Pflegekasse</p>
+            <p class="kasse__ueber">Mit der Pflegekasse möglich</p>
             <ul>
               <li><Symbol name="haken" /> Alltagsbegleitung und Betreuung</li>
               <li><Symbol name="haken" /> Hauswirtschaft</li>
               <li><Symbol name="haken" /> Trauerbegleitung</li>
             </ul>
-            <p class="kasse__hinweis">Gebäudereinigung und Gartenpflege rechnen wir direkt mit Ihnen ab.</p>
+            <p class="kasse__hinweis">Gebäudereinigung und Gartenpflege vereinbaren wir direkt mit Ihnen.</p>
           </div>
         </div>
       </div>
@@ -201,12 +215,12 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
         <li>
           <span class="schritte__zahl" aria-hidden="true">1</span>
           <h3>Anrufen</h3>
-          <p>Sie erzählen uns, wobei Sie Hilfe brauchen. Wir beantworten Ihre Fragen in Ruhe.</p>
+          <p>Sie erzählen uns, was Sie sich wünschen. Wir beantworten Ihre Fragen in aller Ruhe.</p>
         </li>
         <li>
           <span class="schritte__zahl" aria-hidden="true">2</span>
           <h3>Kennenlernen</h3>
-          <p>Wir besuchen Sie zu Hause, gern mit Ihren Angehörigen. Sie erfahren den Preis, bevor wir anfangen.</p>
+          <p>Wir besuchen Sie zu Hause, gern gemeinsam mit Ihren Angehörigen. Sie erhalten ein klares Angebot.</p>
         </li>
         <li>
           <span class="schritte__zahl" aria-hidden="true">3</span>
@@ -215,16 +229,15 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
         </li>
       </ol>
 
-      <div class="kosten">
-        <h3>Was kostet das?</h3>
+      <div class="angebot">
+        <h3>Ihr persönliches Angebot</h3>
         <p>
-          Das hängt davon ab, was Sie brauchen und wie oft wir kommen. Beim ersten Besuch nennen wir Ihnen
-          einen festen Preis. Erst wenn Sie einverstanden sind, fangen wir an.
+          Wir stellen Ihr Angebot so zusammen, wie es zu Ihnen passt: was Sie sich wünschen und wie oft wir kommen.
+          Beim ersten Besuch erhalten Sie einen festen, fairen Preis und entscheiden ganz in Ruhe.
         </p>
         {site.pflegekasse && (
           <p>
-            Haben Sie einen Pflegegrad, rechnen wir Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung
-            direkt mit Ihrer Pflegekasse ab.
+            Mit Pflegegrad regeln wir Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung direkt mit Ihrer Pflegekasse.
           </p>
         )}
       </div>
@@ -238,7 +251,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
         <h2 id="vorstellung-titel">Jemand, der Zeit mitbringt.</h2>
         <p>
           Hinter {site.name} {site.mehrereInhaber ? 'stehen' : 'steht'} {site.inhaberin}. Bei uns haben Sie eine feste Ansprechperson,
-          die Sie kennt, pünktlich kommt und zuhört.
+          die Sie kennt, pünktlich kommt und gern zuhört.
         </p>
         <a class="weiter" href={p('/ueber-uns/')}>Mehr über uns <Symbol name="pfeil" /></a>
       </div>
@@ -249,30 +262,6 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
         sizes="(min-width: 64em) 46rem, 100vw"
         alt="Eine Begleiterin geht mit einer älteren Dame mit Gehstock die Straße entlang"
       />
-    </div>
-  </section>
-
-  <!-- Trauerbegleitung: still und zurückgenommen -->
-  <section class="trauer" aria-labelledby="trauer-titel">
-    <div class="behaelter">
-    <div class="trauer__raster">
-      <Bild
-        klasse="trauer__bild"
-        bild={fotoTrauer}
-        format="1-1"
-        sizes="(min-width: 48em) 16rem, 60vw"
-        alt="Blumen auf einem Grab im Abendlicht"
-      />
-      <div class="trauer__text">
-        <h2 id="trauer-titel">Wenn ein Mensch gestorben ist</h2>
-        <p>
-          Nach einem Todesfall ist vieles schwer. Wir begleiten Sie in dieser Zeit: Wir hören zu,
-          nehmen uns Zeit für Gespräche und unterstützen Sie im Alltag.
-          {site.pflegekasse && ' Auch die Trauerbegleitung können Sie über die Pflegekasse abrechnen.'}
-        </p>
-        <a href={p('/trauerbegleitung/')}>Über die Trauerbegleitung</a>
-      </div>
-    </div>
     </div>
   </section>
 </Basis>
@@ -458,11 +447,10 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
     margin: 0;
     color: var(--leise);
   }
-  .kachel--gross .kachel__text h3 {
+  .kachel--alltag .kachel__text h3 {
     font-size: var(--titel-2);
   }
-  .kachel--gross :global(.bild__rahmen),
-  .kachel--breit :global(.bild__rahmen) {
+  .kachel--alltag :global(.bild__rahmen) {
     aspect-ratio: 4 / 3;
   }
 
@@ -470,37 +458,28 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
     .kacheln {
       grid-template-columns: repeat(12, minmax(0, 1fr));
     }
-    .kachel--gross {
+    .kachel--alltag {
       grid-column: 1 / span 7;
       grid-row: 1 / span 2;
     }
-    .kachel--gross :global(.kachel__bild),
-    .kachel--breit :global(.kachel__bild) {
+    .kachel--alltag :global(.kachel__bild) {
       position: relative;
       min-height: 20rem;
     }
-    .kachel--gross :global(.bild__rahmen),
-    .kachel--breit :global(.bild__rahmen) {
+    .kachel--alltag :global(.bild__rahmen) {
       position: absolute;
       inset: 0;
       aspect-ratio: auto;
     }
-    .kachel:not(.kachel--gross):not(.kachel--breit) {
+    .kachel--haus,
+    .kachel--rein {
       grid-column: 8 / span 5;
     }
-    .kachel--breit {
-      grid-column: 1 / -1;
-      flex-direction: row;
+    .kachel--trauer {
+      grid-column: 1 / span 5;
     }
-    .kachel--breit :global(.kachel__bild) {
-      flex: 0 0 42%;
-    }
-    .kachel--breit .kachel__text {
-      align-self: center;
-      padding: var(--a-4) var(--a-5);
-    }
-    .kachel--breit .kachel__text h3 {
-      font-size: var(--titel-2);
+    .kachel--garten {
+      grid-column: 6 / span 7;
     }
   }
 
@@ -647,14 +626,14 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
     }
   }
 
-  .kosten {
+  .angebot {
     margin-top: var(--a-5);
     padding: var(--a-4);
     border-radius: var(--r-bild);
     background: var(--salbei);
     max-width: 52rem;
   }
-  .kosten p:last-child {
+  .angebot p:last-child {
     margin-bottom: 0;
   }
 
@@ -678,32 +657,4 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
     }
   }
 
-  /* Trauer */
-  .trauer {
-    padding-bottom: 0;
-  }
-  .trauer__raster {
-    display: grid;
-    gap: var(--a-4);
-    padding-top: var(--a-5);
-    border-top: 1px solid var(--linie);
-  }
-  .trauer :global(.trauer__bild) {
-    max-width: 12rem;
-  }
-  .trauer h2 {
-    font-size: var(--titel-3);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-  .trauer__text p {
-    color: var(--leise);
-  }
-  @media (min-width: 48em) {
-    .trauer__raster {
-      grid-template-columns: 12rem minmax(0, 40rem);
-      gap: var(--a-5);
-      align-items: center;
-    }
-  }
 </style>
