@@ -1,3 +1,7 @@
 /* Wird nur geladen, wenn JavaScript ausgeschaltet ist: Navigation immer zeigen */
-.hauptnav { display: block !important; }
+.hauptnav { display: block !important; max-height: none !important; overflow: visible !important; }
 .kopf__menue { display: none !important; }
+/* Mit offener Navigation wäre der klebende Kopf auf dem Handy zu hoch: dort scrollt er normal mit */
+@media (max-width: 63.99em) {
+  .kopfbereich { position: relative !important; top: auto !important; }
+}

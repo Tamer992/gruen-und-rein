@@ -2,6 +2,7 @@
 import { p } from '../pfad';
 import { site, leistungen, leistungsPfad } from '../site.config';
 import Symbol from './Symbol.astro';
+import Blatt from './Blatt.astro';
 import logo from './logo-mass.json';
 
 const jahr = new Date().getFullYear();
@@ -9,7 +10,7 @@ const jahr = new Date().getFullYear();
 const ueberUns = site.unterseiten ? '/ueber-uns/' : '/#ueber-uns';
 const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
 ---
-<footer class="fuss" id="kontakt">
+<footer class="fuss flaeche-tanne" id="kontakt">
   <div class="behaelter">
     <div class="fuss__anruf">
       <div class="fuss__kopf">
@@ -38,6 +39,8 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
         </p>
       </div>
     </div>
+
+    <div class="fuss__zier" aria-hidden="true"><Blatt /></div>
 
     <div class="fuss__raster">
       <div class="fuss__betrieb">
@@ -79,45 +82,27 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
 </footer>
 
 <style>
+  /* Fuß: Tanne mit Papierkorn. Oben die Einladung zum Anruf, darunter ruhig gegliedert die Angaben. */
   .fuss {
     position: relative;
-    background: var(--tanne);
-    color: var(--auf-tanne);
     padding-block: var(--a-bereich) var(--a-4);
-  }
-  /* Feine Messinglinie als oberer Abschluss */
-  .fuss::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: min(var(--breite), calc(100% - 2 * var(--rand)));
-    height: 1px;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, transparent, var(--messing), transparent);
-    opacity: 0.6;
   }
   .fuss a:not(.knopf) {
     color: var(--hell);
-    text-decoration-color: rgb(255 253 249 / 0.4);
+    text-decoration-color: rgb(252 250 245 / 0.35);
   }
   .fuss a:not(.knopf):hover {
     text-decoration-color: var(--messing-hell);
   }
-  .fuss :focus-visible {
-    outline-color: var(--hell);
-  }
 
   .fuss__anruf {
     display: grid;
-    gap: var(--a-4);
-    padding-bottom: var(--a-6);
-    border-bottom: 1px solid var(--linie-auf-tanne);
+    gap: var(--a-5);
   }
   .fuss__titel {
     color: var(--hell);
     font-size: var(--titel-2);
-    max-width: 18ch;
+    max-width: 17ch;
     margin: 0;
   }
   .fuss__handeln {
@@ -143,10 +128,33 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
     color: var(--messing-hell);
   }
 
+  /* Zierlinie mit Blatt, wie auf der Pflegekassen-Fläche */
+  .fuss__zier {
+    display: flex;
+    align-items: center;
+    gap: var(--a-3);
+    margin-block: var(--a-6) var(--a-5);
+    color: var(--messing-hell);
+    --blatt-ader: var(--tanne);
+  }
+  .fuss__zier::before,
+  .fuss__zier::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(214 187 135 / 0.45));
+  }
+  .fuss__zier::after {
+    background: linear-gradient(90deg, rgb(214 187 135 / 0.45), transparent);
+  }
+  .fuss__zier :global(.blatt) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
   .fuss__raster {
     display: grid;
     gap: var(--a-5) var(--spalt);
-    padding-top: var(--a-5);
   }
   .fuss__betrieb img {
     height: 3rem;
@@ -159,13 +167,14 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
   .fuss address a {
     display: inline-flex;
     align-items: center;
-    min-height: 2.75rem;
+    min-height: 3rem;
   }
   .fuss__ueber {
     font-family: var(--schrift-text);
     font-size: var(--text-klein);
     font-weight: 700;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
     color: var(--messing-hell);
     margin-bottom: var(--a-1);
   }
@@ -175,14 +184,14 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
     margin: 0;
   }
   .fuss__liste li {
-    min-height: 2.75rem;
+    min-height: 3rem;
     display: flex;
     align-items: center;
   }
   .fuss__liste a {
     display: flex;
     align-items: center;
-    min-height: 2.75rem;
+    min-height: 3rem;
     text-decoration: none;
   }
   .fuss__liste a:hover {
@@ -190,7 +199,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
   }
   .fuss__zeile {
     max-width: none;
-    margin: var(--a-5) 0 0;
+    margin: var(--a-6) 0 0;
     padding-top: var(--a-3);
     border-top: 1px solid var(--linie-auf-tanne);
     font-size: var(--text-klein);
@@ -203,9 +212,15 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
   }
   @media (min-width: 64em) {
     .fuss__anruf {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--spalt);
       align-items: end;
-      gap: var(--a-6);
+    }
+    .fuss__kopf {
+      grid-column: 1 / span 7;
+    }
+    .fuss__wege {
+      grid-column: 8 / -1;
     }
     .fuss__raster {
       grid-template-columns: 2fr 1fr 1.4fr 1fr;

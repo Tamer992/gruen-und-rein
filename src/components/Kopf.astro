@@ -8,74 +8,95 @@ const aktuell = Astro.url.pathname;
 ---
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
-<div class="leiste">
-  <div class="behaelter leiste__innen">
-    <a class="leiste__telefon" href={`tel:${site.telefonLink}`}>
-      <Symbol name="telefon" />
-      <span><span class="leiste__frage">Rufen Sie uns an:</span> <strong class="nummer">{site.telefon}</strong></span>
-    </a>
-    <span class="leiste__zeiten">
-      <Symbol name="uhr" />
-      {site.erreichbarkeit}
-    </span>
-    <a class="leiste__whatsapp" href={`https://wa.me/${site.whatsappLink}`}>
-      <Symbol name="whatsapp" />
-      WhatsApp schreiben
-    </a>
+<!-- Telefonleiste und Kopfzeile bilden zusammen den Kopf der Seite und kleben gemeinsam oben. Der Bereich ist um die Höhe der Leiste nach oben versetzt:
+     Beim Scrollen gleitet die Leiste hinaus, die Kopfzeile mit dem Anrufknopf bleibt stehen.
+     So wird der Kopf kompakter, ohne dass sich darunter etwas verschiebt. -->
+<header class="kopfbereich">
+  <div class="leiste">
+    <div class="behaelter leiste__innen">
+      <a class="leiste__telefon" href={`tel:${site.telefonLink}`}>
+        <Symbol name="telefon" />
+        <span><span class="leiste__frage">Rufen Sie uns an:</span> <strong class="nummer">{site.telefon}</strong></span>
+      </a>
+      <span class="leiste__zeiten">
+        <Symbol name="uhr" />
+        {site.erreichbarkeit}
+      </span>
+      <a class="leiste__whatsapp" href={`https://wa.me/${site.whatsappLink}`}>
+        <Symbol name="whatsapp" />
+        WhatsApp schreiben
+      </a>
+    </div>
   </div>
-</div>
 
-<header class="kopf">
-  <div class="behaelter kopf__zeile">
-    <a class="kopf__marke" href={p('/')}>
-      <img src={p('/logo.svg')} alt={`${site.name}, zur Startseite`} width={logo.breite} height={logo.hoehe} />
-    </a>
+  <div class="kopf">
+    <div class="behaelter kopf__zeile">
+      <a class="kopf__marke" href={p('/')}>
+        <img src={p('/logo.svg')} alt={`${site.name}, zur Startseite`} width={logo.breite} height={logo.hoehe} />
+      </a>
 
-    <nav id="hauptnavigation" class="hauptnav" aria-label="Hauptnavigation">
-      <ul class="hauptnav__liste">
-        {navigation.map((punkt) => (
-          <li>
-            <a href={p(punkt.pfad)} aria-current={aktuell.startsWith(p(punkt.pfad)) ? 'page' : undefined}>{punkt.titel}</a>
-          </li>
-        ))}
-      </ul>
-      <div class="hauptnav__handeln">
-        <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
-          <Symbol name="telefon" kreis />
-          Jetzt anrufen
-        </a>
-        <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
-          <Symbol name="whatsapp" kreis />
-          WhatsApp schreiben
-        </a>
-      </div>
-    </nav>
+      <nav id="hauptnavigation" class="hauptnav" aria-label="Hauptnavigation">
+        <ul class="hauptnav__liste">
+          {navigation.map((punkt) => (
+            <li>
+              <a href={p(punkt.pfad)} aria-current={aktuell.startsWith(p(punkt.pfad)) ? 'page' : undefined}>{punkt.titel}</a>
+            </li>
+          ))}
+        </ul>
+        <div class="hauptnav__handeln">
+          <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
+            <Symbol name="telefon" kreis />
+            Jetzt anrufen
+          </a>
+          <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
+            <Symbol name="whatsapp" kreis />
+            WhatsApp schreiben
+          </a>
+        </div>
+      </nav>
 
-    <a class="knopf knopf--haupt kopf__anruf" href={`tel:${site.telefonLink}`}>
-      <Symbol name="telefon" kreis />
-      Jetzt anrufen
-    </a>
+      <a class="knopf knopf--haupt kopf__anruf" href={`tel:${site.telefonLink}`}>
+        <Symbol name="telefon" kreis />
+        Jetzt anrufen
+      </a>
 
-    <button class="kopf__menue" type="button" aria-expanded="false" aria-controls="hauptnavigation">
-      <span class="kopf__menue-striche" aria-hidden="true"></span>
-      <span class="kopf__menue-wort">Menü</span>
-    </button>
+      <button class="kopf__menue" type="button" aria-expanded="false" aria-controls="hauptnavigation">
+        <span class="kopf__menue-striche" aria-hidden="true"></span>
+        <span class="kopf__menue-wort">Menü</span>
+      </button>
+    </div>
   </div>
 </header>
 
 <style>
-  /* Dunkle Leiste mit Telefon */
+  .kopfbereich {
+    position: sticky;
+    top: calc(-1 * (var(--leiste-hoehe) + var(--kopf-luft)));
+    z-index: 40;
+  }
+  /* Niedrige Fenster (Querformat, starker Zoom): Kopf scrollt normal mit, damit genug Platz für den Inhalt bleibt */
+  @media (max-height: 34em) {
+    .kopfbereich {
+      position: relative;
+      top: auto;
+    }
+  }
+
+  /* Dunkle Leiste mit Telefon: feste Höhe, damit der Versatz oben genau passt */
   .leiste {
-    background: var(--tanne);
+    height: var(--leiste-hoehe);
+    overflow: hidden;
+    background: var(--tanne) var(--korn-hell);
     color: var(--auf-tanne);
     font-size: var(--text-klein);
+    white-space: nowrap;
   }
   .leiste__innen {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--a-3);
-    min-height: 3.25rem;
+    height: 100%;
   }
   .leiste a {
     color: var(--hell);
@@ -87,6 +108,8 @@ const aktuell = Astro.url.pathname;
   }
   .leiste :focus-visible {
     outline-color: var(--hell);
+    outline-offset: -3px;
+    box-shadow: none;
   }
   .leiste__telefon,
   .leiste__zeiten,
@@ -94,10 +117,11 @@ const aktuell = Astro.url.pathname;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    min-height: 3rem;
+    height: 100%;
+    padding-inline: 0.25rem;
   }
   .leiste__telefon {
-    font-size: 1.1875rem;
+    font-size: 1.125rem;
   }
   .leiste :global(.symbol) {
     color: var(--messing-hell);
@@ -125,10 +149,17 @@ const aktuell = Astro.url.pathname;
     }
   }
 
-  /* Hauptzeile */
+  /* Hauptzeile: oben etwas mehr Luft, die beim Scrollen mit der Leiste verschwindet */
   .kopf {
-    background: var(--grund);
+    position: relative;
+    background: var(--leinen) var(--korn);
     border-bottom: 1px solid var(--linie);
+    padding-top: var(--kopf-luft);
+    transition: box-shadow var(--uebergang), border-color var(--uebergang);
+  }
+  :global(.ist-gescrollt) .kopf {
+    border-bottom-color: transparent;
+    box-shadow: 0 1px 0 var(--linie-zart), 0 12px 28px -20px rgb(46 38 24 / 0.45);
   }
   /* Auf kleinen Bildschirmen ein Raster: Das Logo darf schmaler werden, der Menü-Knopf bleibt daneben */
   .kopf__zeile {
@@ -136,13 +167,13 @@ const aktuell = Astro.url.pathname;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 0 var(--a-2);
-    min-height: 5rem;
+    min-height: 4.5rem;
   }
   .kopf__marke {
     display: inline-flex;
     justify-self: start;
     min-width: 0;
-    padding-block: 1rem;
+    padding-block: 0.75rem;
     border-radius: var(--r-feld);
   }
   .kopf__marke img {
@@ -150,6 +181,12 @@ const aktuell = Astro.url.pathname;
     height: auto;
     max-width: 100%;
     max-height: 2.75rem;
+    transform-origin: left center;
+    transition: transform var(--uebergang-lang);
+  }
+  /* Beim Scrollen wird das Logo etwas kleiner (nur optisch, ohne Verschiebung) */
+  :global(.ist-gescrollt) .kopf__marke img {
+    transform: scale(0.9);
   }
   .kopf__anruf {
     display: none;
@@ -166,7 +203,7 @@ const aktuell = Astro.url.pathname;
     font: inherit;
     font-weight: 700;
     color: var(--waldgruen);
-    background: var(--flaeche);
+    background: var(--papier);
     border: 0;
     border-radius: var(--r-knopf);
     box-shadow: inset 0 0 0 1.5px var(--linie-knopf);
@@ -207,12 +244,17 @@ const aktuell = Astro.url.pathname;
   .kopf__menue[aria-expanded='true'] .kopf__menue-striche::before { top: 0; transform: rotate(45deg); }
   .kopf__menue[aria-expanded='true'] .kopf__menue-striche::after { top: 0; transform: rotate(-45deg); }
 
-  /* Navigation: auf kleinen Bildschirmen aufklappbar unter der Zeile */
+  /* Navigation: auf kleinen Bildschirmen aufklappbar unter der Zeile, bei Bedarf in sich scrollbar */
   .hauptnav {
     display: none;
     grid-column: 1 / -1;
     grid-row: 2;
-    padding-bottom: var(--a-4);
+    max-height: calc(100vh - 5.5rem);
+    max-height: calc(100dvh - 5.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.25rem 0.25rem var(--a-4);
+    margin-inline: -0.25rem;
   }
   .hauptnav:global(.ist-offen) {
     display: block;
@@ -244,7 +286,7 @@ const aktuell = Astro.url.pathname;
     min-height: 3.75rem;
     font-family: var(--schrift-titel);
     font-size: var(--titel-3);
-    font-weight: 500;
+    font-weight: 450;
     color: var(--tinte);
     text-decoration: none;
   }
@@ -257,13 +299,33 @@ const aktuell = Astro.url.pathname;
     gap: var(--a-2);
   }
 
+  /* Ab Tablet: Anrufknopf immer in der Kopfzeile */
+  @media (min-width: 48em) {
+    .kopf__zeile {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+    }
+    .kopf__anruf {
+      display: inline-flex;
+      grid-column: 2;
+      grid-row: 1;
+      min-height: 3.25rem;
+      font-size: 1.0625rem;
+    }
+    .kopf__menue {
+      grid-column: 3;
+    }
+    .hauptnav__handeln {
+      display: none;
+    }
+  }
+
   /* Ab Desktop: Navigation in einer Zeile neben dem Logo */
   @media (min-width: 64em) {
     .kopf__zeile {
       display: flex;
       justify-content: space-between;
       gap: 0 var(--a-3);
-      min-height: 5.5rem;
+      min-height: 5rem;
     }
     .kopf__marke {
       flex: none;
@@ -278,12 +340,11 @@ const aktuell = Astro.url.pathname;
     .hauptnav,
     .hauptnav:global(.ist-offen) {
       display: block;
+      max-height: none;
+      overflow: visible;
       margin-left: auto;
-      padding-bottom: 0;
+      padding: 0;
       animation: none;
-    }
-    .hauptnav__handeln {
-      display: none;
     }
     .hauptnav__liste {
       display: flex;
@@ -319,10 +380,7 @@ const aktuell = Astro.url.pathname;
       transform: scaleX(1);
     }
     .kopf__anruf {
-      display: inline-flex;
       flex: none;
-      min-height: 3.25rem;
-      font-size: 1.0625rem;
     }
   }
   @media (min-width: 64em) and (max-width: 74.99em) {

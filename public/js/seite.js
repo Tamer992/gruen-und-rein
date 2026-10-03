@@ -30,6 +30,28 @@
   });
 })();
 
+// Kopf beim Scrollen: dezenter Schatten und etwas kleineres Logo (Klasse ist-gescrollt).
+// Die Leiste darüber gleitet ohnehin von selbst hinaus (CSS, position: sticky).
+(function () {
+  var wurzel = document.documentElement;
+  var geplant = false;
+  function pruefe() {
+    geplant = false;
+    wurzel.classList.toggle('ist-gescrollt', window.scrollY > 48);
+  }
+  window.addEventListener(
+    'scroll',
+    function () {
+      if (!geplant) {
+        geplant = true;
+        window.requestAnimationFrame(pruefe);
+      }
+    },
+    { passive: true }
+  );
+  pruefe();
+})();
+
 // Sanftes Einblenden beim Scrollen. Was beim Laden schon zu sehen ist, bleibt einfach stehen.
 // Bei „Bewegung reduzieren“ oder ohne IntersectionObserver passiert nichts.
 (function () {
@@ -54,4 +76,49 @@
     else beobachter.observe(teil);
   });
   document.documentElement.classList.add('js-bereit');
+})();
+
+// Leichte Parallaxe für Fotos mit data-parallaxe: höchstens ein paar Pixel, nur solange sie sichtbar sind.
+// Bei „Bewegung reduzieren“ oder ohne IntersectionObserver bleibt alles still.
+(function () {
+  var rahmen = document.querySelectorAll('[data-parallaxe]');
+  if (!rahmen.length || !('IntersectionObserver' in window)) return;
+  var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (ruhig.matches) return;
+
+  var sichtbar = [];
+  var geplant = false;
+
+  function rechne() {
+    geplant = false;
+    var mitte = window.innerHeight / 2;
+    sichtbar.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      // Abstand der Rahmenmitte zur Fenstermitte, begrenzt auf ±1
+      var anteil = Math.max(-1, Math.min(1, (r.top + r.height / 2 - mitte) / (mitte + r.height / 2)));
+      // Höchstens 3 % der Rahmenhöhe: Das Bild ist um 8 % vergrößert, die Kanten bleiben verdeckt
+      el.style.setProperty('--parallaxe', (anteil * r.height * 0.03).toFixed(1) + 'px');
+    });
+  }
+  function plane() {
+    if (!geplant) {
+      geplant = true;
+      window.requestAnimationFrame(rechne);
+    }
+  }
+
+  var beobachter = new IntersectionObserver(function (eintraege) {
+    eintraege.forEach(function (eintrag) {
+      var i = sichtbar.indexOf(eintrag.target);
+      if (eintrag.isIntersecting && i < 0) sichtbar.push(eintrag.target);
+      if (!eintrag.isIntersecting && i >= 0) sichtbar.splice(i, 1);
+    });
+    plane();
+  });
+  rahmen.forEach(function (el) {
+    beobachter.observe(el);
+  });
+  window.addEventListener('scroll', plane, { passive: true });
+  window.addEventListener('resize', plane);
+  document.documentElement.classList.add('js-parallaxe');
 })();
