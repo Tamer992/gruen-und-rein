@@ -11,7 +11,7 @@ def baue(quelle, ziel, achsen):
     font = TTFont(quelle, lazy=False)
     opts = subset.Options()
     opts.flavor = "woff2"
-    opts.layout_features = ["kern", "liga", "calt", "lnum", "pnum", "onum", "case", "ss01"]
+    opts.layout_features = ["kern", "liga", "calt", "lnum", "pnum", "onum", "tnum", "case", "ss01", "locl"]
     opts.unicodes = subset.parse_unicodes(ZEICHEN)
     s = subset.Subsetter(opts)
     s.populate(unicodes=opts.unicodes)
@@ -21,10 +21,9 @@ def baue(quelle, ziel, achsen):
     font.save(ziel)
     print(ziel)
 
-# Fraunces für Überschriften: optischer Größenausgleich (opsz) und Gewicht bleiben variabel,
-# weiche Formen (SOFT 50) und ohne schiefe Zierbuchstaben (WONK 0), damit sie ruhig lesbar bleibt
-baue(FS + "fraunces/files/fraunces-latin-full-normal.woff2", "src/fonts/fraunces.woff2",
-     {"wght": (400, 700), "opsz": (9, 144), "SOFT": 50, "WONK": 0})
+# Literata für Überschriften: optischer Größenausgleich (ab 18, kleiner setzen wir keine Überschriften) und Gewicht bleiben variabel
+baue(FS + "literata/files/literata-latin-opsz-normal.woff2", "src/fonts/literata.woff2",
+     {"wght": (400, 700), "opsz": (18, 72)})
 baue(FS + "atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2",
      "src/fonts/atkinson-next.woff2", {"wght": (400, 700)})
 baue(FS + "atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-italic.woff2",
