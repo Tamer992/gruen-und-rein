@@ -5,9 +5,9 @@ import os
 FS = "node_modules/@fontsource-variable/"
 os.makedirs("scripts/_instanzen", exist_ok=True)
 for quelle, ziel, achsen in [
-    (FS + "fraunces/files/fraunces-latin-full-normal.woff2", "wort.ttf", {"wght": 560, "opsz": 96, "SOFT": 50, "WONK": 0}),
-    (FS + "fraunces/files/fraunces-latin-full-italic.woff2", "et.ttf", {"wght": 380, "opsz": 144, "SOFT": 100, "WONK": 1}),
-    (FS + "atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2", "zeile.ttf", {"wght": 600}),
+    (FS + "schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2", "wort.ttf", {"wght": 800}),
+    (FS + "schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2", "et.ttf", {"wght": 500}),
+    (FS + "atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2", "zeile.ttf", {"wght": 400}),
 ]:
     f = TTFont(quelle, lazy=False)
     f = instancer.instantiateVariableFont(f, achsen)

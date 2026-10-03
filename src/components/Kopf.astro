@@ -1,110 +1,156 @@
 ---
 import { p } from '../pfad';
 import { site, navigation } from '../site.config';
+import Symbol from './Symbol.astro';
 import logo from './logo-mass.json';
 
 const aktuell = Astro.url.pathname;
 ---
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+
+<div class="leiste">
+  <div class="behaelter leiste__innen">
+    <a class="leiste__telefon" href={`tel:${site.telefonLink}`}>
+      <Symbol name="telefon" />
+      <span><span class="leiste__frage">Rufen Sie uns an:</span> <strong class="nummer">{site.telefon}</strong></span>
+    </a>
+    <span class="leiste__zeiten">
+      <Symbol name="uhr" />
+      {site.erreichbarkeit}
+    </span>
+    <a class="leiste__whatsapp" href={`https://wa.me/${site.whatsappLink}`}>
+      <Symbol name="whatsapp" />
+      WhatsApp schreiben
+    </a>
+  </div>
+</div>
+
 <header class="kopf">
-  <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
   <div class="behaelter kopf__zeile">
     <a class="kopf__marke" href={p('/')}>
       <img src={p('/logo.svg')} alt={`${site.name}, zur Startseite`} width={logo.breite} height={logo.hoehe} />
     </a>
 
-    <p class="kopf__telefon">
-      <span class="kopf__frage">Rufen Sie uns an</span>
-      <a class="kopf__nummer" href={`tel:${site.telefonLink}`}>{site.telefon}</a>
-      <span class="kopf__zeiten">{site.erreichbarkeit}</span>
-    </p>
+    <nav id="hauptnavigation" class="hauptnav" aria-label="Hauptnavigation">
+      <ul class="hauptnav__liste">
+        {navigation.map((punkt) => (
+          <li>
+            <a href={p(punkt.pfad)} aria-current={aktuell.startsWith(p(punkt.pfad)) ? 'page' : undefined}>{punkt.titel}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
     <button class="kopf__menue" type="button" aria-expanded="false" aria-controls="hauptnavigation">
       <span class="kopf__menue-striche" aria-hidden="true"></span>
       <span class="kopf__menue-wort">Menü</span>
     </button>
   </div>
-
-  <nav id="hauptnavigation" class="hauptnav" aria-label="Hauptnavigation">
-    <ul class="behaelter hauptnav__liste">
-      {navigation.map((punkt) => (
-        <li>
-          <a href={p(punkt.pfad)} aria-current={aktuell.startsWith(p(punkt.pfad)) ? 'page' : undefined}>{punkt.titel}</a>
-        </li>
-      ))}
-    </ul>
-  </nav>
 </header>
 
 <style>
-  .kopf {
-    border-bottom: 1px solid var(--linie);
-    background: var(--papier);
+  /* Dunkle Leiste mit Telefon */
+  .leiste {
+    background: var(--tanne);
+    color: var(--hell-auf-tanne);
+    font-size: var(--text-klein);
   }
-  .kopf__zeile {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas:
-      'marke menue'
-      'telefon telefon';
+  .leiste__innen {
+    display: flex;
     align-items: center;
-    gap: var(--a-2) var(--a-3);
-    padding-block: var(--a-2);
+    justify-content: space-between;
+    gap: var(--a-3);
+    min-height: 3.25rem;
   }
-  .kopf__marke {
-    grid-area: marke;
-    display: inline-block;
-    justify-self: start;
-    padding-block: 0.25rem;
+  .leiste a {
+    color: #fff;
+    text-decoration: none;
   }
-  .kopf__marke img {
-    width: clamp(11.5rem, 8rem + 12vw, 16.5rem);
+  .leiste a:hover {
+    text-decoration: underline;
+  }
+  .leiste :focus-visible {
+    outline-color: #fff;
+  }
+  .leiste__telefon,
+  .leiste__zeiten,
+  .leiste__whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 3rem;
+  }
+  .leiste__telefon {
+    font-size: 1.1875rem;
+  }
+  .leiste__telefon strong {
+    letter-spacing: 0.01em;
+  }
+  .leiste__telefon :global(.symbol),
+  .leiste__whatsapp :global(.symbol) {
+    color: var(--blatt);
+  }
+  .leiste__zeiten,
+  .leiste__whatsapp {
+    display: none;
+  }
+  @media (min-width: 48em) {
+    .leiste__whatsapp {
+      display: inline-flex;
+    }
+  }
+  @media (min-width: 64em) {
+    .leiste__zeiten {
+      display: inline-flex;
+      margin-right: auto;
+    }
+  }
+  @media (max-width: 29.99em) {
+    .leiste__frage {
+      display: none;
+    }
   }
 
-  .kopf__telefon {
-    grid-area: telefon;
-    margin: 0;
+  /* Hauptzeile */
+  .kopf {
+    background: var(--grund);
+    border-bottom: 1px solid var(--linie);
+  }
+  .kopf__zeile {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0 var(--a-2);
-    padding-top: var(--a-2);
-    border-top: 1px solid var(--linie);
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 var(--a-3);
+    min-height: 4.75rem;
   }
-  .kopf__frage {
-    font-size: var(--text-klein);
-    color: var(--tinte-leise);
+  .kopf__marke {
+    display: inline-flex;
+    flex: none;
+    padding-block: 0.9rem;
   }
-  .kopf__nummer {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    padding-block: 0.35rem;
-    max-width: 100%;
-  }
-  .kopf__zeiten {
-    flex-basis: 100%;
-    font-size: var(--text-klein);
-    color: var(--tinte-leise);
+  .kopf__marke img {
+    height: 2.75rem;
+    width: auto;
   }
 
   .kopf__menue {
-    grid-area: menue;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
     min-height: 3rem;
-    min-width: 3rem;
     padding: 0.5rem 1rem;
     font: inherit;
     font-weight: 700;
-    color: var(--tanne);
-    background: var(--papier);
-    border: 2px solid var(--tanne);
-    border-radius: var(--ecke);
+    color: var(--waldgruen);
+    background: var(--salbei);
+    border: 0;
+    border-radius: var(--r-knopf);
     cursor: pointer;
+    transition: background-color var(--uebergang);
   }
   .kopf__menue:hover {
-    background: var(--blatt);
+    background: var(--salbei-tief);
   }
   .kopf__menue-striche,
   .kopf__menue-striche::before,
@@ -112,6 +158,7 @@ const aktuell = Astro.url.pathname;
     display: block;
     width: 1.1rem;
     height: 2px;
+    border-radius: 2px;
     background: currentColor;
   }
   .kopf__menue-striche {
@@ -122,6 +169,7 @@ const aktuell = Astro.url.pathname;
     content: '';
     position: absolute;
     left: 0;
+    transition: transform var(--uebergang), top var(--uebergang);
   }
   .kopf__menue-striche::before { top: -6px; }
   .kopf__menue-striche::after { top: 6px; }
@@ -129,95 +177,87 @@ const aktuell = Astro.url.pathname;
   .kopf__menue[aria-expanded='true'] .kopf__menue-striche::before { top: 0; transform: rotate(45deg); }
   .kopf__menue[aria-expanded='true'] .kopf__menue-striche::after { top: 0; transform: rotate(-45deg); }
 
-  /* Navigation: auf kleinen Bildschirmen aufklappbar */
+  /* Navigation: auf kleinen Bildschirmen aufklappbar unter der Zeile */
   .hauptnav {
     display: none;
-    border-top: 1px solid var(--linie);
+    order: 3;
+    flex-basis: 100%;
   }
-  .hauptnav.ist-offen {
+  .hauptnav:global(.ist-offen) {
     display: block;
   }
   .hauptnav__liste {
     list-style: none;
-    margin: 0 auto;
-    padding-block: var(--a-1) var(--a-2);
+    margin: 0;
+    padding: 0 0 var(--a-2);
+    max-width: none;
   }
-  .hauptnav__liste li {
-    border-bottom: 1px solid var(--linie);
-  }
-  .hauptnav__liste li:last-child {
-    border-bottom: 0;
+  .hauptnav__liste li + li {
+    border-top: 1px solid var(--linie);
   }
   .hauptnav a {
     display: flex;
     align-items: center;
-    min-height: 3.25rem;
+    min-height: 3.5rem;
     font-weight: 700;
-    text-decoration: none;
     color: var(--tinte);
+    text-decoration: none;
   }
-  .hauptnav a:hover {
-    color: var(--tanne);
-    text-decoration: underline;
-  }
+  .hauptnav a:hover,
   .hauptnav a[aria-current='page'] {
-    color: var(--tanne);
-    text-decoration: underline;
-    text-decoration-thickness: 3px;
-    text-underline-offset: 0.35em;
+    color: var(--waldgruen);
   }
 
-  /* Ab Tablet: Telefon neben der Wortmarke. Wird es eng (große Schrift), rutscht es darunter. */
-  @media (min-width: 40em) {
+  /* Ab Desktop: Navigation in einer Zeile neben dem Logo */
+  @media (min-width: 64em) {
     .kopf__zeile {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      padding-block: var(--a-3);
-    }
-    .kopf__marke {
-      flex: none;
-      margin-right: auto;
-    }
-    .kopf__telefon {
-      order: 2;
-      flex: 0 1 auto;
-      justify-content: flex-end;
-      text-align: right;
-      border-top: 0;
-      padding-top: 0;
-    }
-    .kopf__menue {
-      order: 3;
-    }
-  }
-
-  /* Ab Desktop: Navigation immer sichtbar, kein Menü-Knopf */
-  @media (min-width: 60em) {
-    .kopf__zeile {
-      padding-block: var(--a-4) var(--a-3);
+      flex-wrap: nowrap;
+      min-height: 5rem;
     }
     .kopf__menue {
       display: none;
     }
-    .kopf__nummer {
-      font-size: 1.75rem;
-    }
     .hauptnav,
-    .hauptnav.ist-offen {
+    .hauptnav:global(.ist-offen) {
       display: block;
+      order: 0;
+      flex-basis: auto;
     }
     .hauptnav__liste {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0 clamp(1.25rem, 2.6vw, 2.75rem);
-      padding-block: 0;
+      gap: clamp(1rem, 0.1rem + 1.5vw, 2rem);
+      padding: 0;
     }
-    .hauptnav__liste li {
-      border-bottom: 0;
+    .hauptnav__liste li + li {
+      border-top: 0;
     }
     .hauptnav a {
-      min-height: 3.5rem;
+      position: relative;
+      min-height: 3rem;
+      font-size: 1.0625rem;
+      white-space: nowrap;
+    }
+    .hauptnav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0.4rem;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--waldgruen);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--uebergang);
+    }
+    .hauptnav a:hover::after,
+    .hauptnav a[aria-current='page']::after {
+      transform: scaleX(1);
+    }
+  }
+  @media (min-width: 64em) and (max-width: 74.99em) {
+    .kopf__marke img {
+      height: 2.35rem;
     }
   }
 </style>

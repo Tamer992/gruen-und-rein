@@ -1,11 +1,14 @@
 /* Grün & Rein: Grundgestaltung
-   Alle Farben, Abstände und Schriftgrößen stehen als Variablen in :root.
-   Größen in rem und em, damit die Seite bei 200 % Zoom nicht bricht. */
+   Farben, Abstände, Schriftgrößen und Rundungen stehen als Variablen in :root.
+   Größen in rem und em, damit die Seite bei 200 % Zoom nicht bricht.
+
+   Rundungen (überall gleich):
+   Knöpfe und Felder 12px, Fotos und Kacheln 20px, große Flächen 28px. */
 
 @font-face {
-  font-family: 'Fraunces';
-  src: url('../fonts/fraunces.woff2') format('woff2');
-  font-weight: 400 650;
+  font-family: 'Schibsted Grotesk';
+  src: url('../fonts/schibsted.woff2') format('woff2');
+  font-weight: 500 800;
   font-style: normal;
   font-display: swap;
 }
@@ -25,35 +28,34 @@
 }
 
 :root {
-  /* Farben (Kontraste in der README) */
-  --papier: #faf7f0;
-  --blatt: #eaf0e6;
-  --stein: #efece5;
-  --bildgrund: #e3e6dd;
-  --tinte: #1e2a23;
-  --tinte-leise: #46534b;
-  --tanne: #2f5640;
-  --tanne-tief: #24432f;
-  --moos: #55705a;
-  --linie: #c9cfc2;
-  --hell-auf-tanne: #cfdccb;
-  --ocker: #d2a043;
-  --ocker-hell: #ddb061;
-  --ocker-rand: #7a5212;
+  color-scheme: light;
+
+  /* Farben. Kontraste: Text auf Grund 15,5 : 1, Weiß auf Waldgrün 9,7 : 1 */
+  --grund: #f6f7f4;
+  --flaeche: #ffffff;
+  --salbei: #e7eee8;
+  --salbei-tief: #d9e5dc;
+  --linie: #d3dcd5;
+  --tinte: #14211a;
+  --leise: #4a5a51;
+  --waldgruen: #1e4d36;
+  --waldgruen-tief: #163a29;
+  --tanne: #12291d;
+  --blatt: #a9d3b2;
+  --hell-auf-tanne: #bfd0c4;
 
   /* Schriften */
-  --schrift-titel: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --schrift-titel: 'Schibsted Grotesk', 'Segoe UI', Arial, sans-serif;
   --schrift-text: 'Atkinson Hyperlegible Next', 'Segoe UI', Verdana, sans-serif;
 
   /* Schriftgrößen */
   --text: 1.1875rem;
   --text-gross: 1.3125rem;
   --text-klein: 1.0625rem;
-  --titel-1: clamp(2.25rem, 1.55rem + 2.6vw, 3.625rem);
-  --titel-2: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
-  --titel-3: clamp(1.4375rem, 1.3rem + 0.6vw, 1.75rem);
-  --zeilenhoehe: 1.6;
-  --mass: 65ch;
+  --titel-1: clamp(2.6rem, 1.7rem + 3.6vw, 4.6rem);
+  --titel-2: clamp(2rem, 1.45rem + 2vw, 3.1rem);
+  --titel-3: clamp(1.375rem, 1.25rem + 0.5vw, 1.625rem);
+  --mass: 62ch;
 
   /* Abstände */
   --a-1: 0.5rem;
@@ -62,15 +64,19 @@
   --a-4: 2rem;
   --a-5: 3rem;
   --a-6: 4.5rem;
-  --a-7: clamp(4rem, 2.5rem + 6vw, 8rem);
+  --a-bereich: clamp(4.5rem, 3rem + 5vw, 8rem);
 
   /* Raster */
-  --breite: 78rem;
-  --rand: clamp(1rem, 0.5rem + 3vw, 3rem);
-  --spalt: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+  --breite: 80rem;
+  --rand: clamp(1rem, 0.4rem + 3vw, 3rem);
+  --spalt: clamp(1rem, 0.4rem + 2.2vw, 2.5rem);
 
-  --ecke: 2px;
-  --fokus: 3px solid var(--tinte);
+  /* Rundungen */
+  --r-knopf: 12px;
+  --r-bild: 20px;
+  --r-gross: 28px;
+
+  --uebergang: 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 @media (min-width: 64em) {
@@ -80,7 +86,6 @@
   }
 }
 
-/* Grundlagen */
 *,
 *::before,
 *::after {
@@ -94,13 +99,13 @@ html {
 
 body {
   margin: 0;
-  background: var(--papier);
+  background: var(--grund);
   color: var(--tinte);
   font-family: var(--schrift-text);
   font-size: var(--text);
-  line-height: var(--zeilenhoehe);
-  font-variant-numeric: lining-nums;
+  line-height: 1.6;
   overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
 }
 
 img,
@@ -115,23 +120,27 @@ h2,
 h3,
 h4 {
   font-family: var(--schrift-titel);
-  font-weight: 560;
-  line-height: 1.15;
   color: var(--tinte);
   margin: 0 0 var(--a-2);
   text-wrap: balance;
-  font-optical-sizing: auto;
 }
 h1 {
   font-size: var(--titel-1);
-  letter-spacing: -0.012em;
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
 }
 h2 {
   font-size: var(--titel-2);
-  letter-spacing: -0.008em;
+  font-weight: 750;
+  line-height: 1.08;
+  letter-spacing: -0.028em;
 }
 h3 {
   font-size: var(--titel-3);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
 }
 
 p,
@@ -145,19 +154,20 @@ p {
 }
 
 a {
-  color: var(--tanne);
+  color: var(--waldgruen);
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
 a:hover {
-  color: var(--tanne-tief);
+  color: var(--waldgruen-tief);
   text-decoration-thickness: 2px;
 }
 
 :focus-visible {
-  outline: var(--fokus);
+  outline: 3px solid var(--tinte);
   outline-offset: 3px;
+  border-radius: 4px;
 }
 
 ::selection {
@@ -183,13 +193,14 @@ a:hover {
   top: -10rem;
   z-index: 100;
   background: var(--tinte);
-  color: var(--papier);
+  color: #fff;
   padding: var(--a-2) var(--a-3);
+  border-radius: var(--r-knopf);
   font-weight: 700;
 }
 .sprung:focus {
   top: var(--a-2);
-  color: var(--papier);
+  color: #fff;
 }
 
 /* Raster */
@@ -212,44 +223,17 @@ a:hover {
 }
 
 .bereich {
-  padding-block: var(--a-7);
-}
-
-/* Kleine Bausteine */
-.vorzeile {
-  display: block;
-  font-family: var(--schrift-text);
-  font-size: var(--text-klein);
-  font-weight: 700;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--moos);
-  margin: 0 0 var(--a-2);
+  padding-block: var(--a-bereich);
 }
 
 .einleitung {
   font-size: var(--text-gross);
-  line-height: 1.55;
+  line-height: 1.5;
+  color: var(--leise);
 }
 
 .leise {
-  color: var(--tinte-leise);
-}
-
-.klein {
-  font-size: var(--text-klein);
-}
-
-/* Liste mit feinen Linien zwischen den Punkten */
-.linienliste {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--a-3);
-  border-top: 1px solid var(--linie);
-}
-.linienliste li {
-  padding: 0.55rem 0;
-  border-bottom: 1px solid var(--linie);
+  color: var(--leise);
 }
 
 /* Knöpfe */
@@ -257,62 +241,110 @@ a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  min-height: 3.25rem;
-  min-width: 3rem;
-  padding: 0.75rem 1.5rem;
+  gap: 0.65rem;
+  min-height: 3.5rem;
+  padding: 0.85rem 1.6rem;
   font-family: var(--schrift-text);
   font-size: var(--text);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
+  white-space: nowrap;
   text-decoration: none;
-  border-radius: var(--ecke);
-  border: 1px solid transparent;
+  border-radius: var(--r-knopf);
+  border: 0;
   cursor: pointer;
+  transition: background-color var(--uebergang), transform var(--uebergang);
 }
-.knopf--anruf {
-  background: var(--ocker);
-  border-color: var(--ocker-rand);
-  color: var(--tinte);
+.knopf:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
 }
-.knopf--anruf:hover {
-  background: var(--ocker-hell);
-  color: var(--tinte);
+.knopf:active {
+  transform: translateY(0) scale(0.98);
 }
-.knopf--tanne {
-  background: var(--tanne);
-  border-color: var(--tanne-tief);
-  color: var(--papier);
+.knopf--haupt {
+  background: var(--waldgruen);
+  color: #fff;
 }
-.knopf--tanne:hover {
-  background: var(--tanne-tief);
-  color: var(--papier);
+.knopf--haupt:hover {
+  background: var(--waldgruen-tief);
+  color: #fff;
 }
-.knopf__hoerer {
-  width: 1.15em;
-  height: 1.15em;
+.knopf--neben {
+  background: var(--salbei);
+  color: var(--waldgruen);
+}
+.knopf--neben:hover {
+  background: var(--salbei-tief);
+  color: var(--waldgruen-tief);
+}
+.knopf--hell {
+  background: var(--blatt);
+  color: var(--tanne);
+}
+.knopf--hell:hover {
+  background: #bfe0c6;
+  color: var(--tanne);
+}
+.knopf--rahmen {
+  background: transparent;
+  color: #fff;
+  box-shadow: inset 0 0 0 2px var(--hell-auf-tanne);
+}
+.knopf--rahmen:hover {
+  background: rgb(255 255 255 / 0.08);
+  color: #fff;
+}
+.symbol {
+  display: inline-flex;
   flex: none;
+  width: 1.3em;
+  height: 1.3em;
+}
+.symbol svg {
+  width: 100%;
+  height: 100%;
 }
 
-/* Link mit Pfeil am Ende eines Abschnitts */
-.weiter {
-  display: inline-block;
-  padding-block: 0.6rem;
+/* Telefonnummern: in der Überschriftenschrift, deren Null nicht durchgestrichen ist */
+.nummer {
+  font-family: var(--schrift-titel);
   font-weight: 700;
-}
-.weiter::after {
-  content: '\2009\2192';
-  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
 }
 
-/* Bilder und Bild-Platzhalter */
+/* Link mit Pfeil */
+.weiter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 3rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.weiter:hover {
+  text-decoration: underline;
+}
+.weiter .symbol {
+  width: 1.05em;
+  height: 1.05em;
+  transition: transform var(--uebergang);
+}
+.weiter:hover .symbol {
+  transform: translateX(3px);
+}
+
+/* Bilder */
 .bild {
   margin: 0;
 }
 .bild__rahmen {
   position: relative;
   overflow: hidden;
-  background: var(--bildgrund);
+  border-radius: var(--r-bild);
+  background: var(--salbei);
+  height: 100%;
 }
 .bild__rahmen img {
   width: 100%;
@@ -320,52 +352,15 @@ a:hover {
   object-fit: cover;
 }
 .format-4-5 { aspect-ratio: 4 / 5; }
+.format-4-3 { aspect-ratio: 4 / 3; }
 .format-3-2 { aspect-ratio: 3 / 2; }
 .format-16-9 { aspect-ratio: 16 / 9; }
-.format-2-1 { aspect-ratio: 2 / 1; }
 .format-1-1 { aspect-ratio: 1 / 1; }
-
-.bild__platzhalter {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  padding: var(--a-3);
-  outline: 1px solid var(--linie);
-  outline-offset: -0.75rem;
-  color: var(--tinte-leise);
-  font-size: var(--text-klein);
-  line-height: 1.45;
-}
-.bild__platzhalter strong {
-  color: var(--tinte);
-}
-.bild figcaption {
-  margin-top: var(--a-1);
-  font-size: var(--text-klein);
-  color: var(--tinte-leise);
-}
-
-/* Zweig-Motiv */
-.zweig {
-  color: var(--moos);
-  width: 4.5rem;
-}
-
-/* Hinweis Pflegekasse */
-.hinweis {
-  border-left: 4px solid var(--tanne);
-  background: var(--blatt);
-  padding: var(--a-3) var(--a-4);
-  max-width: 48rem;
-}
-.hinweis h2,
-.hinweis h3 {
-  font-size: var(--titel-3);
-}
-.hinweis p:last-child {
-  margin-bottom: 0;
-}
+.format-frei { aspect-ratio: auto; }
+.ausschnitt-oben img { object-position: center 20%; }
+.ausschnitt-unten img { object-position: center 85%; }
+.ausschnitt-links img { object-position: 25% center; }
+.ausschnitt-rechts img { object-position: 75% center; }
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -380,7 +375,7 @@ a:hover {
 @media print {
   .kopf__menue,
   .anrufleiste,
-  .hauptnav {
+  .leiste {
     display: none !important;
   }
 }

@@ -1,7 +1,7 @@
 ---
 import { p } from '../pfad';
 import schriftText from '../fonts/atkinson-next.woff2?url';
-import schriftTitel from '../fonts/fraunces.woff2?url';
+import schriftTitel from '../fonts/schibsted.woff2?url';
 import '../styles/global.css';
 import { site, leistungen } from '../site.config';
 import Kopf from '../components/Kopf.astro';
@@ -68,7 +68,7 @@ const betrieb = {
     <meta name="description" content={beschreibung} />
     <link rel="canonical" href={adresse} />
     {!indexieren && <meta name="robots" content="noindex, follow" />}
-    <meta name="theme-color" content="#faf7f0" />
+    <meta name="theme-color" content="#12291d" />
 
     <link rel="preload" href={schriftText} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={schriftTitel} as="font" type="font/woff2" crossorigin />
@@ -109,7 +109,7 @@ const betrieb = {
   }
   @media (max-width: 47.99em) {
     body {
-      padding-bottom: 4.5rem;
+      padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
     }
   }
 </style>

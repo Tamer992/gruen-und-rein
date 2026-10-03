@@ -21,8 +21,8 @@ def baue(quelle, ziel, achsen):
     font.save(ziel)
     print(ziel)
 
-baue(FS + "fraunces/files/fraunces-latin-full-normal.woff2", "src/fonts/fraunces.woff2",
-     {"wght": (400, 650), "opsz": (24, 144), "SOFT": 50, "WONK": 0})
+baue(FS + "schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2", "src/fonts/schibsted.woff2",
+     {"wght": (500, 800)})
 baue(FS + "atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2",
      "src/fonts/atkinson-next.woff2", {"wght": (400, 700)})
 baue(FS + "atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-italic.woff2",

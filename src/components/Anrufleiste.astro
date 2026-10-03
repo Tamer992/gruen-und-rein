@@ -1,15 +1,18 @@
 ---
-// Feste Leiste am unteren Rand, nur auf dem Handy.
+// Feste Leiste am unteren Rand, nur auf dem Handy: Anrufen und WhatsApp.
 // „ruhig“ nimmt die Farbe zurück (für die Trauerbegleitung).
 import { site } from '../site.config';
-import Hoerer from './Hoerer.astro';
+import Symbol from './Symbol.astro';
 const { ruhig = false } = Astro.props;
 ---
 <div class:list={['anrufleiste', { 'anrufleiste--ruhig': ruhig }]}>
-  <a href={`tel:${site.telefonLink}`}>
-    <Hoerer klasse="anrufleiste__hoerer" />
-    <span>{ruhig ? 'Anrufen' : 'Jetzt anrufen'}</span>
-    <span class="anrufleiste__nummer">{site.telefon}</span>
+  <a class="anrufleiste__anruf" href={`tel:${site.telefonLink}`}>
+    <Symbol name="telefon" />
+    Jetzt anrufen
+  </a>
+  <a class="anrufleiste__whatsapp" href={`https://wa.me/${site.whatsappLink}`}>
+    <Symbol name="whatsapp" />
+    WhatsApp
   </a>
 </div>
 
@@ -18,40 +21,35 @@ const { ruhig = false } = Astro.props;
     position: fixed;
     inset: auto 0 0 0;
     z-index: 50;
-    background: var(--ocker);
-    border-top: 1px solid var(--ocker-rand);
-    padding-bottom: env(safe-area-inset-bottom);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    padding: 0.6rem var(--rand) calc(0.6rem + env(safe-area-inset-bottom));
+    background: var(--grund);
+    border-top: 1px solid var(--linie);
   }
   .anrufleiste a {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 0 0.6rem;
-    min-height: 3.75rem;
-    padding: 0.4rem var(--rand);
-    color: var(--tinte);
+    gap: 0.55rem;
+    min-height: 3.25rem;
+    border-radius: var(--r-knopf);
     font-weight: 700;
     text-decoration: none;
   }
-  .anrufleiste a:focus-visible {
-    outline-offset: -5px;
+  .anrufleiste__anruf {
+    background: var(--waldgruen);
+    color: #fff;
   }
-  .anrufleiste__nummer {
-    font-weight: 400;
+  .anrufleiste__whatsapp {
+    background: var(--salbei);
+    color: var(--waldgruen);
   }
-  .anrufleiste :global(.anrufleiste__hoerer) {
-    width: 1.2em;
-    height: 1.2em;
+  .anrufleiste--ruhig .anrufleiste__anruf {
+    background: var(--salbei);
+    color: var(--waldgruen);
   }
-  .anrufleiste--ruhig {
-    background: var(--papier);
-    border-top-color: var(--linie);
-  }
-  .anrufleiste--ruhig a {
-    color: var(--tanne);
-  }
-
   @media (min-width: 48em) {
     .anrufleiste {
       display: none;
