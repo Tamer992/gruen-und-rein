@@ -13,6 +13,13 @@ ohne Namensnennung. Sie sind ein Übergang, bis eigene Fotos von Grün & Rein vo
 | garten-rasen.jpg | https://unsplash.com/photos/YhxOrHGrQQc |
 | weg-gruen.jpg | https://unsplash.com/photos/qgmojlGhb7k |
 | trauer-blumen.jpg | https://unsplash.com/photos/nIynZQhcQBM |
+| alltag-gesellschaft.jpg | https://unsplash.com/photos/dMhB7w99ju8 |
+| hauswirtschaft-waesche.jpg | https://unsplash.com/photos/oa7pqZmmhuA |
+| trauer-tee.jpg | https://unsplash.com/photos/S6AyKJ5hFPo |
+| reinigung-wohnzimmer.jpg | https://unsplash.com/photos/x3mSC1WnWhc |
+| garten-beet.jpg | https://unsplash.com/photos/P1jvE8062pQ |
+| kontakt-telefon.jpg | https://unsplash.com/photos/f5uc9of5eak |
+| ueber-uns-umarmung.jpg | https://unsplash.com/photos/gikzHDPJmp0 |
 
 Eigenes Foto einsetzen: Datei mit gleichem Namen hier ablegen (JPG, mindestens 2000 px breit).
 Beim Bauen entstehen automatisch AVIF und WebP in passenden Größen.

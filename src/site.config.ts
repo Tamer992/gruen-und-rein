@@ -58,30 +58,14 @@ export const site = {
   // Auf false stellen, falls die Anerkennung doch fehlt: Dann verschwinden alle Hinweise.
   pflegekasse: true,
 
-  // Gibt es schon eigene Unterseiten für die Leistungen und „Über uns“?
-  // Solange false, zeigen Navigation, Kacheln und Fuß auf die Abschnitte der Startseite,
-  // damit kein Link ins Leere führt. Auf true stellen, sobald die Seiten in src/pages/ liegen.
-  unterseiten: false,
-};
+  // Entlastungsbetrag nach § 45b SGB XI in Euro pro Monat (seit 1.1.2025, gilt auch 2026).
+  // Steht auf der Seite „Pflegekasse“. Bei einer gesetzlichen Erhöhung hier anpassen.
+  entlastungsbetrag: 131,
 
-// Navigation im Kopf: höchstens sechs Punkte
-const navigationUnterseiten = [
-  { titel: 'Alltagsbegleitung', pfad: '/alltagsbegleitung/' },
-  { titel: 'Hauswirtschaft', pfad: '/hauswirtschaft/' },
-  { titel: 'Gebäudereinigung', pfad: '/gebaeudereinigung/' },
-  { titel: 'Gartenpflege', pfad: '/gartenpflege/' },
-  { titel: 'Über uns', pfad: '/ueber-uns/' },
-  { titel: 'Kontakt', pfad: '/kontakt/' },
-];
-// Solange es keine Unterseiten gibt: Sprungmarken auf der Startseite
-const navigationStartseite = [
-  { titel: 'Leistungen', pfad: '/#leistungen' },
-  ...(site.pflegekasse ? [{ titel: 'Pflegekasse', pfad: '/#pflegekasse' }] : []),
-  { titel: 'Ablauf', pfad: '/#ablauf' },
-  { titel: 'Über uns', pfad: '/#ueber-uns' },
-  { titel: 'Kontakt', pfad: '/#kontakt' },
-];
-export const navigation = site.unterseiten ? navigationUnterseiten : navigationStartseite;
+  // Gibt es eigene Unterseiten für die Leistungen, „Pflegekasse“, „Über uns“ und „Kontakt“?
+  // Bei false zeigen Navigation, Kacheln und Fuß auf die Abschnitte der Startseite.
+  unterseiten: true,
+};
 
 // Leistungen wie auf dem Flyer von Hussain und Ali.
 // kasse: Abrechnung über die Pflegekasse möglich (nur sichtbar, wenn pflegekasse: true)
@@ -95,20 +79,20 @@ export const leistungen = [
     punkte: ['Gesellschaft', 'Spaziergänge', 'Einkäufe', 'Arztbegleitung', 'Entlastung im Alltag'],
   },
   {
-    titel: 'Trauerbegleitung',
-    kurz: 'Trauerbegleitung',
-    pfad: '/trauerbegleitung/',
-    anker: 'trauerbegleitung',
-    kasse: true,
-    punkte: ['Zuhören', 'Gespräche', 'Unterstützung im Alltag', 'Begleitung in schweren Zeiten'],
-  },
-  {
     titel: 'Hauswirtschaft',
     kurz: 'Hauswirtschaft',
     pfad: '/hauswirtschaft/',
     anker: 'hauswirtschaft',
     kasse: true,
     punkte: ['Reinigung', 'Wäsche', 'Einkaufen', 'Küche', 'Bad', 'Haushaltshilfe'],
+  },
+  {
+    titel: 'Trauerbegleitung',
+    kurz: 'Trauerbegleitung',
+    pfad: '/trauerbegleitung/',
+    anker: 'trauerbegleitung',
+    kasse: true,
+    punkte: ['Zuhören', 'Gespräche', 'Unterstützung im Alltag', 'Begleitung in schweren Zeiten'],
   },
   {
     titel: 'Gebäudereinigung',
@@ -132,3 +116,21 @@ export const leistungen = [
 export function leistungsPfad(l: { pfad: string; anker: string }): string {
   return site.unterseiten ? l.pfad : `/#${l.anker}`;
 }
+
+// Navigation im Kopf. „unter“ erscheint auf dem Desktop als aufklappende Liste, im Handy-Menü direkt darunter.
+type Navigationspunkt = { titel: string; pfad: string; unter?: { titel: string; pfad: string; kasse?: boolean }[] };
+const navigationUnterseiten: Navigationspunkt[] = [
+  { titel: 'Leistungen', pfad: '/#leistungen', unter: leistungen.map((l) => ({ titel: l.kurz, pfad: l.pfad, kasse: l.kasse })) },
+  ...(site.pflegekasse ? [{ titel: 'Pflegekasse', pfad: '/pflegekasse/' }] : []),
+  { titel: 'Über uns', pfad: '/ueber-uns/' },
+  { titel: 'Kontakt', pfad: '/kontakt/' },
+];
+// Ohne Unterseiten: Sprungmarken auf der Startseite
+const navigationStartseite: Navigationspunkt[] = [
+  { titel: 'Leistungen', pfad: '/#leistungen' },
+  ...(site.pflegekasse ? [{ titel: 'Pflegekasse', pfad: '/#pflegekasse' }] : []),
+  { titel: 'Ablauf', pfad: '/#ablauf' },
+  { titel: 'Über uns', pfad: '/#ueber-uns' },
+  { titel: 'Kontakt', pfad: '/#kontakt' },
+];
+export const navigation = site.unterseiten ? navigationUnterseiten : navigationStartseite;

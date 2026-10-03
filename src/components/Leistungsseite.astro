@@ -1,0 +1,424 @@
+---
+// Vorlage für die fünf Leistungsseiten. Jede Seite gibt nur ihre Texte und Fotos hinein.
+// Aufbau: Seitenkopf mit Foto, „Im Einzelnen“ (Sand), Erzählteil mit zweitem Foto,
+// Band in Tanne (Pflegekasse oder Angebot), häufige Fragen, weitere Leistungen (Sand).
+import type { ImageMetadata } from 'astro';
+import { p } from '../pfad';
+import Basis from '../layouts/Basis.astro';
+import Seitenkopf from './Seitenkopf.astro';
+import Fragen, { type Frage } from './Fragen.astro';
+import Bild from './Bild.astro';
+import Blatt from './Blatt.astro';
+import Symbol from './Symbol.astro';
+import { site, leistungen } from '../site.config';
+import { leistungsbilder } from '../leistungsbilder';
+
+type Ausschnitt = 'mitte' | 'ganz-oben' | 'oben' | 'unten' | 'links' | 'rechts';
+interface Props {
+  anker: string;
+  titel: string;
+  beschreibung: string;
+  ueberschrift: string;
+  einleitung: string;
+  bild: ImageMetadata;
+  alt: string;
+  ausschnitt?: Ausschnitt;
+  aufgabenTitel: string;
+  aufgaben: { titel: string; text: string }[];
+  mitte: { titel: string; absaetze: string[]; bild: ImageMetadata; alt: string; ausschnitt?: Ausschnitt };
+  // Für Leistungen ohne Pflegekasse: Text des Bands in Tanne
+  band?: { titel: string; text: string };
+  fragen: Frage[];
+  ruhig?: boolean;
+}
+const { anker, titel, beschreibung, ueberschrift, einleitung, bild, alt, ausschnitt, aufgabenTitel, aufgaben, mitte, band, fragen, ruhig = false } =
+  Astro.props;
+
+const leistung = leistungen.find((l) => l.anker === anker)!;
+const kasse = site.pflegekasse && leistung.kasse;
+const andere = leistungen.filter((l) => l.anker !== anker);
+
+const dienst = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: leistung.titel,
+  serviceType: leistung.titel,
+  description: beschreibung,
+  url: new URL(leistung.pfad, site.domain).href,
+  provider: { '@id': `${site.domain}/#betrieb` },
+  areaServed: site.einsatzorte.map((ort) => ({ '@type': 'City', name: ort })),
+};
+---
+<Basis titel={titel} beschreibung={beschreibung} ruhig={ruhig}>
+  <Fragment slot="kopf"><script type="application/ld+json" set:html={JSON.stringify(dienst)} /></Fragment>
+
+  <Seitenkopf
+    wege={[
+      { titel: 'Leistungen', pfad: '/#leistungen' },
+      { titel: leistung.kurz, pfad: leistung.pfad },
+    ]}
+    etikett={leistung.titel}
+    ueberschrift={ueberschrift}
+    einleitung={einleitung}
+    bild={bild}
+    alt={alt}
+    ausschnitt={ausschnitt}
+  >
+    {kasse && <p slot="zusatz" class="kassenmarke"><Blatt /> Mit Pflegegrad über die Pflegekasse</p>}
+  </Seitenkopf>
+
+  <!-- Im Einzelnen: links die Überschrift, rechts die Aufgaben in zwei Spalten zwischen Haarlinien -->
+  <section class="bereich aufgaben flaeche-sand" aria-labelledby="aufgaben-titel">
+    <div class="behaelter aufgaben__raster">
+      <div class="aufgaben__kopf" data-einblenden>
+        <p class="etikett">Im Einzelnen</p>
+        <h2 id="aufgaben-titel">{aufgabenTitel}</h2>
+      </div>
+      <ul class="aufgaben__liste">
+        {aufgaben.map((a, i) => (
+          <li data-einblenden={i % 2 ? '2' : ''}>
+            <span class="blattpunkt"><Blatt /></span>
+            <div>
+              <h3>{a.titel}</h3>
+              <p>{a.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Erzählteil: Foto links in gespiegelter Blattform, Text rechts -->
+  <section class="bereich mitte" aria-labelledby="mitte-titel">
+    <div class="behaelter mitte__raster">
+      <div class="mitte__bildbereich" data-einblenden>
+        <Bild
+          klasse="mitte__bild"
+          bild={mitte.bild}
+          format="4-3"
+          formatGross="4-5"
+          form="blatt-gespiegelt"
+          parallaxe
+          ausschnitt={mitte.ausschnitt}
+          sizes="(min-width: 80em) 33rem, (min-width: 64em) 40vw, 100vw"
+          alt={mitte.alt}
+        />
+      </div>
+      <div class="mitte__text" data-einblenden="2">
+        <h2 id="mitte-titel">{mitte.titel}</h2>
+        {mitte.absaetze.map((t, i) => <p class:list={{ einleitung: i === 0 }}>{t}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Band in Tanne: Pflegekasse oder, bei Reinigung und Garten, das persönliche Angebot -->
+  <section class="band flaeche-tanne" aria-labelledby="band-titel">
+    <div class="behaelter band__raster">
+      <div class="band__zeichen" aria-hidden="true"><Blatt art="linie" /></div>
+      <div class="band__text" data-einblenden>
+        {kasse ? (
+          <>
+            <p class="etikett etikett--hell">Pflegekasse</p>
+            <h2 id="band-titel">Mit Pflegegrad rechnen wir direkt mit Ihrer Pflegekasse ab.</h2>
+            <p>
+              Für die {leistung.kurz} setzen Sie Ihren monatlichen Entlastungsbetrag ein. Die Abrechnung übernehmen wir
+              für Sie und stimmen alles mit Ihrer Pflegekasse ab.
+            </p>
+          </>
+        ) : (
+          <>
+            <p class="etikett etikett--hell">Ihr Angebot</p>
+            <h2 id="band-titel">{band?.titel}</h2>
+            <p>{band?.text}</p>
+          </>
+        )}
+      </div>
+      <div class="band__handeln" data-einblenden="2">
+        {kasse ? (
+          <a class="knopf knopf--hell" href={p('/pflegekasse/')}>
+            So funktioniert es
+            <Symbol name="pfeil" />
+          </a>
+        ) : (
+          <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
+            <Symbol name="telefon" kreis />
+            Jetzt anrufen
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <Fragen fragen={fragen} />
+
+  <!-- Weitere Leistungen: vier Karten mit Foto -->
+  <section class="bereich weitere flaeche-sand" aria-labelledby="weitere-titel">
+    <div class="behaelter">
+      <div class="weitere__kopf" data-einblenden>
+        <p class="etikett">Weitere Leistungen</p>
+        <h2 id="weitere-titel">Was wir noch für Sie tun</h2>
+      </div>
+      <ul class="weitere__liste">
+        {andere.map((l, i) => {
+          const b = leistungsbilder[l.anker];
+          return (
+            <li data-einblenden={i % 2 ? '2' : ''}>
+              <a class="weitere__karte" href={p(l.pfad)}>
+                <Bild
+                  klasse="weitere__bild"
+                  bild={b.bild}
+                  format="4-3"
+                  ausschnitt={b.ausschnitt}
+                  sizes="(min-width: 80em) 18rem, (min-width: 64em) 22vw, (min-width: 40em) 46vw, 8rem"
+                  alt=""
+                />
+                <span class="weitere__text">
+                  <span class="weitere__titel">{l.kurz} <Symbol name="pfeil" /></span>
+                  {site.pflegekasse && l.kasse && <span class="weitere__kasse">Mit Pflegegrad über die Pflegekasse</span>}
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+</Basis>
+
+<style>
+  /* Im Einzelnen */
+  .aufgaben__raster {
+    display: grid;
+    gap: var(--a-5);
+  }
+  .aufgaben__kopf h2 {
+    max-width: 13ch;
+    margin: 0;
+  }
+  .aufgaben__liste {
+    list-style: none;
+    display: grid;
+    gap: 0 var(--spalt);
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+  .aufgaben__liste li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--a-2);
+    padding-block: var(--a-3) var(--a-4);
+    border-top: 1px solid var(--sand-tief);
+  }
+  .aufgaben__liste .blattpunkt {
+    margin-top: 0.2rem;
+    background: var(--papier);
+  }
+  .aufgaben__liste h3 {
+    margin-bottom: 0.4rem;
+    font-size: clamp(1.4rem, 1.25rem + 0.5vw, 1.75rem);
+    font-weight: 500;
+  }
+  .aufgaben__liste p {
+    margin: 0;
+    color: var(--leise);
+  }
+  @media (min-width: 48em) {
+    .aufgaben__liste {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64em) {
+    .aufgaben__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--spalt);
+      align-items: start;
+    }
+    .aufgaben__kopf {
+      grid-column: 1 / span 4;
+      position: sticky;
+      top: 8rem;
+    }
+    .aufgaben__liste {
+      grid-column: 5 / -1;
+    }
+  }
+
+  /* Erzählteil */
+  .mitte__raster {
+    display: grid;
+    gap: var(--a-6);
+  }
+  .mitte :global(.mitte__bild .bild__rahmen) {
+    box-shadow: var(--schatten-3);
+  }
+  .mitte h2 {
+    max-width: 15ch;
+    margin-bottom: var(--a-4);
+  }
+  .mitte__text p {
+    max-width: 40ch;
+  }
+  .mitte__text p:not(.einleitung) {
+    color: var(--leise);
+  }
+  .mitte__text p:last-child {
+    margin-bottom: 0;
+  }
+  @media (min-width: 64em) {
+    .mitte__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 0 var(--spalt);
+      align-items: center;
+    }
+    .mitte__bildbereich {
+      grid-column: 1 / span 5;
+    }
+    .mitte__text {
+      grid-column: 7 / -1;
+    }
+  }
+
+  /* Band in Tanne: links ein großes Blatt als feine Messingzeichnung, daneben Text und Knopf */
+  .band {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--a-7);
+  }
+  .band__raster {
+    position: relative;
+    display: grid;
+    gap: var(--a-4);
+  }
+  .band__zeichen {
+    position: absolute;
+    right: -2rem;
+    top: 50%;
+    width: 16rem;
+    transform: translateY(-50%);
+    color: var(--messing-hell);
+    opacity: 0.18;
+    --blatt-linie: 1.25px;
+    pointer-events: none;
+  }
+  .band__zeichen :global(.blatt) {
+    width: 100%;
+    height: auto;
+  }
+  .band h2 {
+    max-width: 22ch;
+    margin-bottom: var(--a-3);
+    font-size: clamp(2rem, 1.45rem + 2.1vw, 3.25rem);
+  }
+  .band__text p:not(.etikett) {
+    max-width: 46ch;
+    margin-bottom: 0;
+    font-size: var(--text-gross);
+    line-height: 1.55;
+  }
+  .band__handeln {
+    position: relative;
+  }
+  .band__handeln :global(.symbol:not(.symbol--kreis)) {
+    width: 1.05em;
+    height: 1.05em;
+  }
+  @media (min-width: 64em) {
+    .band__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--spalt);
+      align-items: end;
+    }
+    .band__text {
+      grid-column: 1 / span 8;
+    }
+    .band__handeln {
+      grid-column: 10 / -1;
+      justify-self: end;
+    }
+    .band__zeichen {
+      right: 22%;
+      width: 20rem;
+    }
+  }
+
+  /* Weitere Leistungen */
+  .weitere__kopf {
+    margin-bottom: var(--a-5);
+  }
+  .weitere__kopf h2 {
+    margin: 0;
+  }
+  .weitere__liste {
+    list-style: none;
+    display: grid;
+    gap: var(--a-2) var(--spalt);
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+  .weitere__karte {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: var(--a-2);
+    align-items: center;
+    color: var(--tinte);
+    text-decoration: none;
+  }
+  .weitere__karte:hover {
+    color: var(--tinte);
+  }
+  .weitere__karte:focus-visible {
+    border-radius: var(--r-bild);
+    outline-offset: 6px;
+  }
+  .weitere__karte :global(.weitere__bild .bild__rahmen) {
+    box-shadow: var(--schatten-2);
+    transition: transform var(--uebergang);
+  }
+  .weitere__karte:hover :global(.weitere__bild .bild__rahmen) {
+    transform: translateY(-3px);
+  }
+  .weitere__text {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .weitere__titel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--schrift-titel);
+    font-size: clamp(1.375rem, 1.25rem + 0.4vw, 1.625rem);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .weitere__titel :global(.symbol) {
+    width: 0.7em;
+    height: 0.7em;
+    color: var(--messing-text);
+    transition: transform var(--uebergang);
+  }
+  .weitere__karte:hover .weitere__titel :global(.symbol) {
+    transform: translateX(4px);
+  }
+  .weitere__kasse {
+    font-size: var(--text-klein);
+    line-height: 1.35;
+    color: var(--leise);
+  }
+  @media (min-width: 40em) {
+    .weitere__liste {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--a-5);
+    }
+    .weitere__karte {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+  @media (min-width: 64em) {
+    .weitere__liste {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

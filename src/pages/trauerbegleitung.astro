@@ -1,0 +1,64 @@
+---
+// Ruhige Seite: Die Anrufleiste auf dem Handy tritt farblich zurück (ruhig).
+import Leistungsseite from '../components/Leistungsseite.astro';
+import { site } from '../site.config';
+import fotoKopf from '../bilder/trauer-blumen.jpg';
+import fotoMitte from '../bilder/trauer-tee.jpg';
+
+const fragen = [
+  {
+    frage: 'Für wen ist die Trauerbegleitung?',
+    antwort:
+      'Für alle, die einen lieben Menschen verloren haben. Ob der Abschied ein paar Wochen oder schon länger zurückliegt, spielt keine Rolle.',
+  },
+  {
+    frage: 'Wie oft kommen Sie?',
+    antwort:
+      'So oft, wie es Ihnen guttut. Manche wünschen sich am Anfang mehrere Besuche in der Woche, später seltener. Sie bestimmen das Tempo.',
+  },
+  {
+    frage: 'Und wenn ich mir zusätzlich Hilfe wünsche?',
+    antwort:
+      'Dann sprechen wir gemeinsam darüber, wer Ihnen weiterhelfen kann, zum Beispiel eine Trauergruppe in der Nähe oder Ihre Hausärztin.',
+  },
+  ...(site.pflegekasse
+    ? [
+        {
+          frage: 'Übernimmt die Pflegekasse die Trauerbegleitung?',
+          antwort:
+            'Ja. Mit einem Pflegegrad setzen Sie dafür Ihren monatlichen Entlastungsbetrag ein. Wir rechnen direkt mit Ihrer Pflegekasse ab.',
+          link: { text: 'So funktioniert es mit der Pflegekasse', pfad: '/pflegekasse/' },
+        },
+      ]
+    : []),
+];
+---
+<Leistungsseite
+  anker="trauerbegleitung"
+  ruhig
+  titel={`Trauerbegleitung in ${site.ort} | ${site.name}`}
+  beschreibung={`Trauerbegleitung in ${site.ort} und Umgebung: zuhören, Gespräche und Unterstützung im Alltag nach dem Verlust eines lieben Menschen. Mit Pflegegrad über die Pflegekasse.`}
+  ueberschrift="Wir sind in dieser Zeit für Sie da."
+  einleitung="Wenn ein lieber Mensch gestorben ist, verändert sich vieles. Wir hören zu, haben Zeit für Gespräche und helfen bei dem, was im Alltag gerade liegen bleibt."
+  bild={fotoKopf}
+  alt="Blumen im warmen Abendlicht"
+  ausschnitt="rechts"
+  aufgabenTitel="Wie wir Sie begleiten"
+  aufgaben={[
+    { titel: 'Zuhören', text: 'Sie erzählen, wir hören zu. So lange und so oft, wie es Ihnen guttut.' },
+    { titel: 'Gespräche', text: 'Über Erinnerungen, über den Menschen, den Sie vermissen, und über das, was jetzt kommt.' },
+    { titel: 'Unterstützung im Alltag', text: 'Einkaufen, Haushalt, ein Spaziergang an der frischen Luft. Damit der Alltag wieder Halt gibt.' },
+    { titel: 'Begleitung zu Wegen', text: 'Zum Friedhof, zur Bank oder zu einem Amt. Wir gehen mit, wenn Sie das möchten.' },
+  ]}
+  mitte={{
+    titel: 'Zeit, Ruhe und ein offenes Ohr.',
+    absaetze: [
+      'Trauer braucht keinen Zeitplan. Wir kommen regelmäßig vorbei, trinken einen Tee mit Ihnen und sind einfach da.',
+      'Auch Angehörige, die weiter weg wohnen, sind froh zu wissen, dass jemand vorbeischaut. Auf Wunsch geben wir ihnen kurz Bescheid.',
+    ],
+    bild: fotoMitte,
+    alt: 'Ältere Hände an einer Tasse Tee auf einem gedeckten Tisch',
+    ausschnitt: 'mitte',
+  }}
+  fragen={fragen}
+/>

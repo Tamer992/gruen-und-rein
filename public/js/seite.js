@@ -30,6 +30,36 @@
   });
 })();
 
+// Leistungen in der Navigation (Desktop): Der Knopf klappt die Liste auf und zu.
+// Escape, ein Klick daneben oder Weitertabben schließt sie. Im Handy-Menü ist die Liste immer offen.
+(function () {
+  var knopf = document.querySelector('.hauptnav__auf');
+  if (!knopf) return;
+  var gruppe = knopf.closest('.hauptnav__gruppe');
+  document.documentElement.classList.add('js-menue');
+
+  function setze(offen) {
+    knopf.setAttribute('aria-expanded', offen ? 'true' : 'false');
+    gruppe.classList.toggle('ist-offen', offen);
+  }
+
+  knopf.addEventListener('click', function () {
+    setze(knopf.getAttribute('aria-expanded') !== 'true');
+  });
+  document.addEventListener('click', function (e) {
+    if (!gruppe.contains(e.target)) setze(false);
+  });
+  gruppe.addEventListener('focusout', function (e) {
+    if (e.relatedTarget && !gruppe.contains(e.relatedTarget)) setze(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && knopf.getAttribute('aria-expanded') === 'true') {
+      setze(false);
+      knopf.focus();
+    }
+  });
+})();
+
 // Kopf beim Scrollen: dezenter Schatten und etwas kleineres Logo (Klasse ist-gescrollt).
 // Die Leiste darüber gleitet ohnehin von selbst hinaus (CSS, position: sticky).
 (function () {

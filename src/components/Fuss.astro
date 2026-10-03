@@ -70,6 +70,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
         <h2 class="fuss__ueber">Betrieb</h2>
         <ul class="fuss__liste">
           <li><a href={p(ueberUns)}>Über uns</a></li>
+          {site.pflegekasse && site.unterseiten && <li><a href={p('/pflegekasse/')}>Pflegekasse</a></li>}
           <li><a href={p(kontakt)}>Kontakt</a></li>
           <li><a href={p('/impressum/')}>Impressum</a></li>
           <li><a href={p('/datenschutz/')}>Datenschutz</a></li>

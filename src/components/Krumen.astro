@@ -1,0 +1,79 @@
+---
+// Brotkrumen über dem Seitenkopf: zeigt, wo man ist, und führt mit einem Klick zurück.
+// Dazu die passenden Daten für Suchmaschinen (BreadcrumbList).
+import { p } from '../pfad';
+import { site } from '../site.config';
+
+interface Props {
+  // Der letzte Eintrag ist die aktuelle Seite und bekommt keinen Link
+  wege: { titel: string; pfad: string }[];
+}
+const { wege } = Astro.props;
+const alle = [{ titel: 'Startseite', pfad: '/' }, ...wege];
+const daten = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: alle.map((w, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: w.titel,
+    item: new URL(w.pfad, site.domain).href,
+  })),
+};
+---
+<nav class="krumen behaelter" aria-label="Sie sind hier">
+  <ol>
+    {alle.map((w, i) =>
+      i < alle.length - 1 ? (
+        <li><a href={p(w.pfad)}>{w.titel}</a></li>
+      ) : (
+        <li><span aria-current="page">{w.titel}</span></li>
+      )
+    )}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(daten)} />
+
+<style>
+  .krumen {
+    padding-top: var(--a-3);
+  }
+  .krumen ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    font-size: var(--text-klein);
+    color: var(--leise);
+  }
+  .krumen li {
+    display: flex;
+    align-items: center;
+  }
+  /* Trenner: kleiner Winkel in Messing */
+  .krumen li + li::before {
+    content: '';
+    width: 0.4rem;
+    height: 0.4rem;
+    margin-inline: 0.65rem 0.85rem;
+    border-top: 1.5px solid var(--messing);
+    border-right: 1.5px solid var(--messing);
+    transform: rotate(45deg);
+  }
+  .krumen a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    color: var(--leise);
+  }
+  .krumen a:hover {
+    color: var(--waldgruen);
+  }
+  .krumen [aria-current] {
+    font-weight: 700;
+    color: var(--tinte);
+  }
+</style>

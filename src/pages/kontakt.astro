@@ -1,0 +1,352 @@
+---
+// Kontakt: alle Wege auf einen Blick, was beim ersten Anruf hilft, und wo wir unterwegs sind.
+// Kein Formular: Telefon und WhatsApp sind für die Zielgruppe der kürzeste Weg, und es braucht keinen Server.
+import Basis from '../layouts/Basis.astro';
+import Seitenkopf from '../components/Seitenkopf.astro';
+import Blatt from '../components/Blatt.astro';
+import Symbol from '../components/Symbol.astro';
+import { site } from '../site.config';
+import fotoKopf from '../bilder/kontakt-telefon.jpg';
+
+const vorbereitung = [
+  'Wobei Sie sich Unterstützung wünschen',
+  'An welchen Tagen und zu welcher Uhrzeit es Ihnen gut passt',
+  ...(site.pflegekasse ? ['Ihren Pflegegrad und den Namen Ihrer Pflegekasse, falls vorhanden'] : []),
+  'Ihre Adresse, damit wir den ersten Besuch planen können',
+];
+---
+<Basis
+  titel={`Kontakt: ${site.telefon} | ${site.name} in ${site.ort}`}
+  beschreibung={`So erreichen Sie ${site.name}: Telefon ${site.telefon}, WhatsApp und E-Mail. ${site.erreichbarkeit}. ${site.adresse.strasse}, ${site.adresse.plz} ${site.adresse.ort}.`}
+>
+  <Seitenkopf
+    wege={[{ titel: 'Kontakt', pfad: '/kontakt/' }]}
+    etikett="Kontakt"
+    ueberschrift="Rufen Sie uns an."
+    einleitung="Erzählen Sie uns, wobei wir Sie unterstützen dürfen. Wir nehmen uns Zeit für Ihre Fragen und kommen gern zu einem ersten Besuch zu Ihnen nach Hause."
+    bild={fotoKopf}
+    alt="Eine ältere Frau mit Brille telefoniert lächelnd am Fenster"
+    ausschnitt="mitte"
+  />
+
+  <!-- Alle Wege: Telefon groß, daneben WhatsApp, E-Mail und Adresse -->
+  <section class="bereich wege flaeche-sand" aria-labelledby="wege-titel">
+    <div class="behaelter">
+      <div class="wege__kopf" data-einblenden>
+        <p class="etikett">So erreichen Sie uns</p>
+        <h2 id="wege-titel">Vier Wege zu uns.</h2>
+      </div>
+      <div class="wege__raster">
+        <a class="weg weg--telefon flaeche-tanne" href={`tel:${site.telefonLink}`} data-einblenden>
+          <span class="weg__zeichen"><Symbol name="telefon" /></span>
+          <span class="weg__art">Telefon</span>
+          <span class="weg__wert nummer">{site.telefon}</span>
+          <span class="weg__info"><Symbol name="uhr" /> {site.erreichbarkeit}</span>
+          <span class="weg__los" aria-hidden="true">Anrufen <Symbol name="pfeil" /></span>
+        </a>
+        <a class="weg" href={`https://wa.me/${site.whatsappLink}`} data-einblenden="2">
+          <span class="weg__zeichen"><Symbol name="whatsapp" /></span>
+          <span class="weg__art">WhatsApp</span>
+          <span class="weg__wert">Nachricht schreiben</span>
+          <span class="weg__info">Wir melden uns schnell zurück.</span>
+        </a>
+        <a class="weg" href={`mailto:${site.email}`} data-einblenden="2">
+          <span class="weg__zeichen"><Symbol name="brief" /></span>
+          <span class="weg__art">E-Mail</span>
+          <span class="weg__wert weg__wert--klein">{site.email}</span>
+          <span class="weg__info">Gern auch mit Rückrufwunsch.</span>
+        </a>
+        <div class="weg weg--adresse" data-einblenden="3">
+          <span class="weg__zeichen"><Symbol name="ort" /></span>
+          <span class="weg__art">Adresse</span>
+          <address class="weg__wert weg__wert--klein">
+            {site.name}<br />
+            {site.adresse.strasse}<br />
+            {site.adresse.plz} {site.adresse.ort}
+          </address>
+        </div>
+      </div>
+      {site.telefon2 && (
+        <p class="wege__zweite">
+          Zweite Nummer: <a href={`tel:${site.telefon2Link}`}><span class="nummer">{site.telefon2}</span></a>
+        </p>
+      )}
+    </div>
+  </section>
+
+  <!-- Gut vorbereitet und Einsatzgebiet -->
+  <section class="bereich vorbereitung" aria-labelledby="vorbereitung-titel">
+    <div class="behaelter vorbereitung__raster">
+      <div class="vorbereitung__text" data-einblenden>
+        <p class="etikett">Der erste Anruf</p>
+        <h2 id="vorbereitung-titel">Das hilft uns beim ersten Gespräch.</h2>
+        <ul class="vorbereitung__liste">
+          {vorbereitung.map((v) => (
+            <li><span class="blattpunkt"><Blatt /></span> {v}</li>
+          ))}
+        </ul>
+        <p class="leise">Alles andere klären wir gemeinsam. Auch Ihre Angehörigen können gern für Sie anrufen.</p>
+      </div>
+      <aside class="gebiet" aria-labelledby="gebiet-titel" data-einblenden="2">
+        <div class="gebiet__zier" aria-hidden="true"><Blatt art="linie" /></div>
+        <p class="etikett">Einsatzgebiet</p>
+        <h2 id="gebiet-titel" class="gebiet__titel">Unterwegs in</h2>
+        <ul class="gebiet__liste">
+          {site.einsatzorte.map((ort) => <li>{ort}</li>)}
+        </ul>
+        <p class="gebiet__hinweis">Sie wohnen in einem Nachbarort? Rufen Sie einfach an und fragen Sie nach.</p>
+      </aside>
+    </div>
+  </section>
+</Basis>
+
+<style>
+  /* Wege */
+  .wege__kopf {
+    margin-bottom: var(--a-5);
+  }
+  .wege__kopf h2 {
+    margin: 0;
+  }
+  .wege__raster {
+    display: grid;
+    gap: var(--spalt);
+  }
+  .weg {
+    display: grid;
+    align-content: start;
+    gap: 0.35rem;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    border-radius: var(--r-gross);
+    background: var(--papier);
+    box-shadow: inset 0 0 0 1px var(--linie-zart), var(--schatten-2);
+    color: var(--tinte);
+    text-decoration: none;
+    transition: transform var(--uebergang), box-shadow var(--uebergang);
+  }
+  a.weg:hover {
+    color: var(--tinte);
+    transform: translateY(-3px);
+    box-shadow: inset 0 0 0 1px var(--linie-zart), var(--schatten-3);
+  }
+  .weg:focus-visible {
+    border-radius: var(--r-gross);
+  }
+  .weg__zeichen {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-bottom: var(--a-2);
+    border-radius: 50%;
+    background: var(--salbei);
+    color: var(--waldgruen);
+  }
+  .weg__zeichen :global(.symbol) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .weg__art {
+    font-size: var(--text-klein);
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--messing-text);
+  }
+  .weg__wert {
+    font-family: var(--schrift-titel);
+    font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+    font-weight: 500;
+    line-height: 1.25;
+    font-style: normal;
+    overflow-wrap: anywhere;
+  }
+  .weg__wert--klein {
+    font-size: clamp(1.3rem, 1.2rem + 0.4vw, 1.5rem);
+  }
+  .weg__info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+    color: var(--leise);
+  }
+  /* Telefon: die wichtigste Karte, in Tanne und größer */
+  .weg--telefon {
+    background: var(--tanne) var(--korn-hell);
+    box-shadow: var(--schatten-3);
+  }
+  a.weg--telefon:hover {
+    box-shadow: var(--schatten-4);
+  }
+  .weg--telefon .weg__zeichen {
+    background: rgb(255 255 255 / 0.1);
+    color: var(--messing-hell);
+  }
+  .weg--telefon .weg__art {
+    color: var(--messing-hell);
+  }
+  .weg--telefon .weg__wert {
+    color: var(--hell);
+    font-size: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+  }
+  .weg--telefon .weg__info {
+    color: var(--auf-tanne);
+  }
+  .weg--telefon .weg__info :global(.symbol) {
+    color: var(--messing-hell);
+  }
+  .weg--telefon:focus-visible {
+    outline-color: var(--tinte);
+  }
+  .wege__zweite {
+    margin: var(--a-4) 0 0;
+  }
+  @media (min-width: 48em) {
+    .wege__raster {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .weg--telefon {
+      grid-column: 1 / -1;
+    }
+  }
+  /* Pfeil-Hinweis in der Telefonkarte: sieht aus wie ein Knopf, die ganze Karte ist der Link */
+  .weg__los {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 0.5rem;
+    min-height: 3.25rem;
+    margin-top: var(--a-3);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--r-knopf);
+    background: var(--messing-hell);
+    color: var(--tanne);
+    font-weight: 700;
+    transition: background-color var(--uebergang);
+  }
+  .weg__los :global(.symbol) {
+    width: 1.05em;
+    height: 1.05em;
+    transition: transform var(--uebergang);
+  }
+  a.weg--telefon:hover .weg__los {
+    background: var(--messing-hell-tief);
+  }
+  a.weg--telefon:hover .weg__los :global(.symbol) {
+    transform: translateX(4px);
+  }
+  @media (min-width: 64em) {
+    .wege__raster {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    /* Telefon als breites Band: Nummer links, Zeiten und Knopf rechts */
+    .weg--telefon {
+      grid-column: 1 / -1;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-areas:
+        'zeichen art los'
+        'zeichen wert los'
+        'zeichen info los';
+      column-gap: var(--a-4);
+      align-items: center;
+      padding: var(--a-5) var(--a-6);
+    }
+    .weg--telefon .weg__zeichen {
+      grid-area: zeichen;
+      width: 5rem;
+      height: 5rem;
+      margin: 0;
+    }
+    .weg--telefon .weg__zeichen :global(.symbol) {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+    .weg--telefon .weg__art { grid-area: art; }
+    .weg--telefon .weg__wert { grid-area: wert; }
+    .weg--telefon .weg__info { grid-area: info; }
+    .weg--telefon .weg__los {
+      grid-area: los;
+      margin: 0;
+      font-size: var(--text-gross);
+      min-height: 4rem;
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Vorbereitung und Einsatzgebiet */
+  .vorbereitung__raster {
+    display: grid;
+    gap: var(--a-6);
+  }
+  .vorbereitung h2 {
+    max-width: 15ch;
+    margin-bottom: var(--a-4);
+  }
+  .vorbereitung__liste {
+    list-style: none;
+    margin: 0 0 var(--a-4);
+    padding: 0;
+    border-top: 1px solid var(--linie);
+  }
+  .vorbereitung__liste li {
+    display: flex;
+    align-items: center;
+    gap: var(--a-2);
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--linie);
+  }
+  .gebiet {
+    position: relative;
+    overflow: hidden;
+    align-self: start;
+    padding: clamp(1.75rem, 1rem + 2.5vw, 3rem);
+    border-radius: var(--r-gross);
+    background: var(--sand) var(--korn);
+  }
+  .gebiet__zier {
+    position: absolute;
+    right: -1.5rem;
+    bottom: -2rem;
+    width: 11rem;
+    color: var(--messing);
+    opacity: 0.35;
+    --blatt-linie: 1.25px;
+  }
+  .gebiet__zier :global(.blatt) {
+    width: 100%;
+    height: auto;
+  }
+  .gebiet__titel {
+    font-size: var(--titel-3);
+    font-weight: 560;
+    margin-bottom: var(--a-1);
+  }
+  .gebiet__liste {
+    list-style: none;
+    margin: 0 0 var(--a-3);
+    padding: 0;
+    font-family: var(--schrift-titel);
+    font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+    line-height: 1.3;
+  }
+  .gebiet__hinweis {
+    position: relative;
+    max-width: 30ch;
+    margin: 0;
+    color: var(--leise);
+  }
+  @media (min-width: 64em) {
+    .vorbereitung__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--spalt);
+      align-items: start;
+    }
+    .vorbereitung__text {
+      grid-column: 1 / span 7;
+    }
+    .gebiet {
+      grid-column: 9 / -1;
+    }
+  }
+</style>

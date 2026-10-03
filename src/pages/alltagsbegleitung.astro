@@ -1,0 +1,69 @@
+---
+import Leistungsseite from '../components/Leistungsseite.astro';
+import { site } from '../site.config';
+import fotoKopf from '../bilder/alltag-park.jpg';
+import fotoMitte from '../bilder/alltag-gesellschaft.jpg';
+
+const fragen = [
+  {
+    frage: 'Wie oft können Sie kommen?',
+    antwort:
+      'So oft, wie es zu Ihnen passt. Manche wünschen sich einen festen Nachmittag in der Woche, andere zwei oder drei Termine. Das besprechen wir beim ersten Besuch.',
+  },
+  {
+    frage: 'Kommt immer dieselbe Person?',
+    antwort:
+      'Ja, Sie haben bei uns eine feste Ansprechperson. Ist sie einmal im Urlaub, sagen wir Ihnen vorher Bescheid, wer stattdessen kommt.',
+  },
+  {
+    frage: 'Gehört Pflege auch dazu?',
+    antwort:
+      'Alltagsbegleitung ergänzt die Pflege. Körperpflege und Medikamente übernimmt ein Pflegedienst. Wir kümmern uns um alles, was den Tag schön und leichter macht.',
+  },
+  {
+    frage: 'Können meine Angehörigen beim Kennenlernen dabei sein?',
+    antwort:
+      'Sehr gern. Ihre Kinder können auch per Telefon dazukommen. Auf Wunsch geben wir ihnen nach jedem Besuch kurz Bescheid.',
+  },
+  ...(site.pflegekasse
+    ? [
+        {
+          frage: 'Übernimmt die Pflegekasse die Alltagsbegleitung?',
+          antwort:
+            'Ja. Mit einem Pflegegrad setzen Sie dafür Ihren monatlichen Entlastungsbetrag ein. Wir rechnen direkt mit Ihrer Pflegekasse ab.',
+          link: { text: 'So funktioniert es mit der Pflegekasse', pfad: '/pflegekasse/' },
+        },
+      ]
+    : []),
+];
+---
+<Leistungsseite
+  anker="alltagsbegleitung"
+  titel={`Alltagsbegleitung und Betreuung in ${site.ort} | ${site.name}`}
+  beschreibung={`Gesellschaft, Spaziergänge, Einkäufe und Begleitung zum Arzt. Alltagsbegleitung für Senioren in ${site.ort} und Umgebung, mit Pflegegrad über die Pflegekasse.`}
+  ueberschrift="Jemand, der mitgeht."
+  einleitung="Wir gehen mit Ihnen spazieren, einkaufen oder zum Arzt. Wir trinken Kaffee, spielen Karten oder lesen Ihnen die Zeitung vor. Ganz so, wie es Ihnen Freude macht."
+  bild={fotoKopf}
+  alt="Zwei Frauen gehen untergehakt und lachend durch einen Park"
+  ausschnitt="oben"
+  aufgabenTitel="Was wir gemeinsam unternehmen"
+  aufgaben={[
+    { titel: 'Gesellschaft', text: 'Zeit für ein Gespräch, ein Kartenspiel oder einen Blick ins Fotoalbum. Bei einer Tasse Kaffee, in Ruhe.' },
+    { titel: 'Spaziergänge', text: 'Eine Runde um den Block oder durch den Park. In Ihrem Tempo und mit einem sicheren Arm an Ihrer Seite.' },
+    { titel: 'Einkäufe', text: 'Wir gehen mit Ihnen einkaufen oder erledigen den Einkauf nach Ihrer Liste und räumen alles ein.' },
+    { titel: 'Begleitung zum Arzt', text: 'Wir gehen mit in die Praxis, warten mit im Wartezimmer und schreiben auf Wunsch mit, was besprochen wurde.' },
+    { titel: 'Erledigungen', text: 'Zur Post, zur Apotheke oder zum Friseur. Wir gehen mit oder übernehmen den Weg für Sie.' },
+    { titel: 'Entlastung für Angehörige', text: 'Sie haben ein paar Stunden für sich und wissen Ihre Mutter oder Ihren Vater in guter Gesellschaft.' },
+  ]}
+  mitte={{
+    titel: 'Ein Besuch, auf den man sich freut.',
+    absaetze: [
+      'Zu Ihnen kommt immer dieselbe Person. Sie kennt Ihre Gewohnheiten, weiß, wie Sie Ihren Kaffee trinken, und hört zu, wenn Sie etwas auf dem Herzen haben.',
+      'Angehörige halten wir auf dem Laufenden, wenn Sie das möchten. Ein kurzer Anruf nach dem Besuch, und alle wissen, dass es Ihnen gut geht.',
+    ],
+    bild: fotoMitte,
+    alt: 'Eine Begleiterin und eine ältere Dame sitzen nah beieinander und lachen',
+    ausschnitt: 'rechts',
+  }}
+  fragen={fragen}
+/>

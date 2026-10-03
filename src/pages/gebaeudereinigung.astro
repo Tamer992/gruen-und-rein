@@ -1,0 +1,66 @@
+---
+import Leistungsseite from '../components/Leistungsseite.astro';
+import { site } from '../site.config';
+import fotoKopf from '../bilder/reinigung-wischen.jpg';
+import fotoMitte from '../bilder/reinigung-wohnzimmer.jpg';
+
+const fragen = [
+  {
+    frage: 'Reinigen Sie auch einmalig?',
+    antwort:
+      'Ja. Zum Beispiel als Grundreinigung vor dem Einzug, nach dem Auszug oder als Frühjahrsputz. Genauso gern kommen wir regelmäßig nach festem Plan.',
+  },
+  {
+    frage: 'Für wen ist die Gebäudereinigung?',
+    antwort:
+      'Für Privathaushalte genauso wie für Büros, Praxen, Hausgemeinschaften und Hausverwaltungen in ' + site.ort + ' und Umgebung.',
+  },
+  {
+    frage: 'Wie kommt mein Angebot zustande?',
+    antwort:
+      'Wir schauen uns die Räume an und besprechen mit Ihnen, was wann gereinigt werden soll. Danach erhalten Sie ein klares Angebot.',
+  },
+  ...(site.pflegekasse
+    ? [
+        {
+          frage: 'Geht das auch über die Pflegekasse?',
+          antwort:
+            'Die Gebäudereinigung vereinbaren wir direkt mit Ihnen. Mit einem Pflegegrad ist oft unsere Hauswirtschaft das Richtige: Die rechnen wir direkt mit Ihrer Pflegekasse ab.',
+          link: { text: 'Zur Hauswirtschaft', pfad: '/hauswirtschaft/' },
+        },
+      ]
+    : []),
+];
+---
+<Leistungsseite
+  anker="gebaeudereinigung"
+  titel={`Gebäudereinigung in ${site.ort}: Wohnung, Haus, Büro, Treppenhaus | ${site.name}`}
+  beschreibung={`Gebäudereinigung in ${site.ort} und Umgebung: Wohnungen, Häuser, Büros und Treppenhäuser. Regelmäßig oder als gründliche Grundreinigung.`}
+  ueberschrift="Sauberkeit, auf die Sie sich verlassen können."
+  einleitung={`Wir reinigen Wohnungen, Häuser, Büros und Treppenhäuser in ${site.ort} und Umgebung. Regelmäßig nach festem Plan oder einmal ganz gründlich.`}
+  bild={fotoKopf}
+  alt="Eine Reinigungskraft wischt den Boden einer hellen Wohnung"
+  aufgabenTitel="Was wir für Sie reinigen"
+  aufgaben={[
+    { titel: 'Wohnungsreinigung', text: 'Böden, Küche, Bad und alle Zimmer. Damit Sie nach Hause kommen und sich wohlfühlen.' },
+    { titel: 'Hausreinigung', text: 'Vom Keller bis zum Dachboden, für Einfamilienhäuser und Doppelhaushälften.' },
+    { titel: 'Büroreinigung', text: 'Arbeitsplätze, Teeküche, Sanitärräume und Böden. Damit Sie und Ihr Team gern zur Arbeit kommen.' },
+    { titel: 'Treppenhaus', text: 'Treppen, Geländer, Eingang und Briefkästen. Für Hausgemeinschaften und Hausverwaltungen, im festen Rhythmus.' },
+    { titel: 'Grundreinigung', text: 'Vor dem Einzug, nach dem Auszug oder zum Frühjahrsputz: einmal alles von oben bis unten.' },
+  ]}
+  mitte={{
+    titel: 'Für Privathaushalte und Betriebe.',
+    absaetze: [
+      'Ob Mietwohnung, Einfamilienhaus, Praxis oder Büro: Wir schauen uns die Räume vorher an und besprechen mit Ihnen, was wann gereinigt wird.',
+      'So wissen Sie genau, was Sie bekommen, und haben für alles eine feste Ansprechperson.',
+    ],
+    bild: fotoMitte,
+    alt: 'Ein heller, aufgeräumter Wohnraum mit Sofas und großen Fenstern',
+    ausschnitt: 'mitte',
+  }}
+  band={{
+    titel: 'Ihr Angebot nach einem kurzen Besuch.',
+    text: 'Wir kommen vorbei, schauen uns Räume und Wünsche an und machen Ihnen ein klares Angebot. Regelmäßig oder einmalig, ganz wie Sie möchten.',
+  }}
+  fragen={fragen}
+/>

@@ -1,0 +1,63 @@
+---
+import Leistungsseite from '../components/Leistungsseite.astro';
+import { site } from '../site.config';
+import fotoKopf from '../bilder/hauswirtschaft-kueche.jpg';
+import fotoMitte from '../bilder/hauswirtschaft-waesche.jpg';
+
+const fragen = [
+  {
+    frage: 'Wie oft kommen Sie?',
+    antwort:
+      'Ganz nach Ihrem Wunsch: jede Woche, alle zwei Wochen oder mehrmals in der Woche. Feste Tage und Uhrzeiten machen wir beim ersten Besuch aus.',
+  },
+  {
+    frage: 'Was ist der Unterschied zur Gebäudereinigung?',
+    antwort:
+      'Die Hauswirtschaft ist Hilfe im Haushalt für Menschen, die zu Hause leben: putzen, waschen, einkaufen, kochen. Die Gebäudereinigung ist für Wohnungen, Häuser, Büros und Treppenhäuser, ganz unabhängig vom Alter.',
+    link: { text: 'Zur Gebäudereinigung', pfad: '/gebaeudereinigung/' },
+  },
+  {
+    frage: 'Kann ich selbst mithelfen?',
+    antwort:
+      'Natürlich. Viele legen gern die Wäsche mit zusammen oder kochen mit uns. Und wer lieber die Füße hochlegt, darf das genauso.',
+  },
+  ...(site.pflegekasse
+    ? [
+        {
+          frage: 'Übernimmt die Pflegekasse die Hauswirtschaft?',
+          antwort:
+            'Ja. Mit einem Pflegegrad setzen Sie dafür Ihren monatlichen Entlastungsbetrag ein. Wir rechnen direkt mit Ihrer Pflegekasse ab.',
+          link: { text: 'So funktioniert es mit der Pflegekasse', pfad: '/pflegekasse/' },
+        },
+      ]
+    : []),
+];
+---
+<Leistungsseite
+  anker="hauswirtschaft"
+  titel={`Hauswirtschaft und Haushaltshilfe in ${site.ort} | ${site.name}`}
+  beschreibung={`Haushaltshilfe für Senioren in ${site.ort} und Umgebung: putzen, Wäsche, Küche, Bad und Einkaufen. Mit Pflegegrad über die Pflegekasse.`}
+  ueberschrift="Ein Zuhause, in dem Sie sich wohlfühlen."
+  einleitung="Wir kümmern uns um die Wäsche, putzen Küche und Bad und bringen den Einkauf mit. Sie behalten den Überblick, wir packen an."
+  bild={fotoKopf}
+  alt="Eine ältere Frau bereitet in ihrer Küche einen Salat zu"
+  aufgabenTitel="Was wir im Haushalt übernehmen"
+  aufgaben={[
+    { titel: 'Wohnung reinigen', text: 'Staubsaugen, wischen, Staub wischen. Damit es in allen Zimmern frisch und ordentlich ist.' },
+    { titel: 'Wäsche', text: 'Waschen, aufhängen, zusammenlegen und in den Schrank räumen. Auf Wunsch beziehen wir auch die Betten frisch.' },
+    { titel: 'Küche', text: 'Abwasch, Kühlschrank und Arbeitsflächen. Und gern kochen wir auch einmal gemeinsam.' },
+    { titel: 'Bad', text: 'Waschbecken, Dusche, Wanne und Toilette, gründlich sauber und hygienisch.' },
+    { titel: 'Einkaufen', text: 'Wir besorgen, was auf Ihrer Liste steht, und räumen es gleich an seinen Platz.' },
+    { titel: 'Kleine Dinge im Haushalt', text: 'Blumen gießen, Müll hinausbringen, Post sortieren. Alles, was im Alltag dazugehört.' },
+  ]}
+  mitte={{
+    titel: 'Ihr Haushalt, Ihre Ordnung.',
+    absaetze: [
+      'Jeder Haushalt hat seine eigene Ordnung. Wir fragen nach, wo was hingehört, und machen es so, wie Sie es gewohnt sind.',
+      'Nach ein paar Besuchen läuft vieles wie von selbst. Ihre Ansprechperson weiß, was Ihnen wichtig ist, und Sie können sich auf feste Tage verlassen.',
+    ],
+    bild: fotoMitte,
+    alt: 'Hände legen frisch gewaschene Wäsche zu ordentlichen Stapeln zusammen',
+  }}
+  fragen={fragen}
+/>

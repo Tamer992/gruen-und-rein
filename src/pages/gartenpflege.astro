@@ -1,0 +1,66 @@
+---
+import Leistungsseite from '../components/Leistungsseite.astro';
+import { site } from '../site.config';
+import fotoKopf from '../bilder/garten-rasen.jpg';
+import fotoMitte from '../bilder/garten-beet.jpg';
+
+const fragen = [
+  {
+    frage: 'Kommen Sie regelmäßig oder auch einmalig?',
+    antwort:
+      'Beides. Viele Gärten pflegen wir das ganze Jahr in einem festen Rhythmus. Wir kommen aber auch gern einmalig, zum Beispiel für das Laub im Herbst.',
+  },
+  {
+    frage: 'Pflegen Sie auch größere Anlagen?',
+    antwort:
+      'Ja. Neben Privatgärten kümmern wir uns auch um Außenanlagen von Wohnhäusern und Betrieben.',
+  },
+  {
+    frage: 'Wie kommt mein Angebot zustande?',
+    antwort:
+      'Wir schauen uns Ihren Garten an und besprechen, was Ihnen wichtig ist. Danach erhalten Sie ein klares Angebot.',
+  },
+  ...(site.pflegekasse
+    ? [
+        {
+          frage: 'Geht das auch über die Pflegekasse?',
+          antwort:
+            'Die Gartenpflege vereinbaren wir direkt mit Ihnen. Über die Pflegekasse sind bei uns Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung möglich.',
+          link: { text: 'Mehr zur Pflegekasse', pfad: '/pflegekasse/' },
+        },
+      ]
+    : []),
+];
+---
+<Leistungsseite
+  anker="gartenpflege"
+  titel={`Gartenpflege in ${site.ort}: Rasen, Beete, Laub | ${site.name}`}
+  beschreibung={`Gartenpflege in ${site.ort} und Umgebung: Rasen mähen, Beete pflegen, Unkraut und Laub entfernen, Außenanlagen in Ordnung halten.`}
+  ueberschrift="Ein Garten, der Freude macht."
+  einleitung="Wir mähen den Rasen, pflegen die Beete und halten Wege und Hof in Ordnung. Das Laub nehmen wir mit. Sie genießen Ihren Garten."
+  bild={fotoKopf}
+  alt="Ein Rasenmäher auf frisch gemähtem, sattgrünem Rasen"
+  aufgabenTitel="Was wir im Garten erledigen"
+  aufgaben={[
+    { titel: 'Rasenpflege', text: 'Regelmäßig mähen und die Kanten sauber halten, damit der Rasen dicht und grün bleibt.' },
+    { titel: 'Beetpflege', text: 'Jäten, auflockern, Verblühtes abschneiden. Damit Blumen und Stauden gut wachsen.' },
+    { titel: 'Unkraut entfernen', text: 'In Beeten, Fugen und auf Wegen, gründlich und in festen Abständen.' },
+    { titel: 'Laub entfernen', text: 'Im Herbst rechen wir das Laub zusammen und nehmen es gleich mit.' },
+    { titel: 'Außenanlagen', text: 'Wege, Hof, Einfahrt und Terrasse: gepflegt und ordentlich, das ganze Jahr.' },
+  ]}
+  mitte={{
+    titel: 'Das ganze Jahr in guten Händen.',
+    absaetze: [
+      'Im Frühjahr bringen wir den Garten in Schwung, im Sommer halten wir Rasen und Beete in Form, im Herbst kommt das Laub weg.',
+      'Für Privatgärten genauso wie für Wohnanlagen und Betriebe. Sie haben eine feste Ansprechperson, die Ihren Garten kennt.',
+    ],
+    bild: fotoMitte,
+    alt: 'Ein Gärtner pflegt ein blühendes Beet, neben ihm steht ein Holzhocker',
+    ausschnitt: 'links',
+  }}
+  band={{
+    titel: 'Ihr Angebot nach einem Blick in den Garten.',
+    text: 'Wir kommen vorbei, schauen uns Ihren Garten an und machen Ihnen ein klares Angebot. Regelmäßig oder einmalig, ganz wie Sie möchten.',
+  }}
+  fragen={fragen}
+/>

@@ -1,0 +1,495 @@
+---
+// Pflegekasse: Entlastungsbetrag nach § 45b SGB XI einfach erklärt.
+// Kopf in Tanne mit dem Monatsbetrag im Passepartout, darunter die vier Schritte,
+// drei Fakten, die Leistungen mit Pflegekasse und häufige Fragen.
+// Ohne Anerkennung (site.pflegekasse: false) verschwindet die Seite aus Navigation und Fuß; dann die Datei löschen.
+import { p } from '../pfad';
+import Basis from '../layouts/Basis.astro';
+import Krumen from '../components/Krumen.astro';
+import Fragen from '../components/Fragen.astro';
+import Bild from '../components/Bild.astro';
+import Blatt from '../components/Blatt.astro';
+import Symbol from '../components/Symbol.astro';
+import { site, leistungen } from '../site.config';
+import { leistungsbilder } from '../leistungsbilder';
+
+const betrag = site.entlastungsbetrag;
+const mitKasse = leistungen.filter((l) => l.kasse);
+const ohneKasse = leistungen.filter((l) => !l.kasse);
+
+const schritte = [
+  {
+    titel: 'Anrufen',
+    text: 'Sie rufen uns an und sagen uns Ihren Pflegegrad und den Namen Ihrer Pflegekasse. Mehr brauchen wir für den Anfang nicht.',
+  },
+  {
+    titel: 'Kennenlernen',
+    text: 'Wir besuchen Sie zu Hause und besprechen, wobei wir Sie unterstützen. Mit einer Unterschrift auf der Abtretungserklärung dürfen wir direkt mit Ihrer Pflegekasse abrechnen.',
+  },
+  {
+    titel: 'Loslegen',
+    text: 'Wir kommen an festen Tagen zu festen Zeiten. Zu Ihnen kommt immer dieselbe Ansprechperson.',
+  },
+  {
+    titel: 'Wir rechnen ab',
+    text: 'Die Rechnung geht jeden Monat direkt an Ihre Pflegekasse. Was über den Entlastungsbetrag hinausgeht, besprechen wir vorher mit Ihnen.',
+  },
+];
+
+const fakten = [
+  {
+    gross: 'Pflegegrad 1 bis 5',
+    text: 'Den Entlastungsbetrag erhalten alle, die zu Hause leben und einen Pflegegrad haben. Schon ab Pflegegrad 1.',
+  },
+  {
+    gross: `${betrag} Euro im Monat`,
+    text: 'Der Betrag steht Ihnen zusätzlich zu Pflegegeld oder Pflegesachleistungen zur Verfügung.',
+  },
+  {
+    gross: 'Ansparen möglich',
+    text: 'Was Sie in einem Monat nicht nutzen, sammelt sich an. Sie können es bis zum 30. Juni des folgenden Jahres einsetzen.',
+  },
+];
+
+const fragen = [
+  {
+    frage: 'Ich habe noch keinen Pflegegrad. Wie bekomme ich einen?',
+    antwort:
+      'Den Pflegegrad beantragen Sie bei Ihrer Pflegekasse, das geht auch formlos per Telefon. Danach kommt eine Gutachterin oder ein Gutachter zu Ihnen nach Hause. Wir erklären Ihnen gern, wie es abläuft.',
+  },
+  {
+    frage: 'Bekomme ich eine Rechnung?',
+    antwort:
+      'Mit der Abtretungserklärung geht die Rechnung direkt an Ihre Pflegekasse. Darum kümmern wir uns.',
+  },
+  {
+    frage: 'Ich bin privat versichert. Geht das auch?',
+    antwort:
+      'Ja, den Entlastungsbetrag gibt es auch in der privaten Pflegeversicherung. Dort reichen Sie unsere Rechnung in der Regel selbst ein und erhalten den Betrag erstattet. Wir helfen Ihnen gern dabei.',
+  },
+  {
+    frage: 'Ein Pflegedienst kommt schon zu mir. Kann ich Sie trotzdem dazunehmen?',
+    antwort:
+      'Ja. Der Pflegedienst übernimmt die Pflege, wir den Alltag. Den Entlastungsbetrag können Sie dafür einsetzen, solange er nicht schon für den Pflegedienst verplant ist. Ihre Pflegekasse sagt Ihnen, wie viel noch zur Verfügung steht.',
+  },
+  {
+    frage: 'Kann ich Beträge aus dem letzten Jahr noch nutzen?',
+    antwort:
+      'Ja. Was Sie im vergangenen Jahr nicht genutzt haben, können Sie bis zum 30. Juni einsetzen. Wie viel das bei Ihnen ist, sagt Ihnen Ihre Pflegekasse.',
+  },
+];
+
+const daten = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Abrechnung über die Pflegekasse',
+  description: `Mit Pflegegrad den Entlastungsbetrag für Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung einsetzen. ${site.name} rechnet direkt mit der Pflegekasse ab.`,
+  about: { '@id': `${site.domain}/#betrieb` },
+};
+---
+<Basis
+  titel={`Pflegekasse und Entlastungsbetrag: so einfach geht es | ${site.name}`}
+  beschreibung={`Mit Pflegegrad ${betrag} Euro im Monat für Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung. ${site.name} rechnet direkt mit Ihrer Pflegekasse ab, in ${site.ort} und Umgebung.`}
+>
+  <Fragment slot="kopf"><script type="application/ld+json" set:html={JSON.stringify(daten)} /></Fragment>
+
+  <Krumen wege={[{ titel: 'Pflegekasse', pfad: '/pflegekasse/' }]} />
+
+  <!-- Kopf: Tannenfläche mit Text links und dem Monatsbetrag rechts -->
+  <section class="kassenkopf" aria-labelledby="kassenkopf-titel">
+    <div class="behaelter">
+      <div class="kassenkopf__flaeche flaeche-tanne">
+        <div class="kassenkopf__zier" aria-hidden="true"><Blatt art="linie" /></div>
+        <div class="kassenkopf__text">
+          <p class="etikett etikett--hell"><span>Entlastungsbetrag nach <span class="paragraf">{'§ 45b SGB XI'}</span></span></p>
+          <h1 id="kassenkopf-titel">Wir rechnen direkt mit Ihrer Pflegekasse ab.</h1>
+          <p class="kassenkopf__einleitung">
+            Mit einem Pflegegrad stehen Ihnen jeden Monat {betrag} Euro für Unterstützung im Alltag zur Verfügung.
+            Diesen Betrag setzen Sie für unsere Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung ein.
+            Die Abrechnung übernehmen wir.
+          </p>
+          <div class="kassenkopf__handeln">
+            <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
+              <Symbol name="telefon" kreis />
+              Jetzt anrufen
+            </a>
+            <a class="knopf knopf--rahmen" href={`https://wa.me/${site.whatsappLink}`}>
+              <Symbol name="whatsapp" kreis />
+              WhatsApp schreiben
+            </a>
+          </div>
+        </div>
+        <div class="betrag">
+          <p class="betrag__ueber">Ihr Entlastungsbetrag</p>
+          <p class="betrag__zahl"><span class="betrag__wert">{betrag}</span> <span class="betrag__einheit">Euro</span></p>
+          <p class="betrag__unter">jeden Monat, ab Pflegegrad 1</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vier Schritte mit großen Messing-Ziffern -->
+  <section class="bereich ablauf" aria-labelledby="ablauf-titel">
+    <div class="behaelter ablauf__raster">
+      <div class="ablauf__kopf" data-einblenden>
+        <p class="etikett">So einfach geht es</p>
+        <h2 id="ablauf-titel">Vom ersten Anruf bis zur Abrechnung</h2>
+        <p class="leise">Sie erzählen uns, was Sie sich wünschen. Alles Weitere regeln wir mit Ihrer Pflegekasse.</p>
+      </div>
+      <ol class="schritte">
+        {schritte.map((s, i) => (
+          <li data-einblenden>
+            <span class="schritte__zahl" aria-hidden="true">{i + 1}</span>
+            <div>
+              <h3>{s.titel}</h3>
+              <p>{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Drei Fakten auf Sand -->
+  <section class="bereich fakten flaeche-sand" aria-labelledby="fakten-titel">
+    <div class="behaelter">
+      <div class="fakten__kopf" data-einblenden>
+        <p class="etikett">Gut zu wissen</p>
+        <h2 id="fakten-titel">Ihr Anspruch auf einen Blick</h2>
+      </div>
+      <ul class="fakten__liste">
+        {fakten.map((f, i) => (
+          <li data-einblenden={i ? String(i + 1) : ''}>
+            <span class="blattpunkt"><Blatt /></span>
+            <h3>{f.gross}</h3>
+            <p>{f.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Welche Leistungen über die Pflegekasse möglich sind -->
+  <section class="bereich moeglich" aria-labelledby="moeglich-titel">
+    <div class="behaelter">
+      <div class="moeglich__kopf" data-einblenden>
+        <p class="etikett">Mit Pflegegrad möglich</p>
+        <h2 id="moeglich-titel">Dafür setzen Sie den Betrag ein</h2>
+      </div>
+      <ul class="moeglich__liste">
+        {mitKasse.map((l, i) => {
+          const b = leistungsbilder[l.anker];
+          return (
+            <li data-einblenden={i ? String(i + 1) : ''}>
+              <a class="moeglich__karte" href={p(l.pfad)}>
+                <Bild
+                  klasse="moeglich__bild"
+                  bild={b.bild}
+                  format="4-3"
+                  ausschnitt={b.ausschnitt}
+                  sizes="(min-width: 80em) 25rem, (min-width: 48em) 31vw, 100vw"
+                  alt=""
+                />
+                <span class="moeglich__titel">{l.kurz} <Symbol name="pfeil" /></span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <p class="moeglich__hinweis">
+        {ohneKasse.map((l, i) => (
+          <>
+            {i > 0 && ' und '}
+            <a href={p(l.pfad)}>{l.kurz}</a>
+          </>
+        ))} vereinbaren wir direkt mit Ihnen.
+      </p>
+    </div>
+  </section>
+
+  <Fragen fragen={fragen} titel="Fragen zur Pflegekasse" klasse="flaeche-sand" />
+</Basis>
+
+<style>
+  /* Kopf: Tannenfläche als große Karte mit runden Ecken, daneben der Monatsbetrag im Passepartout */
+  .kassenkopf {
+    padding-block: var(--a-2) var(--a-bereich);
+  }
+  .kassenkopf__flaeche {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    display: grid;
+    gap: var(--a-6);
+    padding: clamp(2rem, 1rem + 4vw, 5.5rem);
+    border-radius: var(--r-blatt) var(--r-gross);
+  }
+  .kassenkopf__zier {
+    position: absolute;
+    z-index: -1;
+    right: -4rem;
+    bottom: -5rem;
+    width: 26rem;
+    color: var(--messing-hell);
+    opacity: 0.14;
+    --blatt-linie: 1.25px;
+  }
+  .kassenkopf__zier :global(.blatt) {
+    width: 100%;
+    height: auto;
+  }
+  .paragraf {
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+  .kassenkopf h1 {
+    max-width: 14ch;
+    margin-bottom: var(--a-4);
+    color: var(--hell);
+    font-size: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem);
+  }
+  .kassenkopf__einleitung {
+    max-width: 40ch;
+    font-size: var(--text-gross);
+    line-height: 1.55;
+  }
+  .kassenkopf__handeln {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--a-2);
+    margin-top: var(--a-5);
+  }
+  @media (max-width: 29.99em) {
+    .kassenkopf__handeln .knopf {
+      flex: 1 1 100%;
+    }
+  }
+  /* Betrag: Passepartout aus zwei Haarlinien in Messing, wie auf der Startseite */
+  .betrag {
+    position: relative;
+    align-self: center;
+    padding: clamp(1.75rem, 1rem + 2.5vw, 3rem);
+    border-radius: var(--r-gross);
+    background: var(--tanne-hell) var(--korn-hell);
+    box-shadow: inset 0 0 0 1px rgb(214 187 135 / 0.4), 0 30px 60px -30px rgb(0 0 0 / 0.6);
+    text-align: center;
+  }
+  .betrag::before {
+    content: '';
+    position: absolute;
+    inset: 0.6rem;
+    border-radius: calc(var(--r-gross) - 0.6rem);
+    box-shadow: inset 0 0 0 1px rgb(214 187 135 / 0.16);
+    pointer-events: none;
+  }
+  .betrag p {
+    max-width: none;
+    margin: 0;
+  }
+  .betrag__ueber {
+    font-size: var(--text-klein);
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--messing-hell);
+  }
+  .betrag .betrag__zahl {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-block: var(--a-2) var(--a-1);
+    font-family: var(--schrift-titel);
+    color: var(--hell);
+  }
+  .betrag__wert {
+    font-size: clamp(5rem, 3rem + 7vw, 8.5rem);
+    font-weight: 400;
+    font-variant-numeric: lining-nums;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+  }
+  .betrag__einheit {
+    font-size: var(--titel-3);
+  }
+  .betrag__unter {
+    color: var(--auf-tanne);
+  }
+  @media (min-width: 64em) {
+    .kassenkopf__flaeche {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--spalt);
+      align-items: center;
+    }
+    .kassenkopf__text {
+      grid-column: 1 / span 7;
+    }
+    .betrag {
+      grid-column: 9 / -1;
+    }
+  }
+
+  /* Schritte: wie der Ablauf auf der Startseite */
+  .ablauf__raster {
+    display: grid;
+    gap: var(--a-6);
+  }
+  .ablauf__kopf h2 {
+    max-width: 14ch;
+    margin-bottom: var(--a-3);
+  }
+  .ablauf__kopf p {
+    max-width: 34ch;
+    margin: 0;
+  }
+  .schritte {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: none;
+    border-bottom: 1px solid var(--linie);
+  }
+  .schritte li {
+    display: grid;
+    grid-template-columns: clamp(4rem, 2.5rem + 5vw, 8.5rem) minmax(0, 1fr);
+    gap: var(--a-3);
+    align-items: start;
+    padding-block: var(--a-4) var(--a-5);
+    border-top: 1px solid var(--linie);
+  }
+  .schritte__zahl {
+    font-family: var(--schrift-titel);
+    font-size: clamp(4.5rem, 2.8rem + 6vw, 9rem);
+    font-weight: 400;
+    font-variant-numeric: lining-nums;
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: var(--messing);
+  }
+  .schritte h3 {
+    margin: 0.35rem 0 var(--a-1);
+    font-size: clamp(1.75rem, 1.45rem + 1.1vw, 2.375rem);
+    font-weight: 450;
+    letter-spacing: -0.015em;
+  }
+  .schritte p {
+    margin: 0;
+    max-width: 44ch;
+    color: var(--leise);
+  }
+  @media (min-width: 64em) {
+    .ablauf__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--spalt);
+      align-items: start;
+    }
+    .ablauf__kopf {
+      grid-column: 1 / span 5;
+      position: sticky;
+      top: 8rem;
+    }
+    .schritte {
+      grid-column: 7 / -1;
+    }
+  }
+
+  /* Fakten */
+  .fakten__kopf,
+  .moeglich__kopf {
+    margin-bottom: var(--a-5);
+  }
+  .fakten__kopf h2,
+  .moeglich__kopf h2 {
+    max-width: 16ch;
+    margin: 0;
+  }
+  .fakten__liste {
+    list-style: none;
+    display: grid;
+    gap: var(--a-4) var(--spalt);
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+  .fakten__liste li {
+    padding-top: var(--a-3);
+    border-top: 1px solid var(--sand-tief);
+  }
+  .fakten__liste .blattpunkt {
+    margin-bottom: var(--a-2);
+    background: var(--papier);
+  }
+  .fakten__liste h3 {
+    margin-bottom: var(--a-1);
+    font-size: clamp(1.6rem, 1.35rem + 0.9vw, 2.125rem);
+    font-weight: 450;
+  }
+  .fakten__liste p {
+    margin: 0;
+    color: var(--leise);
+  }
+  @media (min-width: 48em) {
+    .fakten__liste {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* Leistungen mit Pflegekasse */
+  .moeglich__liste {
+    list-style: none;
+    display: grid;
+    gap: var(--a-5) var(--spalt);
+    margin: 0 0 var(--a-5);
+    padding: 0;
+    max-width: none;
+  }
+  .moeglich__karte {
+    display: grid;
+    gap: var(--a-2);
+    color: var(--tinte);
+    text-decoration: none;
+  }
+  .moeglich__karte:hover {
+    color: var(--tinte);
+  }
+  .moeglich__karte:focus-visible {
+    border-radius: var(--r-bild);
+    outline-offset: 6px;
+  }
+  .moeglich__karte :global(.moeglich__bild .bild__rahmen) {
+    box-shadow: var(--schatten-2);
+    transition: transform var(--uebergang);
+  }
+  .moeglich__karte:hover :global(.moeglich__bild .bild__rahmen) {
+    transform: translateY(-3px);
+  }
+  .moeglich__titel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--schrift-titel);
+    font-size: clamp(1.5rem, 1.35rem + 0.5vw, 1.875rem);
+    font-weight: 450;
+    line-height: 1.2;
+  }
+  .moeglich__titel :global(.symbol) {
+    width: 0.7em;
+    height: 0.7em;
+    color: var(--messing-text);
+    transition: transform var(--uebergang);
+  }
+  .moeglich__karte:hover .moeglich__titel :global(.symbol) {
+    transform: translateX(4px);
+  }
+  .moeglich__hinweis {
+    margin: 0;
+    padding-top: var(--a-3);
+    border-top: 1px solid var(--linie);
+    color: var(--leise);
+  }
+  @media (min-width: 48em) {
+    .moeglich__liste {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

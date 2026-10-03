@@ -1,0 +1,146 @@
+---
+// Kopf einer Unterseite: Brotkrumen, links Etikett, Überschrift, Einleitung und die beiden Kontaktwege,
+// rechts ein Foto in Blattform, das bis an den Fensterrand läuft. Dahinter eine versetzte Sandfläche.
+// Der Platz „zusatz“ nimmt eine kleine Zeile unter der Einleitung auf (zum Beispiel die Pflegekassen-Marke).
+import type { ImageMetadata } from 'astro';
+import { site } from '../site.config';
+import Bild from './Bild.astro';
+import Symbol from './Symbol.astro';
+import Krumen from './Krumen.astro';
+
+interface Props {
+  wege: { titel: string; pfad: string }[];
+  etikett: string;
+  ueberschrift: string;
+  einleitung: string;
+  bild: ImageMetadata;
+  alt: string;
+  ausschnitt?: 'mitte' | 'ganz-oben' | 'oben' | 'unten' | 'links' | 'rechts';
+}
+const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte' } = Astro.props;
+---
+<Krumen wege={wege} />
+<section class="seitenkopf" aria-labelledby="seitenkopf-titel">
+  <div class="behaelter seitenkopf__raster">
+    <div class="seitenkopf__text">
+      <p class="etikett">{etikett}</p>
+      <h1 id="seitenkopf-titel">{ueberschrift}</h1>
+      <p class="einleitung">{einleitung}</p>
+      <slot name="zusatz" />
+      <div class="seitenkopf__handeln">
+        <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
+          <Symbol name="telefon" kreis />
+          Jetzt anrufen
+        </a>
+        <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
+          <Symbol name="whatsapp" kreis />
+          WhatsApp schreiben
+        </a>
+      </div>
+    </div>
+    <div class="seitenkopf__bildbereich">
+      <Bild
+        klasse="seitenkopf__bild"
+        bild={bild}
+        format="4-3"
+        formatGross="1-1"
+        form="blatt"
+        parallaxe
+        zuerst
+        ausschnitt={ausschnitt}
+        sizes="(min-width: 100em) 44rem, (min-width: 64em) 44vw, (min-width: 48em) 46vw, 100vw"
+        alt={alt}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .seitenkopf {
+    position: relative;
+    padding-block: var(--a-4) var(--a-bereich);
+    overflow-x: clip;
+  }
+  .seitenkopf__raster {
+    display: grid;
+    gap: var(--a-6);
+  }
+  .seitenkopf h1 {
+    max-width: 14ch;
+    margin-bottom: var(--a-4);
+    font-size: clamp(2.6rem, 1.7rem + 3.6vw, 4.75rem);
+  }
+  .seitenkopf .einleitung {
+    max-width: 36ch;
+  }
+  .seitenkopf__text :global(.kassenmarke) {
+    margin-top: var(--a-1);
+  }
+  .seitenkopf__handeln {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--a-2);
+    margin-top: var(--a-5);
+  }
+  @media (max-width: 29.99em) {
+    .seitenkopf__handeln .knopf {
+      flex: 1 1 100%;
+    }
+  }
+
+  .seitenkopf__bildbereich {
+    position: relative;
+    isolation: isolate;
+    margin-right: calc(-1 * var(--rand));
+  }
+  /* Zweite Ebene: Sandfläche in Blattform, nach links unten versetzt */
+  .seitenkopf__bildbereich::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: var(--a-6);
+    bottom: calc(-1 * var(--a-4));
+    left: calc(-1 * var(--a-4));
+    right: var(--a-6);
+    border-radius: var(--r-blatt) var(--r-bild);
+    background: var(--sand-tief) var(--korn);
+  }
+  .seitenkopf :global(.seitenkopf__bild .bild__rahmen) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: var(--schatten-3);
+  }
+
+  @media (min-width: 48em) {
+    .seitenkopf {
+      padding-top: var(--a-5);
+    }
+    .seitenkopf__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 0 var(--spalt);
+      align-items: center;
+    }
+    .seitenkopf__text {
+      grid-column: 1 / span 7;
+      grid-row: 1;
+    }
+    .seitenkopf__bildbereich {
+      grid-column: 8 / -1;
+      grid-row: 1;
+      margin-right: calc(-1 * max(var(--rand), (100vw - var(--breite)) / 2));
+    }
+    .seitenkopf :global(.seitenkopf__bild .bild__rahmen) {
+      aspect-ratio: 4 / 5;
+    }
+  }
+  @media (min-width: 48em) and (max-width: 63.99em) {
+    .seitenkopf__handeln .knopf {
+      flex: 1 1 100%;
+    }
+  }
+  @media (min-width: 64em) {
+    .seitenkopf :global(.seitenkopf__bild .bild__rahmen) {
+      aspect-ratio: 1 / 1;
+    }
+  }
+</style>

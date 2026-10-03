@@ -1,0 +1,161 @@
+---
+// Häufige Fragen als aufklappbare Einträge (details/summary: ohne JavaScript, mit Tastatur bedienbar).
+// Links Überschrift und der Weg zum Telefon, rechts die Fragen zwischen Haarlinien.
+import { p } from '../pfad';
+import { site } from '../site.config';
+import Symbol from './Symbol.astro';
+
+export interface Frage {
+  frage: string;
+  antwort: string;
+  link?: { text: string; pfad: string };
+}
+interface Props {
+  fragen: Frage[];
+  titel?: string;
+  klasse?: string;
+}
+const { fragen, titel = 'Gut zu wissen', klasse } = Astro.props;
+---
+<section class:list={['bereich', 'fragen', klasse]} aria-labelledby="fragen-titel">
+  <div class="behaelter fragen__raster">
+    <div class="fragen__kopf" data-einblenden>
+      <p class="etikett">Häufige Fragen</p>
+      <h2 id="fragen-titel">{titel}</h2>
+      <p class="fragen__hinweis">Noch eine Frage? Rufen Sie uns gern an.</p>
+      <a class="weiter" href={`tel:${site.telefonLink}`}>
+        <Symbol name="telefon" /> <span class="nummer">{site.telefon}</span>
+      </a>
+    </div>
+    <div class="fragen__liste" data-einblenden="2">
+      {fragen.map((f) => (
+        <details class="frage">
+          <summary>
+            <span>{f.frage}</span>
+            <span class="frage__zeichen" aria-hidden="true"></span>
+          </summary>
+          <div class="frage__antwort">
+            <p>{f.antwort}</p>
+            {f.link && (
+              <a class="weiter" href={p(f.link.pfad)}><span>{f.link.text}</span> <Symbol name="pfeil" /></a>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .fragen__raster {
+    display: grid;
+    gap: var(--a-5);
+  }
+  .fragen__kopf h2 {
+    max-width: 12ch;
+    margin-bottom: var(--a-3);
+  }
+  .fragen__hinweis {
+    margin-bottom: 0;
+    color: var(--leise);
+  }
+  .fragen__kopf .weiter :global(.symbol) {
+    color: var(--messing-text);
+  }
+  .fragen__liste {
+    border-bottom: 1px solid var(--linie);
+  }
+  .frage {
+    border-top: 1px solid var(--linie);
+  }
+  .frage summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--a-3);
+    min-height: 4.5rem;
+    padding-block: var(--a-2);
+    font-family: var(--schrift-titel);
+    font-size: clamp(1.3125rem, 1.2rem + 0.4vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--tinte);
+    list-style: none;
+    cursor: pointer;
+    transition: color var(--uebergang);
+  }
+  .frage summary::-webkit-details-marker {
+    display: none;
+  }
+  .frage summary:hover {
+    color: var(--waldgruen);
+  }
+  .frage summary:focus-visible {
+    border-radius: var(--r-feld);
+  }
+  /* Plus im Kreis, wird beim Öffnen zum Minus */
+  .frage__zeichen {
+    position: relative;
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1.5px var(--linie-knopf);
+    transition: background-color var(--uebergang), box-shadow var(--uebergang);
+  }
+  .frage__zeichen::before,
+  .frage__zeichen::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.9rem;
+    height: 2px;
+    margin: -1px 0 0 -0.45rem;
+    border-radius: 2px;
+    background: var(--waldgruen);
+    transition: transform var(--uebergang);
+  }
+  .frage__zeichen::after {
+    transform: rotate(90deg);
+  }
+  .frage[open] .frage__zeichen {
+    background: var(--salbei);
+    box-shadow: inset 0 0 0 1.5px var(--salbei);
+  }
+  .frage[open] .frage__zeichen::after {
+    transform: rotate(0deg);
+  }
+  .frage summary:hover .frage__zeichen {
+    box-shadow: inset 0 0 0 1.5px var(--waldgruen);
+  }
+  .frage__antwort {
+    padding: 0 var(--a-6) var(--a-4) 0;
+  }
+  .frage__antwort p {
+    color: var(--leise);
+  }
+  .frage__antwort p:last-child {
+    margin-bottom: 0;
+  }
+  @media (max-width: 29.99em) {
+    .frage__antwort {
+      padding-right: 0;
+    }
+  }
+  @media (min-width: 64em) {
+    .fragen__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--spalt);
+      align-items: start;
+    }
+    .fragen__kopf {
+      grid-column: 1 / span 4;
+      position: sticky;
+      top: 8rem;
+    }
+    .fragen__liste {
+      grid-column: 6 / -1;
+    }
+  }
+</style>

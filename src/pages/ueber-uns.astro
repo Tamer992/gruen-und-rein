@@ -1,0 +1,332 @@
+---
+// Über uns: wer hinter Grün & Rein steht, was den Inhabern wichtig ist, Steckbrief und alle Leistungen.
+import { p } from '../pfad';
+import Basis from '../layouts/Basis.astro';
+import Seitenkopf from '../components/Seitenkopf.astro';
+import Bild from '../components/Bild.astro';
+import Blatt from '../components/Blatt.astro';
+import Symbol from '../components/Symbol.astro';
+import { site, leistungen } from '../site.config';
+import { leistungsbilder } from '../leistungsbilder';
+// [PLATZHALTER: Foto der Inhaber] Ein echtes Foto von Hussain und Ali ersetzt dieses Foto (gleicher Dateiname in src/bilder/)
+import fotoKopf from '../bilder/ueber-uns-umarmung.jpg';
+import fotoWeg from '../bilder/weg-gruen.jpg';
+
+const werte = [
+  {
+    titel: 'Eine feste Ansprechperson',
+    text: 'Zu Ihnen kommt immer dieselbe Person. Sie kennt Ihre Wünsche und weiß nach ein paar Besuchen, was Ihnen wichtig ist.',
+  },
+  {
+    titel: 'Zeit statt Eile',
+    text: 'Wir planen unsere Besuche so, dass Zeit bleibt. Für ein Gespräch, eine Frage oder eine Tasse Kaffee.',
+  },
+  {
+    titel: 'Pünktlich und verlässlich',
+    text: 'Wir kommen zur vereinbarten Zeit. Ändert sich einmal etwas, rufen wir Sie rechtzeitig an.',
+  },
+  {
+    titel: 'Verschwiegen',
+    text: 'Was wir bei Ihnen zu Hause sehen und hören, bleibt bei uns. Darauf können Sie und Ihre Familie sich verlassen.',
+  },
+];
+---
+<Basis
+  titel={`Über uns: ${site.inhaberin} | ${site.name} in ${site.ort}`}
+  beschreibung={`${site.name} aus ${site.ort}: ${site.inhaberin} unterstützen ältere Menschen und ihre Familien im Alltag, im Haushalt und im Garten.`}
+>
+  <Seitenkopf
+    wege={[{ titel: 'Über uns', pfad: '/ueber-uns/' }]}
+    etikett="Über uns"
+    ueberschrift={`Wir sind ${site.inhaberin}.`}
+    einleitung={`${site.name} ist ein Betrieb aus ${site.ort}. Wir unterstützen ältere Menschen und ihre Familien im Alltag, im Haushalt und im Garten, mit Herz und mit Zeit.`}
+    bild={fotoKopf}
+    alt="Eine ältere Dame und eine junge Frau umarmen sich und lachen"
+    ausschnitt="oben"
+  >
+    {site.pflegekasse && (
+      <p slot="zusatz" class="kassenmarke"><Blatt /> Anerkanntes Angebot zur Unterstützung im Alltag</p>
+    )}
+  </Seitenkopf>
+  <!-- [ERGÄNZEN: zwei, drei Sätze zu Hussain und Ali: was sie vorher gemacht haben und warum sie Grün & Rein gegründet haben] -->
+
+  <!-- Was uns wichtig ist: vier Versprechen auf Sand -->
+  <section class="bereich werte flaeche-sand" aria-labelledby="werte-titel">
+    <div class="behaelter werte__raster">
+      <div class="werte__kopf" data-einblenden>
+        <p class="etikett">Was uns wichtig ist</p>
+        <h2 id="werte-titel">Darauf können Sie sich verlassen.</h2>
+      </div>
+      <ul class="werte__liste">
+        {werte.map((w, i) => (
+          <li data-einblenden={i % 2 ? '2' : ''}>
+            <span class="blattpunkt"><Blatt /></span>
+            <h3>{w.titel}</h3>
+            <p>{w.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Steckbrief: Foto links, die wichtigsten Angaben rechts -->
+  <section class="bereich steckbrief" aria-labelledby="steckbrief-titel">
+    <div class="behaelter steckbrief__raster">
+      <div class="steckbrief__bildbereich" data-einblenden>
+        <Bild
+          klasse="steckbrief__bild"
+          bild={fotoWeg}
+          format="4-3"
+          formatGross="4-5"
+          form="blatt-gespiegelt"
+          ausschnitt="unten"
+          parallaxe
+          sizes="(min-width: 80em) 33rem, (min-width: 64em) 40vw, 100vw"
+          alt="Eine Begleiterin geht mit einer älteren Dame einen grünen Weg entlang"
+        />
+      </div>
+      <div class="steckbrief__text" data-einblenden="2">
+        <p class="etikett">Auf einen Blick</p>
+        <h2 id="steckbrief-titel">{site.name}</h2>
+        <dl class="steckbrief__liste">
+          <div>
+            <dt>{site.inhaberTitel}</dt>
+            <dd>{site.inhaberin}</dd>
+          </div>
+          <div>
+            <dt>Sitz</dt>
+            <dd>{site.adresse.strasse}, {site.adresse.plz} {site.adresse.ort}</dd>
+          </div>
+          <div>
+            <dt>Unterwegs in</dt>
+            <dd>{site.einsatzorte.join(', ')}</dd>
+          </div>
+          <div>
+            <dt>Erreichbar</dt>
+            <dd>{site.erreichbarkeit}</dd>
+          </div>
+          {site.pflegekasse && (
+            <div>
+              <dt>Pflegekasse</dt>
+              <dd>Anerkanntes Angebot zur Unterstützung im Alltag in Hessen. <a href={p('/pflegekasse/')}>So rechnen wir ab</a></dd>
+            </div>
+          )}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alle Leistungen -->
+  <section class="bereich alle flaeche-sand" aria-labelledby="alle-titel">
+    <div class="behaelter">
+      <div class="alle__kopf" data-einblenden>
+        <p class="etikett">Leistungen</p>
+        <h2 id="alle-titel">Wobei wir Sie unterstützen</h2>
+      </div>
+      <ul class="alle__liste">
+        {leistungen.map((l, i) => {
+          const b = leistungsbilder[l.anker];
+          return (
+            <li data-einblenden={i % 2 ? '2' : ''}>
+              <a class="alle__karte" href={p(l.pfad)}>
+                <Bild
+                  klasse="alle__bild"
+                  bild={b.bild}
+                  format="4-3"
+                  ausschnitt={b.ausschnitt}
+                  sizes="(min-width: 80em) 15rem, (min-width: 64em) 18vw, (min-width: 40em) 30vw, 8rem"
+                  alt=""
+                />
+                <span class="alle__titel">{l.kurz} <Symbol name="pfeil" /></span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+</Basis>
+
+<style>
+  /* Werte */
+  .werte__raster {
+    display: grid;
+    gap: var(--a-5);
+  }
+  .werte__kopf h2 {
+    max-width: 12ch;
+    margin: 0;
+  }
+  .werte__liste {
+    list-style: none;
+    display: grid;
+    gap: var(--a-4) var(--spalt);
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+  .werte__liste li {
+    padding-top: var(--a-3);
+    border-top: 1px solid var(--sand-tief);
+  }
+  .werte__liste .blattpunkt {
+    margin-bottom: var(--a-2);
+    background: var(--papier);
+  }
+  .werte__liste h3 {
+    margin-bottom: 0.4rem;
+    font-size: clamp(1.4rem, 1.25rem + 0.5vw, 1.75rem);
+    font-weight: 500;
+  }
+  .werte__liste p {
+    margin: 0;
+    color: var(--leise);
+  }
+  @media (min-width: 48em) {
+    .werte__liste {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64em) {
+    .werte__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--spalt);
+      align-items: start;
+    }
+    .werte__kopf {
+      grid-column: 1 / span 4;
+    }
+    .werte__liste {
+      grid-column: 5 / -1;
+    }
+  }
+
+  /* Steckbrief */
+  .steckbrief__raster {
+    display: grid;
+    gap: var(--a-6);
+  }
+  .steckbrief :global(.steckbrief__bild .bild__rahmen) {
+    box-shadow: var(--schatten-3);
+  }
+  .steckbrief h2 {
+    margin-bottom: var(--a-4);
+  }
+  .steckbrief__liste {
+    margin: 0;
+    max-width: none;
+    border-top: 1px solid var(--linie);
+  }
+  .steckbrief__liste > div {
+    display: grid;
+    grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr);
+    gap: var(--a-2);
+    align-items: baseline;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--linie);
+  }
+  .steckbrief__liste dt {
+    font-size: var(--text-klein);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--messing-text);
+  }
+  .steckbrief__liste dd {
+    margin: 0;
+  }
+  @media (max-width: 29.99em) {
+    .steckbrief__liste > div {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.15rem;
+    }
+  }
+  @media (min-width: 64em) {
+    .steckbrief__raster {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 0 var(--spalt);
+      align-items: center;
+    }
+    .steckbrief__bildbereich {
+      grid-column: 1 / span 5;
+    }
+    .steckbrief__text {
+      grid-column: 7 / -1;
+    }
+  }
+
+  /* Alle Leistungen */
+  .alle__kopf {
+    margin-bottom: var(--a-5);
+  }
+  .alle__kopf h2 {
+    margin: 0;
+  }
+  .alle__liste {
+    list-style: none;
+    display: grid;
+    gap: var(--a-2) var(--spalt);
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+  .alle__karte {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: var(--a-2);
+    align-items: center;
+    color: var(--tinte);
+    text-decoration: none;
+  }
+  .alle__karte:hover {
+    color: var(--tinte);
+  }
+  .alle__karte:focus-visible {
+    border-radius: var(--r-bild);
+    outline-offset: 6px;
+  }
+  .alle__karte :global(.alle__bild .bild__rahmen) {
+    box-shadow: var(--schatten-2);
+    transition: transform var(--uebergang);
+  }
+  .alle__karte:hover :global(.alle__bild .bild__rahmen) {
+    transform: translateY(-3px);
+  }
+  .alle__titel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--schrift-titel);
+    font-size: clamp(1.375rem, 1.25rem + 0.4vw, 1.625rem);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .alle__titel :global(.symbol) {
+    width: 0.7em;
+    height: 0.7em;
+    color: var(--messing-text);
+    transition: transform var(--uebergang);
+  }
+  .alle__karte:hover .alle__titel :global(.symbol) {
+    transform: translateX(4px);
+  }
+  @media (min-width: 40em) {
+    .alle__liste {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: var(--a-5);
+    }
+    .alle__karte {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+  @media (min-width: 64em) {
+    .alle__liste {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .alle__titel {
+      flex-wrap: wrap;
+      font-size: clamp(1.25rem, 0.9rem + 0.6vw, 1.5rem);
+    }
+  }
+</style>
