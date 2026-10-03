@@ -457,22 +457,54 @@ const ADER = 'M37.5 70.5C47 57 57 44 66.5 30.5';
     }
   }
 
+  /* Ab Tablet: Text links, Foto rechts, damit oben rechts keine leere Fläche bleibt */
+  @media (min-width: 48em) {
+    /* Überschrift wächst mit der Spaltenbreite, damit jede Zeile in die halbe Breite passt */
+    .einstieg h1 {
+      font-size: min(var(--titel-1), max(2.5rem, 5.2vw));
+    }
+    .einstieg__raster {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      align-items: center;
+      gap: var(--a-5);
+    }
+  }
+  @media (min-width: 48em) and (max-width: 63.99em) {
+    .einstieg :global(.einstieg__bild .bild__rahmen) {
+      aspect-ratio: 3 / 4;
+    }
+    .einstieg__handeln .knopf {
+      flex: 1 1 100%;
+    }
+    .kassenkarte .haken--gross {
+      display: none;
+    }
+  }
+  /* Tablet und kleine Laptops: Karte unter dem Foto, ragt in den Zwischenraum und verdeckt keine Gesichter */
+  @media (min-width: 48em) and (max-width: 79.99em) {
+    .kassenkarte {
+      margin: calc(-1 * var(--a-5)) 0 0 calc(-1 * var(--a-5));
+      padding: var(--a-2) var(--a-3);
+    }
+  }
   @media (min-width: 64em) {
     .einstieg {
       padding-top: var(--a-6);
     }
     .einstieg__raster {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      align-items: center;
       gap: var(--a-6);
     }
     .einstieg :global(.einstieg__bild .bild__rahmen) {
       border-radius: var(--r-gross);
     }
+  }
+  /* Große Bildschirme: Karte liegt am unteren Bildrand */
+  @media (min-width: 80em) {
     .kassenkarte {
       position: absolute;
       left: calc(-1 * var(--a-5));
-      bottom: calc(-1 * var(--a-4));
+      bottom: calc(-1 * var(--a-5));
       width: min(31rem, 92%);
       margin: 0;
     }
