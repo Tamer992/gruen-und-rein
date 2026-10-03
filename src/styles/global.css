@@ -608,6 +608,7 @@ a:hover {
   .format-gross-16-9 { aspect-ratio: 16 / 9; }
   .format-gross-1-1 { aspect-ratio: 1 / 1; }
 }
+.ausschnitt-ganz-oben img { object-position: center 0%; }
 .ausschnitt-oben img { object-position: center 20%; }
 .ausschnitt-unten img { object-position: center 85%; }
 .ausschnitt-links img { object-position: 25% center; }

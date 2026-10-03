@@ -18,7 +18,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
 
 // Leistungen: zuerst die drei, die über die Pflegekasse möglich sind.
 // Solange es keine Unterseiten gibt (site.unterseiten), sind die Einträge keine Links.
-// Jedes Foto hat sein eigenes Format, damit die Liste nicht wie ein Kachelraster wirkt.
+// format gilt ab Desktop: oben drei gleich große Fotos (4:3), darunter zwei breitere (16:9).
 const kacheln = [
   {
     anker: 'alltagsbegleitung',
@@ -26,8 +26,8 @@ const kacheln = [
     text: 'Wir gehen mit Ihnen spazieren oder einkaufen. Zum Arzt begleiten wir Sie und warten mit im Wartezimmer.',
     kasse: true,
     bild: fotoAlltag,
-    format: '4-5' as const,
-    ausschnitt: 'oben' as const,
+    format: '4-3' as const,
+    ausschnitt: 'ganz-oben' as const,
     alt: 'Ein Begleiter geht Arm in Arm mit einer älteren Dame',
   },
   {
@@ -36,7 +36,7 @@ const kacheln = [
     text: 'Wir kümmern uns um die Wäsche, putzen Küche und Bad und bringen den Einkauf mit.',
     kasse: true,
     bild: fotoHaus,
-    format: '1-1' as const,
+    format: '4-3' as const,
     ausschnitt: 'mitte' as const,
     alt: 'Eine ältere Frau bereitet in ihrer Küche einen Salat zu',
   },
@@ -46,8 +46,8 @@ const kacheln = [
     text: 'Wir hören zu und haben Zeit für Gespräche. Und wir helfen bei dem, was im Alltag gerade liegen bleibt.',
     kasse: true,
     bild: fotoTrauer,
-    format: '4-5' as const,
-    ausschnitt: 'mitte' as const,
+    format: '4-3' as const,
+    ausschnitt: 'rechts' as const,
     alt: 'Blumen im warmen Abendlicht',
   },
   {
@@ -56,7 +56,7 @@ const kacheln = [
     text: 'Wohnungen, Häuser, Büros und Treppenhäuser. Regelmäßig oder einmal ganz gründlich.',
     kasse: false,
     bild: fotoRein,
-    format: '4-3' as const,
+    format: '16-9' as const,
     ausschnitt: 'mitte' as const,
     alt: 'Eine helle, aufgeräumte Küche mit großem Fenster',
   },
@@ -67,18 +67,16 @@ const kacheln = [
     kasse: false,
     bild: fotoGarten,
     format: '16-9' as const,
-    ausschnitt: 'mitte' as const,
+    ausschnitt: 'oben' as const,
     alt: 'Hände in Gartenhandschuhen setzen eine junge Pflanze in die Erde',
   },
 ].map((k) => ({ ...k, punkte: leistungen.find((l) => l.anker === k.anker)?.punkte ?? [] }));
 const Kachel = site.unterseiten ? 'a' : 'article';
-// Bildbreiten passend zum Raster: zwei versetzte Spalten (6 und 5 von 12), die letzte Leistung breit
+// Bildbreiten passend zum Raster: Handy eine Spalte, Tablet zwei, Desktop drei oben und zwei unten
 const groessen = [
-  '(min-width: 80em) 36rem, (min-width: 64em) 47vw, (min-width: 48em) 47vw, 100vw',
-  '(min-width: 80em) 30rem, (min-width: 64em) 39vw, (min-width: 48em) 47vw, 100vw',
-  '(min-width: 80em) 30rem, (min-width: 64em) 39vw, (min-width: 48em) 47vw, 100vw',
-  '(min-width: 80em) 36rem, (min-width: 64em) 47vw, (min-width: 48em) 47vw, 100vw',
-  '(min-width: 80em) 46rem, (min-width: 64em) 56vw, 100vw',
+  ...Array(3).fill('(min-width: 80em) 24rem, (min-width: 64em) 31vw, (min-width: 48em) 46vw, 100vw'),
+  '(min-width: 80em) 37rem, (min-width: 64em) 47vw, (min-width: 48em) 46vw, 100vw',
+  '(min-width: 80em) 37rem, (min-width: 64em) 47vw, (min-width: 48em) 46vw, 100vw',
 ];
 
 ---
@@ -198,7 +196,7 @@ const groessen = [
               <Bild
                 klasse="kachel__bild"
                 bild={k.bild}
-                format={i === 4 ? '4-3' : k.format}
+                format="4-3"
                 formatGross={k.format}
                 ausschnitt={k.ausschnitt}
                 parallaxe
@@ -212,7 +210,7 @@ const groessen = [
                 )}
                 <p class="kachel__beschreibung">{k.text}</p>
                 <ul class="kachel__punkte" aria-label={`${k.titel} im Einzelnen`}>
-                  {k.punkte.map((punkt) => <li>{punkt}</li>)}
+                  {k.punkte.map((punkt) => <li><Symbol name="haken" klasse="kachel__haken" />{punkt}</li>)}
                 </ul>
               </div>
             </div>
@@ -672,23 +670,27 @@ const groessen = [
   }
 
   /* Leistungen
-     Handy: untereinander. Ab Tablet zwei Spalten, die rechte ist nach unten versetzt.
-     Ab Desktop wechseln Spaltenbreiten und Einzüge, die Gartenpflege steht quer über die ganze Breite. */
+     Handy: untereinander. Tablet: zwei Spalten, die Gartenpflege quer mit Foto links.
+     Desktop: oben die drei Leistungen mit Pflegekasse nebeneinander, darunter Reinigung und Garten etwas breiter.
+     Alle Fotos einer Reihe haben dieselbe Größe, damit die Reihe ruhig steht. */
   .leistungen__kopf {
     display: grid;
     gap: var(--a-3);
   }
   .kacheln {
     display: grid;
-    gap: var(--a-7) var(--spalt);
+    gap: var(--a-6) var(--spalt);
   }
   .kachel {
     display: block;
+    min-width: 0;
     color: var(--tinte);
     text-decoration: none;
   }
   .kachel__innen {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
     gap: var(--a-3);
   }
   .kachel :global(.kachel__bild .bild__rahmen) {
@@ -699,7 +701,7 @@ const groessen = [
     align-items: center;
     gap: 0.5rem;
     margin-bottom: var(--a-1);
-    font-size: clamp(1.75rem, 1.45rem + 1.1vw, 2.375rem);
+    font-size: clamp(1.75rem, 1.5rem + 0.7vw, 2.125rem);
     font-weight: 450;
     letter-spacing: -0.015em;
   }
@@ -713,34 +715,39 @@ const groessen = [
     margin-bottom: var(--a-2);
   }
   .kachel__beschreibung {
-    margin-bottom: var(--a-2);
+    margin-bottom: var(--a-3);
     color: var(--leise);
   }
-  /* Was genau dazugehört: ruhige Liste mit feinen Messingstrichen, bei genug Breite zweispaltig */
+  /* Was genau dazugehört: kleine Haken im hellgrünen Kreis, bei genug Breite zweispaltig */
   .kachel__punkte {
     list-style: none;
-    columns: 2 11rem;
-    column-gap: var(--a-4);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+    gap: 0.4rem var(--a-3);
     margin: 0;
-    padding: var(--a-2) 0 0;
-    border-top: 1px solid var(--linie);
+    padding: 0;
     color: var(--tinte);
-    line-height: 1.45;
+    line-height: 1.4;
   }
   .kachel__punkte li {
     display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    padding-block: 0.3rem;
-    break-inside: avoid;
+    align-items: flex-start;
+    gap: 0.6rem;
   }
-  .kachel__punkte li::before {
-    content: '';
+  .kachel__punkte :global(.kachel__haken) {
     flex: none;
-    width: 0.85rem;
-    height: 1px;
-    background: var(--messing);
-    transform: translateY(-0.3em);
+    display: grid;
+    place-items: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-top: 0.05rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--waldgruen) 10%, transparent);
+    color: var(--waldgruen);
+  }
+  .kachel__punkte :global(.kachel__haken svg) {
+    width: 0.75rem;
+    height: 0.75rem;
   }
 
   /* Nur wenn die Einträge auf Unterseiten führen */
@@ -770,41 +777,32 @@ const groessen = [
       grid-column: 1 / span 9;
     }
     .kacheln {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: var(--a-6) var(--spalt);
-      /* Platz für die versetzte rechte Spalte */
-      --versatz: var(--a-6);
-    }
-    .kachel {
-      grid-column: span 6;
-    }
-    .kachel:nth-child(2n) {
-      translate: 0 var(--versatz);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .kachel--5 {
       grid-column: 1 / -1;
-      margin-top: var(--versatz);
+    }
+    .kachel--5 .kachel__innen {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--spalt);
+      align-items: center;
     }
   }
   @media (min-width: 64em) {
     .kacheln {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       row-gap: var(--a-7);
-      --versatz: var(--a-8);
     }
-    .kachel--1 { grid-column: 1 / span 6; }
-    .kachel--2 { grid-column: 8 / span 5; }
-    .kachel--3 { grid-column: 2 / span 5; }
-    .kachel--4 { grid-column: 7 / span 6; }
+    .kachel {
+      grid-column: span 2;
+    }
+    .kachel--4,
+    .kachel--5 {
+      grid-column: span 3;
+    }
     .kachel--5 .kachel__innen {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      column-gap: var(--spalt);
-      align-items: center;
-    }
-    .kachel--5 :global(.kachel__bild) {
-      grid-column: 1 / span 7;
-    }
-    .kachel--5 .kachel__text {
-      grid-column: 9 / -1;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
     }
   }
 
