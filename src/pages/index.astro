@@ -16,8 +16,8 @@ import fotoWeg from '../bilder/alltag-spaziergang.jpg';
 import fotoTrauer from '../bilder/trauer-blumen.jpg';
 ---
 <Basis
-  titel={`Alltagshilfe für Senioren in ${site.ort}: Begleitung, Haushalt, Garten | ${site.name}`}
-  beschreibung={`${site.name} hilft älteren Menschen in ${site.ort} und Umgebung: Begleitung zum Arzt und zum Einkaufen, Hauswirtschaft, Reinigung, Gartenpflege und Trauerbegleitung.`}
+  titel={`Alltagsbegleitung, Hauswirtschaft und Reinigung in ${site.ort} | ${site.name}`}
+  beschreibung={`${site.name} in ${site.ort}: Alltagsbegleitung und Betreuung, Trauerbegleitung, Hauswirtschaft, Gebäudereinigung und Gartenwirtschaft. Für Senioren, Familien und Betriebe.`}
 >
   <!-- Einstieg -->
   <section class="einstieg" aria-labelledby="einstieg-titel">
@@ -25,7 +25,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
       <div class="einstieg__text">
         <h1 id="einstieg-titel">Gut versorgt zu Hause.</h1>
         <p class="einleitung">
-          Wir begleiten, kochen, putzen und pflegen den Garten. Für Senioren in {site.ort} und ihre Familien.
+          Wir begleiten, helfen im Haushalt, reinigen und pflegen den Garten. In {site.ort} und Umgebung.
         </p>
         <div class="einstieg__handeln">
           <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
@@ -53,7 +53,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
       <ul class="fakten" aria-label="Das ist uns wichtig">
         <li><Symbol name="haken" /> Eine feste Ansprechperson</li>
         <li><Symbol name="haken" /> Erster Besuch bei Ihnen unverbindlich</li>
-        <li><Symbol name="haken" /> In {site.ort} und Umgebung</li>
+        <li><Symbol name="haken" /> Für Privat und Gewerbe</li>
       </ul>
     </div>
   </section>
@@ -106,7 +106,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
           />
           <div class="kachel__text">
             <h3>Alltagsbegleitung <Symbol name="pfeil" /></h3>
-            <p>Zum Arzt, zum Einkaufen, auf den Friedhof. Oder einfach ein Spaziergang und ein gutes Gespräch.</p>
+            <p>Gesellschaft, Spaziergänge, Einkäufe und Begleitung zum Arzt. Damit der Alltag wieder leichter wird.</p>
           </div>
         </a>
 
@@ -120,11 +120,11 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
           />
           <div class="kachel__text">
             <h3>Hauswirtschaft <Symbol name="pfeil" /></h3>
-            <p>Kochen, Wäsche, Betten beziehen. So, wie Sie es gewohnt sind.</p>
+            <p>Wäsche, Küche, Bad, Einkaufen und alles, was im Haushalt anfällt.</p>
           </div>
         </a>
 
-        <a class="kachel" href={p('/reinigung/')}>
+        <a class="kachel" href={p('/gebaeudereinigung/')}>
           <Bild
             klasse="kachel__bild"
             bild={fotoRein}
@@ -133,12 +133,12 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
             alt="Eine helle, aufgeräumte Küche mit großem Fenster"
           />
           <div class="kachel__text">
-            <h3>Reinigung <Symbol name="pfeil" /></h3>
-            <p>Böden, Bad, Küche und Fenster. Jede Woche oder einmal gründlich.</p>
+            <h3>Gebäudereinigung <Symbol name="pfeil" /></h3>
+            <p>Wohnung, Haus, Büro und Treppenhaus. Regelmäßig oder als Grundreinigung.</p>
           </div>
         </a>
 
-        <a class="kachel kachel--breit" href={p('/gartenpflege/')}>
+        <a class="kachel kachel--breit" href={p('/gartenwirtschaft/')}>
           <Bild
             klasse="kachel__bild"
             bild={fotoGarten}
@@ -147,10 +147,9 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
             alt="Hände in Gartenhandschuhen setzen eine junge Pflanze in die Erde"
           />
           <div class="kachel__text">
-            <h3>Gartenpflege <Symbol name="pfeil" /></h3>
+            <h3>Gartenwirtschaft <Symbol name="pfeil" /></h3>
             <p>
-              Rasen mähen, Hecken schneiden, Laub rechen, Beete pflegen. Im Frühjahr machen wir den Garten fertig,
-              im Herbst winterfest.
+              Rasenpflege, Unkraut und Laub entfernen, Beete pflegen und Außenanlagen in Ordnung halten.
             </p>
           </div>
         </a>
@@ -203,7 +202,7 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
       <div class="vorstellung__text">
         <h2 id="vorstellung-titel">Jemand, der Zeit mitbringt.</h2>
         <p>
-          Hinter {site.name} steht {site.inhaberin}. Bei uns haben Sie eine feste Ansprechperson,
+          Hinter {site.name} {site.mehrereInhaber ? 'stehen' : 'steht'} {site.inhaberin}. Bei uns haben Sie eine feste Ansprechperson,
           die Sie kennt, pünktlich kommt und zuhört.
         </p>
         <a class="weiter" href={p('/ueber-uns/')}>Mehr über uns <Symbol name="pfeil" /></a>
@@ -232,8 +231,8 @@ import fotoTrauer from '../bilder/trauer-blumen.jpg';
       <div class="trauer__text">
         <h2 id="trauer-titel">Wenn ein Mensch gestorben ist</h2>
         <p>
-          Nach einem Todesfall ist vieles auf einmal zu tun, und vieles ist schwer. Wir begleiten Sie in dieser Zeit,
-          hören zu, gehen mit Ihnen auf den Friedhof und helfen bei dem, was jetzt erledigt werden muss.
+          Nach einem Todesfall ist vieles schwer. Wir begleiten Sie in dieser Zeit: Wir hören zu,
+          nehmen uns Zeit für Gespräche und unterstützen Sie im Alltag.
         </p>
         <a href={p('/trauerbegleitung/')}>Über die Trauerbegleitung</a>
       </div>

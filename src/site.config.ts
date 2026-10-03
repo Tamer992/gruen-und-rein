@@ -11,36 +11,41 @@ export const site = {
   // [PLATZHALTER: echte Domain] Volle Adresse, ohne Schrägstrich am Ende
   domain: 'https://platzhalter-domain.de',
 
-  // [PLATZHALTER: Vor- und Nachname]
-  inhaberin: 'Hussein',
-  inhaberinVorname: 'Hussein',
-  // „Inhaberin“ oder „Inhaber“
+  // [PLATZHALTER: Schreibweise der Vornamen und Nachnamen bestätigen]
+  inhaberin: 'Hussain und Ali',
+  inhaberinVorname: 'Hussain und Ali',
+  // „Inhaberin“, „Inhaber“ oder „Inhaber“ (Mehrzahl)
   inhaberTitel: 'Inhaber',
+  mehrereInhaber: true,
 
   // [PLATZHALTER: Telefonnummer] So wird die Nummer angezeigt
   telefon: '0000 000 000',
   // [PLATZHALTER: Telefonnummer für den Anruf-Link] Ziffern mit +49, ohne 0 vorne
   telefonLink: '+49000000000',
+  // [PLATZHALTER: zweite Telefonnummer] Leer lassen, wenn es keine gibt.
+  // Auf dem Flyer stehen 0160 1234567 und 0176 98765432. Das sind vermutlich Beispielnummern, bitte prüfen.
+  telefon2: '',
+  telefon2Link: '',
   // [PLATZHALTER: WhatsApp-Nummer] Ziffern mit 49 vorne, ohne + und ohne 0
   whatsappLink: '49000000000',
-  // [PLATZHALTER: E-Mail-Adresse]
+  // [PLATZHALTER: E-Mail-Adresse] Achtung: gruenundrein.de gehört einer anderen Firma (Grün und Rein GbR, Pforzheim)
   email: 'name@beispiel.de',
 
   adresse: {
-    // [PLATZHALTER: Straße, PLZ, Ort]
-    strasse: 'Musterstraße 1',
-    plz: '00000',
-    ort: 'Musterstadt',
+    // Vom Flyer übernommen
+    strasse: 'Vogelsbergstraße 2',
+    plz: '64646',
+    ort: 'Heppenheim',
     land: 'DE',
   },
 
-  // [PLATZHALTER: Hauptort] für Überschriften und Seitentitel
-  ort: 'Musterstadt',
+  // Hauptort für Überschriften und Seitentitel
+  ort: 'Heppenheim',
 
-  // [PLATZHALTER: Einsatzorte] Ein Eintrag je Ort
-  einsatzorte: ['Musterstadt', 'Nachbarort', 'Zweiter Ort', 'Dritter Ort'],
+  // [PLATZHALTER: Einsatzorte] Ein Eintrag je Ort, zum Beispiel Heppenheim, Bensheim, Lorsch
+  einsatzorte: ['Heppenheim und Umgebung'],
 
-  // [PLATZHALTER: Erreichbarkeit] So steht es auf der Seite
+  // Erreichbarkeit, so steht es auf der Seite (aus dem Webseiten-Entwurf von Hussain und Ali)
   erreichbarkeit: 'Montag bis Freitag, 8 bis 18 Uhr',
   erreichbarkeitKurz: 'Mo bis Fr, 8 bis 18 Uhr',
   // Dieselben Zeiten für Suchmaschinen. Tage: Mo Tu We Th Fr Sa Su
@@ -57,17 +62,48 @@ export const site = {
 export const navigation = [
   { titel: 'Alltagsbegleitung', pfad: '/alltagsbegleitung/' },
   { titel: 'Hauswirtschaft', pfad: '/hauswirtschaft/' },
-  { titel: 'Reinigung', pfad: '/reinigung/' },
-  { titel: 'Gartenpflege', pfad: '/gartenpflege/' },
+  { titel: 'Gebäudereinigung', pfad: '/gebaeudereinigung/' },
+  { titel: 'Gartenwirtschaft', pfad: '/gartenwirtschaft/' },
   { titel: 'Über uns', pfad: '/ueber-uns/' },
   { titel: 'Kontakt', pfad: '/kontakt/' },
 ];
 
+// Leistungen wie auf dem Flyer von Hussain und Ali.
 // kasse: Abrechnung über die Pflegekasse möglich (nur sichtbar, wenn pflegekasse: true)
 export const leistungen = [
-  { titel: 'Alltagsbegleitung', pfad: '/alltagsbegleitung/', kasse: true },
-  { titel: 'Hauswirtschaft', pfad: '/hauswirtschaft/', kasse: true },
-  { titel: 'Reinigung', pfad: '/reinigung/', kasse: false },
-  { titel: 'Gartenpflege', pfad: '/gartenpflege/', kasse: false },
-  { titel: 'Trauerbegleitung', pfad: '/trauerbegleitung/', kasse: true },
+  {
+    titel: 'Alltagsbegleitung und Betreuung',
+    kurz: 'Alltagsbegleitung',
+    pfad: '/alltagsbegleitung/',
+    kasse: true,
+    punkte: ['Gesellschaft', 'Spaziergänge', 'Einkäufe', 'Arztbegleitung', 'Entlastung im Alltag'],
+  },
+  {
+    titel: 'Trauerbegleitung',
+    kurz: 'Trauerbegleitung',
+    pfad: '/trauerbegleitung/',
+    kasse: true,
+    punkte: ['Zuhören', 'Gespräche', 'Unterstützung im Alltag', 'Begleitung in schweren Zeiten'],
+  },
+  {
+    titel: 'Hauswirtschaft',
+    kurz: 'Hauswirtschaft',
+    pfad: '/hauswirtschaft/',
+    kasse: true,
+    punkte: ['Reinigung', 'Wäsche', 'Einkaufen', 'Küche', 'Bad', 'Haushaltshilfe'],
+  },
+  {
+    titel: 'Gebäudereinigung',
+    kurz: 'Gebäudereinigung',
+    pfad: '/gebaeudereinigung/',
+    kasse: false,
+    punkte: ['Wohnungsreinigung', 'Hausreinigung', 'Büroreinigung', 'Treppenhaus', 'Grundreinigung'],
+  },
+  {
+    titel: 'Gartenwirtschaft',
+    kurz: 'Gartenwirtschaft',
+    pfad: '/gartenwirtschaft/',
+    kasse: false,
+    punkte: ['Rasenpflege', 'Unkraut entfernen', 'Laub entfernen', 'Beetpflege', 'Außenanlagen'],
+  },
 ];
