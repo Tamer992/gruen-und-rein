@@ -9,16 +9,17 @@ const I = 'scripts/_instanzen/';
 const fett = fontkit.openSync(I + 'wort.ttf');
 const mittel = fontkit.openSync(I + 'et.ttf');
 const zeile = fontkit.openSync(I + 'zeile.ttf');
+const titel = fontkit.openSync(I + 'titel.ttf');
 
+// Wie in src/styles/global.css (:root)
 const F = {
-  waldgruen: '#1E4D36',
-  tanne: '#12291D',
-  grund: '#F6F7F4',
-  salbei: '#E7EEE8',
-  blatt: '#A9D3B2',
-  tinte: '#14211A',
-  leise: '#4A5A51',
-  hellAufTanne: '#BFD0C4',
+  waldgruen: '#1D4733',
+  tanne: '#122519',
+  grund: '#F8F5EF',
+  blatt: '#D8BC88',
+  tinte: '#18231D',
+  leise: '#3E4842',
+  hellAufTanne: '#D6DDD5',
 };
 
 // Zeichen: abgerundetes Quadrat, darin ein Blatt, das zugleich ein Tropfen ist
@@ -95,9 +96,9 @@ writeFileSync('public/icon-512.png', await png(512, voll));
 writeFileSync('public/favicon.ico', ico([{ groesse: 16, daten: await png(16) }, { groesse: 32, daten: await png(32) }]));
 
 // Vorschaubild 1200 x 630: links Tanne mit Logo und Satz, rechts das Foto vom Einstieg
-const satz1 = setze(fett, 'Alltag. Zuhause.', 70, 80, 360, -1.5);
-const satz2 = setze(fett, 'Sauber. Gepflegt.', 70, 80, 440, -1.5);
-const flaeche = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="${F.tanne}"/><g transform="translate(80 90) scale(1.6)">${dunkel.svg.replace(/<svg[^>]*>|<\/svg>|<title[^>]*>.*?<\/title>/g, '')}</g><path fill="${F.grund}" d="${rund(satz1.d + satz2.d)}"/></svg>`;
+const satz1 = setze(titel, 'Alltag. Zuhause.', 74, 80, 365, -1.5);
+const satz2 = setze(titel, 'Sauber. Gepflegt.', 74, 80, 448, -1.5);
+const flaeche = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="${F.tanne}"/><g transform="translate(80 90) scale(1.6)">${dunkel.svg.replace(/<svg[^>]*>|<\/svg>|<title[^>]*>.*?<\/title>/g, '')}</g><rect x="80" y="505" width="64" height="2" fill="${F.blatt}"/><path fill="${F.grund}" d="${rund(satz1.d)}"/><path fill="${F.blatt}" d="${rund(satz2.d)}"/></svg>`;
 const foto = await sharp('src/bilder/gespraech-fotoalbum.jpg').resize(460, 630, { fit: 'cover', position: 'right' }).toBuffer();
 writeFileSync(
   'public/og-bild.jpg',
