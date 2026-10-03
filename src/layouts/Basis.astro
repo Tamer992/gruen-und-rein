@@ -1,9 +1,9 @@
 ---
 import { p } from '../pfad';
 import schriftText from '../fonts/atkinson-next.woff2?url';
-import schriftTitel from '../fonts/schibsted.woff2?url';
+import schriftTitel from '../fonts/fraunces.woff2?url';
 import '../styles/global.css';
-import { site, leistungen } from '../site.config';
+import { site, leistungen, leistungsPfad } from '../site.config';
 import Kopf from '../components/Kopf.astro';
 import Fuss from '../components/Fuss.astro';
 import Anrufleiste from '../components/Anrufleiste.astro';
@@ -18,6 +18,21 @@ const { titel, beschreibung, ruhig = false } = Astro.props;
 // In der Vorschau (GitHub Pages) nie in Suchmaschinen aufnehmen
 const vorschau = import.meta.env.PUBLIC_VORSCHAU === '1';
 const indexieren = (Astro.props.indexieren ?? true) && !vorschau;
+
+// Sicherheitsrichtlinie: nur eigene Dateien, kein Inline-CSS, keine Inline-Skripte.
+// Nur im fertigen Build, weil der Entwicklungsserver selbst Inline-Stile einsetzt.
+// frame-ancestors wirkt nur als HTTP-Header (siehe Hinweis in der Zusammenfassung).
+const csp = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+].join('; ');
 
 const adresse = new URL(Astro.url.pathname, Astro.site).href;
 const vorschaubild = new URL(p('/og-bild.jpg'), Astro.site).href;
@@ -54,7 +69,7 @@ const betrieb = {
     name: 'Leistungen',
     itemListElement: leistungen.map((l) => ({
       '@type': 'Offer',
-      itemOffered: { '@type': 'Service', name: l.titel, url: new URL(l.pfad, site.domain).href },
+      itemOffered: { '@type': 'Service', name: l.titel, url: new URL(leistungsPfad(l), site.domain).href },
     })),
   },
 };
@@ -64,11 +79,12 @@ const betrieb = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={csp} />}
     <title>{titel}</title>
     <meta name="description" content={beschreibung} />
     <link rel="canonical" href={adresse} />
     {!indexieren && <meta name="robots" content="noindex, follow" />}
-    <meta name="theme-color" content="#12291d" />
+    <meta name="theme-color" content="#122519" />
 
     <link rel="preload" href={schriftText} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={schriftTitel} as="font" type="font/woff2" crossorigin />
@@ -107,9 +123,8 @@ const betrieb = {
   main:focus {
     outline: none;
   }
-  @media (max-width: 47.99em) {
-    body {
-      padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
-    }
+  /* Ziel einer Sprungmarke nicht unter dem oberen Rand verstecken */
+  [id] {
+    scroll-margin-top: var(--a-3);
   }
 </style>

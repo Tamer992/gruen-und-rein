@@ -1,16 +1,25 @@
 /* Grün & Rein: Grundgestaltung
-   Farben, Abstände, Schriftgrößen und Rundungen stehen als Variablen in :root.
+   Farben, Abstände, Schriftgrößen, Rundungen, Schatten und Bewegung stehen als Variablen in :root.
    Größen in rem und em, damit die Seite bei 200 % Zoom nicht bricht.
 
    Rundungen (überall gleich):
-   Knöpfe und Felder 12px, Fotos und Kacheln 20px, große Flächen 28px. */
+   Knöpfe ganz rund, Felder und Etiketten 12px, Fotos und Kacheln 24px, große Flächen 32px. */
 
 @font-face {
-  font-family: 'Schibsted Grotesk';
-  src: url('../fonts/schibsted.woff2') format('woff2');
-  font-weight: 500 800;
+  font-family: 'Fraunces';
+  src: url('../fonts/fraunces.woff2') format('woff2');
+  font-weight: 400 700;
   font-style: normal;
   font-display: swap;
+}
+/* Ersatz mit angepassten Maßen, damit beim Nachladen der Schrift nichts springt */
+@font-face {
+  font-family: 'Fraunces Ersatz';
+  src: local('Georgia');
+  size-adjust: 96.8%;
+  ascent-override: 101%;
+  descent-override: 26.3%;
+  line-gap-override: 0%;
 }
 @font-face {
   font-family: 'Atkinson Hyperlegible Next';
@@ -30,31 +39,41 @@
 :root {
   color-scheme: light;
 
-  /* Farben. Kontraste: Text auf Grund 15,5 : 1, Weiß auf Waldgrün 9,7 : 1 */
-  --grund: #f6f7f4;
-  --flaeche: #ffffff;
-  --salbei: #e7eee8;
-  --salbei-tief: #d9e5dc;
-  --linie: #d3dcd5;
-  --tinte: #14211a;
-  --leise: #4a5a51;
-  --waldgruen: #1e4d36;
-  --waldgruen-tief: #163a29;
-  --tanne: #12291d;
-  --blatt: #a9d3b2;
-  --hell-auf-tanne: #bfd0c4;
+  /* Farben: Waldgrün mit Messing auf Leinen.
+     Kontraste: Tinte auf Grund 14,9 : 1, Leise auf Grund 8,7 : 1, Leise auf Sand 7,8 : 1,
+     Hell auf Waldgrün 10,3 : 1, Text auf Tanne 11,6 : 1, Messing-Text auf Grund 5,8 : 1 */
+  --grund: #f8f5ef;
+  --flaeche: #fffdf9;
+  --sand: #efe8dc;
+  --sand-tief: #e6dccb;
+  --salbei: #e5ebe2;
+  --linie: #e2dacb;
+  --linie-knopf: #8f8676;
+  --tinte: #18231d;
+  --leise: #3e4842;
+  --waldgruen: #1d4733;
+  --waldgruen-tief: #153626;
+  --tanne: #122519;
+  --tanne-hell: #1b3325;
+  --hell: #fffdf9;
+  --auf-tanne: #d6ddd5;
+  --linie-auf-tanne: rgb(214 221 213 / 0.16);
+  --messing: #9e7a3e;
+  --messing-text: #7a5a24;
+  --messing-hell: #d8bc88;
+  --messing-hell-tief: #e6d0a6;
 
   /* Schriften */
-  --schrift-titel: 'Schibsted Grotesk', 'Segoe UI', Arial, sans-serif;
+  --schrift-titel: 'Fraunces', 'Fraunces Ersatz', Georgia, 'Times New Roman', serif;
   --schrift-text: 'Atkinson Hyperlegible Next', 'Segoe UI', Verdana, sans-serif;
 
   /* Schriftgrößen */
   --text: 1.1875rem;
   --text-gross: 1.3125rem;
   --text-klein: 1.0625rem;
-  --titel-1: clamp(2.6rem, 1.7rem + 3.6vw, 4.6rem);
-  --titel-2: clamp(2rem, 1.45rem + 2vw, 3.1rem);
-  --titel-3: clamp(1.375rem, 1.25rem + 0.5vw, 1.625rem);
+  --titel-1: clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem);
+  --titel-2: clamp(2.125rem, 1.55rem + 2.2vw, 3.375rem);
+  --titel-3: clamp(1.4375rem, 1.3rem + 0.55vw, 1.75rem);
   --mass: 62ch;
 
   /* Abstände */
@@ -64,7 +83,8 @@
   --a-4: 2rem;
   --a-5: 3rem;
   --a-6: 4.5rem;
-  --a-bereich: clamp(4.5rem, 3rem + 5vw, 8rem);
+  --a-7: 6rem;
+  --a-bereich: clamp(5rem, 3.5rem + 5vw, 9rem);
 
   /* Raster */
   --breite: 80rem;
@@ -72,11 +92,26 @@
   --spalt: clamp(1rem, 0.4rem + 2.2vw, 2.5rem);
 
   /* Rundungen */
-  --r-knopf: 12px;
-  --r-bild: 20px;
-  --r-gross: 28px;
+  --r-knopf: 999px;
+  --r-feld: 12px;
+  --r-bild: 24px;
+  --r-gross: 32px;
 
-  --uebergang: 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* Schatten: mehrere weiche Ebenen in warmem Ton */
+  --schatten-1: 0 1px 1px rgb(46 38 24 / 0.04), 0 2px 6px -2px rgb(46 38 24 / 0.06);
+  --schatten-2: 0 1px 1px rgb(46 38 24 / 0.04), 0 4px 10px -4px rgb(46 38 24 / 0.07),
+    0 20px 40px -24px rgb(46 38 24 / 0.22);
+  --schatten-3: 0 1px 2px rgb(46 38 24 / 0.05), 0 10px 20px -10px rgb(46 38 24 / 0.12),
+    0 32px 60px -30px rgb(46 38 24 / 0.32);
+  --schatten-knopf: 0 1px 1px rgb(18 37 25 / 0.18), 0 8px 18px -10px rgb(18 37 25 / 0.55);
+
+  /* Einheitliche Bildstimmung: etwas wärmer und ruhiger */
+  --bild-ton: saturate(0.88) sepia(0.07) contrast(0.98);
+
+  /* Bewegung */
+  --uebergang: 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  --uebergang-lang: 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  --einblenden-weg: 1.25rem;
 }
 
 @media (min-width: 64em) {
@@ -95,6 +130,12 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  background: var(--grund);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -106,6 +147,7 @@ body {
   line-height: 1.6;
   overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 img,
@@ -120,36 +162,40 @@ h2,
 h3,
 h4 {
   font-family: var(--schrift-titel);
+  font-optical-sizing: auto;
   color: var(--tinte);
   margin: 0 0 var(--a-2);
   text-wrap: balance;
 }
 h1 {
   font-size: var(--titel-1);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-weight: 500;
+  line-height: 1.03;
+  letter-spacing: -0.022em;
 }
 h2 {
   font-size: var(--titel-2);
-  font-weight: 750;
+  font-weight: 500;
   line-height: 1.08;
-  letter-spacing: -0.028em;
+  letter-spacing: -0.018em;
 }
 h3 {
   font-size: var(--titel-3);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.006em;
 }
 
 p,
 ul,
-ol {
+ol,
+dl {
   margin: 0 0 var(--a-2);
   max-width: var(--mass);
 }
-p {
+p,
+li,
+dd {
   text-wrap: pretty;
 }
 
@@ -157,7 +203,8 @@ a {
   color: var(--waldgruen);
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.22em;
+  transition: color var(--uebergang), text-decoration-color var(--uebergang);
 }
 a:hover {
   color: var(--waldgruen-tief);
@@ -167,11 +214,11 @@ a:hover {
 :focus-visible {
   outline: 3px solid var(--tinte);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 ::selection {
-  background: var(--blatt);
+  background: var(--messing-hell);
   color: var(--tinte);
 }
 
@@ -193,14 +240,14 @@ a:hover {
   top: -10rem;
   z-index: 100;
   background: var(--tinte);
-  color: #fff;
+  color: var(--hell);
   padding: var(--a-2) var(--a-3);
-  border-radius: var(--r-knopf);
+  border-radius: var(--r-feld);
   font-weight: 700;
 }
 .sprung:focus {
   top: var(--a-2);
-  color: #fff;
+  color: var(--hell);
 }
 
 /* Raster */
@@ -226,9 +273,43 @@ a:hover {
   padding-block: var(--a-bereich);
 }
 
+/* Kopf eines Bereichs: Etikett, Überschrift */
+.bereich__kopf {
+  margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+.bereich__kopf h2 {
+  margin-bottom: 0;
+  max-width: 20ch;
+}
+
+/* Kleines Etikett über Überschriften, mit feiner Messinglinie */
+.etikett {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0 0 var(--a-3);
+  font-size: var(--text-klein);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--messing-text);
+}
+.etikett::before {
+  content: '';
+  flex: none;
+  width: 2.25rem;
+  height: 1.5px;
+  background: var(--messing);
+}
+.etikett--hell {
+  color: var(--messing-hell);
+}
+.etikett--hell::before {
+  background: var(--messing-hell);
+}
+
 .einleitung {
   font-size: var(--text-gross);
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--leise);
 }
 
@@ -243,17 +324,18 @@ a:hover {
   justify-content: center;
   gap: 0.65rem;
   min-height: 3.5rem;
-  padding: 0.85rem 1.6rem;
+  padding: 0.85rem 1.75rem;
   font-family: var(--schrift-text);
   font-size: var(--text);
   font-weight: 700;
   line-height: 1.2;
-  white-space: nowrap;
+  text-align: center;
   text-decoration: none;
   border-radius: var(--r-knopf);
   border: 0;
   cursor: pointer;
-  transition: background-color var(--uebergang), transform var(--uebergang);
+  transition: background-color var(--uebergang), color var(--uebergang), box-shadow var(--uebergang),
+    transform var(--uebergang);
 }
 .knopf:hover {
   text-decoration: none;
@@ -262,38 +344,47 @@ a:hover {
 .knopf:active {
   transform: translateY(0) scale(0.98);
 }
+.knopf:focus-visible {
+  outline-offset: 4px;
+  border-radius: var(--r-knopf);
+}
 .knopf--haupt {
   background: var(--waldgruen);
-  color: #fff;
+  color: var(--hell);
+  box-shadow: var(--schatten-knopf);
 }
 .knopf--haupt:hover {
   background: var(--waldgruen-tief);
-  color: #fff;
+  color: var(--hell);
+  box-shadow: 0 1px 1px rgb(18 37 25 / 0.2), 0 14px 26px -12px rgb(18 37 25 / 0.6);
 }
 .knopf--neben {
-  background: var(--salbei);
+  background: var(--flaeche);
   color: var(--waldgruen);
+  box-shadow: inset 0 0 0 1.5px var(--linie-knopf), var(--schatten-1);
 }
 .knopf--neben:hover {
-  background: var(--salbei-tief);
+  background: var(--sand);
   color: var(--waldgruen-tief);
+  box-shadow: inset 0 0 0 1.5px var(--waldgruen), var(--schatten-2);
 }
 .knopf--hell {
-  background: var(--blatt);
+  background: var(--messing-hell);
   color: var(--tanne);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 0.2), 0 10px 22px -12px rgb(0 0 0 / 0.6);
 }
 .knopf--hell:hover {
-  background: #bfe0c6;
+  background: var(--messing-hell-tief);
   color: var(--tanne);
 }
 .knopf--rahmen {
   background: transparent;
-  color: #fff;
-  box-shadow: inset 0 0 0 2px var(--hell-auf-tanne);
+  color: var(--hell);
+  box-shadow: inset 0 0 0 1.5px var(--auf-tanne);
 }
 .knopf--rahmen:hover {
   background: rgb(255 255 255 / 0.08);
-  color: #fff;
+  color: var(--hell);
 }
 .symbol {
   display: inline-flex;
@@ -304,8 +395,6 @@ a:hover {
 .symbol svg {
   width: 100%;
   height: 100%;
-}
-.symbol svg {
   fill: currentColor;
 }
 /* Symbol im Kreis, für Knöpfe */
@@ -323,34 +412,70 @@ a:hover {
   background: rgb(255 255 255 / 0.14);
 }
 .knopf--neben .symbol--kreis {
-  background: #fff;
+  background: var(--sand);
 }
 .knopf--hell .symbol--kreis {
-  background: rgb(18 41 29 / 0.1);
+  background: rgb(18 37 25 / 0.12);
 }
 .knopf--rahmen .symbol--kreis {
   background: rgb(255 255 255 / 0.12);
 }
 
+/* Haken im Kreis, für Aufzählungen */
+.haken {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--salbei);
+  color: var(--waldgruen);
+}
+.haken .symbol {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+/* Marke für Leistungen, die über die Pflegekasse möglich sind */
+.kassenmarke {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.35rem 0.95rem 0.35rem 0.4rem;
+  border-radius: var(--r-knopf);
+  background: var(--flaeche);
+  box-shadow: inset 0 0 0 1px var(--linie);
+  font-size: var(--text-klein);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--waldgruen);
+}
+
 /* Telefonnummern: in der Überschriftenschrift, deren Null nicht durchgestrichen ist */
 .nummer {
   font-family: var(--schrift-titel);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.01em;
 }
 
 /* Link mit Pfeil */
 .weiter {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
   min-height: 3rem;
   font-weight: 700;
   text-decoration: none;
 }
-.weiter:hover {
-  text-decoration: underline;
+.weiter span {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+  transition: background-size var(--uebergang);
+}
+.weiter:hover span {
+  background-size: 100% 1.5px;
 }
 .weiter .symbol {
   width: 1.05em;
@@ -358,7 +483,7 @@ a:hover {
   transition: transform var(--uebergang);
 }
 .weiter:hover .symbol {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 /* Bilder */
@@ -369,24 +494,63 @@ a:hover {
   position: relative;
   overflow: hidden;
   border-radius: var(--r-bild);
-  background: var(--salbei);
+  background: var(--sand);
   height: 100%;
+  isolation: isolate;
+}
+/* Feine Innenkante, damit helle Fotos sauber vom Grund abgesetzt sind */
+.bild__rahmen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgb(46 38 24 / 0.08);
+  pointer-events: none;
 }
 .bild__rahmen img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: var(--bild-ton);
 }
 .format-4-5 { aspect-ratio: 4 / 5; }
+.format-5-4 { aspect-ratio: 5 / 4; }
 .format-4-3 { aspect-ratio: 4 / 3; }
 .format-3-2 { aspect-ratio: 3 / 2; }
 .format-16-9 { aspect-ratio: 16 / 9; }
 .format-1-1 { aspect-ratio: 1 / 1; }
 .format-frei { aspect-ratio: auto; }
+@media (min-width: 64em) {
+  .format-gross-4-5 { aspect-ratio: 4 / 5; }
+  .format-gross-5-4 { aspect-ratio: 5 / 4; }
+  .format-gross-4-3 { aspect-ratio: 4 / 3; }
+  .format-gross-3-2 { aspect-ratio: 3 / 2; }
+  .format-gross-16-9 { aspect-ratio: 16 / 9; }
+  .format-gross-1-1 { aspect-ratio: 1 / 1; }
+}
 .ausschnitt-oben img { object-position: center 20%; }
 .ausschnitt-unten img { object-position: center 85%; }
 .ausschnitt-links img { object-position: 25% center; }
-.ausschnitt-rechts img { object-position: 75% center; }
+.ausschnitt-rechts img { object-position: 72% center; }
+
+/* Sanftes Einblenden beim Scrollen.
+   Nur mit JavaScript (Klasse js-bereit kommt aus js/seite.js) und nur, wenn Bewegung erwünscht ist.
+   Ohne JavaScript oder mit reduzierter Bewegung ist alles sofort sichtbar. */
+@media (prefers-reduced-motion: no-preference) {
+  .js-bereit [data-einblenden] {
+    transition: opacity var(--uebergang-lang), transform var(--uebergang-lang);
+  }
+  .js-bereit [data-einblenden]:not(.ist-sichtbar) {
+    opacity: 0;
+    transform: translateY(var(--einblenden-weg));
+  }
+  .js-bereit [data-einblenden='2'] {
+    transition-delay: 90ms;
+  }
+  .js-bereit [data-einblenden='3'] {
+    transition-delay: 180ms;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -403,5 +567,9 @@ a:hover {
   .anrufleiste,
   .leiste {
     display: none !important;
+  }
+  [data-einblenden] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
