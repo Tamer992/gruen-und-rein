@@ -53,7 +53,8 @@ export const site = {
 
   // Abrechnung über die Pflegekasse (Entlastungsbetrag nach § 45b SGB XI) für Alltagsbegleitung,
   // Hauswirtschaft und Trauerbegleitung. Laut Hussain und Ali möglich (03.10.2026).
-  // [PLATZHALTER: Anerkennung als Angebot zur Unterstützung im Alltag (Hessen) vorliegend? Stelle und Datum]
+  // Anerkennung als Angebot zur Unterstützung im Alltag (Hessen) liegt vor, auch für die Trauerbegleitung
+  // (Rückmeldung vom 03.10.2026).
   // Auf false stellen, falls die Anerkennung doch fehlt: Dann verschwinden alle Hinweise.
   pflegekasse: true,
 
