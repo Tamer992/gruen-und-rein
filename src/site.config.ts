@@ -85,6 +85,7 @@ export const site = {
 
 // Leistungen wie auf dem Flyer von Hussain und Ali, ergänzt am 03.10.2026 (Bügeln, Mahlzeiten, Rezepte und
 // Medikamente, Post und Termine, Behördengänge, Fenster und Gardinen). Mit Hussain und Ali bestätigen.
+// Alltagsbegleitung am 04.10.2026 nach Liste der Inhaber ergänzt: Demenz, Erwachsene und Kinder, Gespräche.
 // kasse: Abrechnung über die Pflegekasse möglich (nur sichtbar, wenn pflegekasse: true)
 export const leistungen = [
   {
@@ -93,7 +94,7 @@ export const leistungen = [
     pfad: '/alltagsbegleitung/',
     anker: 'alltagsbegleitung',
     kasse: true,
-    punkte: ['Betreuung', 'Spaziergänge', 'Arztbegleitung', 'Rezepte und Medikamente', 'Post und Termine', 'Behördengänge'],
+    punkte: ['Betreuung', 'Demenz', 'Spaziergänge', 'Gespräche', 'Arztbegleitung', 'Rezepte und Medikamente'],
   },
   {
     titel: 'Hauswirtschaft',
