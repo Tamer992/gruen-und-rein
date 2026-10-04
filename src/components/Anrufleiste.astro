@@ -1,11 +1,12 @@
 ---
 // Feste Leiste am unteren Rand, nur auf dem Handy: Anrufen und WhatsApp.
+// Nicht am Computer mit Maus, auch nicht bei starkem Zoom (nur-finger, Tamer 04.10.2026).
 // „ruhig“ nimmt die Farbe zurück (für die Trauerbegleitung).
 import { site } from '../site.config';
 import Symbol from './Symbol.astro';
 const { ruhig = false } = Astro.props;
 ---
-<aside class:list={['anrufleiste', { 'anrufleiste--ruhig': ruhig }]} aria-label="Schnellkontakt">
+<aside class:list={['anrufleiste', 'nur-finger', { 'anrufleiste--ruhig': ruhig }]} aria-label="Schnellkontakt">
   <a class="anrufleiste__anruf" href={`tel:${site.telefonLink}`}>
     <Symbol name="telefon" />
     Jetzt anrufen

@@ -379,9 +379,16 @@ const groessen = [
     margin-top: var(--a-5);
   }
   /* Auf dem Handy klebt die Anrufleiste mit denselben zwei Knöpfen unten, hier also doppelt (Tamer, 04.10.2026) */
-  @media (max-width: 47.99em) {
+  @media (max-width: 47.99em) and (not ((hover: hover) and (pointer: fine))) {
     .einstieg__handeln {
       display: none;
+    }
+  }
+  /* Sehr breite Fenster (oder herausgezoomt): Foto nicht höher als 36rem, es wird dann breiter statt riesig */
+  @media (min-width: 48em) {
+    .einstieg :global(.einstieg__bild .bild__rahmen) {
+      width: 100%;
+      max-height: 36rem;
     }
   }
 

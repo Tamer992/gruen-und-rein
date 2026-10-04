@@ -280,7 +280,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
     }
   }
   /* Platz für die feste Anrufleiste auf dem Handy */
-  @media (max-width: 47.99em) {
+  @media (max-width: 47.99em) and (not ((hover: hover) and (pointer: fine))) {
     .fuss {
       padding-bottom: calc(var(--a-4) + 4.75rem + env(safe-area-inset-bottom));
     }

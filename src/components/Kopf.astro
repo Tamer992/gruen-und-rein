@@ -189,8 +189,25 @@ const aktuell = Astro.url.pathname;
   }
   :global(.ist-gescrollt) .kopf {
     border-bottom-color: transparent;
-    box-shadow: 0 1px 0 var(--linie-zart), 0 12px 28px -20px rgb(46 38 24 / 0.45);
+    box-shadow: 0 12px 28px -20px rgb(46 38 24 / 0.45);
   }
+  /* Leuchtkante unten wie bei ihreitrn.de (Tamer, 04.10.2026): feine Messinglinie, die zu den Seiten ausläuft,
+     darüber ein zarter warmer Schimmer. Ersetzt die graue Trennlinie. */
+  .kopf {
+    border-bottom-color: transparent;
+    isolation: isolate;
+  }
+  .kopf::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, transparent 6%, rgb(162 124 60 / 0.95) 50%, transparent 94%) bottom / 100% 1.5px no-repeat,
+      radial-gradient(45% 90% at 50% 100%, rgb(214 187 135 / 0.38), transparent 100%);
+  }
+
   /* Auf kleinen Bildschirmen ein Raster: Das Logo darf schmaler werden, der Menü-Knopf bleibt daneben */
   .kopf__zeile {
     display: grid;
