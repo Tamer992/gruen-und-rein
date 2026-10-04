@@ -97,8 +97,7 @@
         beobachter.unobserve(eintrag.target);
       });
     },
-    // Etwas weiter im Bild, damit man das Einblenden auch sieht (vorher -8 %, Tamer 04.10.2026)
-    { rootMargin: '0px 0px -12% 0px' }
+    { rootMargin: '0px 0px -8% 0px' }
   );
 
   // Zier-Animationen (Dach, Zierlinien, Siegel) starten erst, wenn sie ein Viertel weit im Bild sind.
