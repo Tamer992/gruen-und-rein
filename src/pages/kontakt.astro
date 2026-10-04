@@ -89,8 +89,7 @@ const vorbereitung = [
         <p class="leise">Alles andere klären wir gemeinsam. Auch Ihre Angehörigen können gern für Sie anrufen.</p>
       </div>
       <aside class="gebiet" aria-labelledby="gebiet-titel" data-einblenden="2">
-        <div class="gebiet__zier" aria-hidden="true"><Dach /></div>
-        <p class="etikett">Einsatzgebiet</p>
+        <div class="gebiet__zier" aria-hidden="true"><Dach zeichnen /></div>
         <h2 id="gebiet-titel" class="gebiet__titel">Unterwegs in</h2>
         <ul class="gebiet__liste">
           {site.einsatzorte.map((ort) => <li>{ort}</li>)}
@@ -157,7 +156,7 @@ const vorbereitung = [
   .weg__wert {
     font-family: var(--schrift-titel);
     font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
-    font-weight: 500;
+    font-weight: 560;
     line-height: 1.25;
     font-style: normal;
     overflow-wrap: anywhere;
@@ -221,7 +220,7 @@ const vorbereitung = [
     margin-top: var(--a-3);
     padding: 0.75rem 1.5rem;
     border-radius: var(--r-knopf);
-    background: var(--messing-hell);
+    background: var(--papier);
     color: var(--tanne);
     font-weight: 700;
     transition: background-color var(--uebergang);
@@ -232,7 +231,7 @@ const vorbereitung = [
     transition: transform var(--uebergang);
   }
   a.weg--telefon:hover .weg__los {
-    background: var(--messing-hell-tief);
+    background: var(--sand);
   }
   a.weg--telefon:hover .weg__los :global(.symbol) {
     transform: translateX(4px);
@@ -305,11 +304,12 @@ const vorbereitung = [
     border-radius: var(--r-gross);
     background: var(--sand) var(--korn);
   }
+  /* Oben rechts statt unten: unten lag die Zeichnung über dem Hinweistext (Prüfung 04.10.2026) */
   .gebiet__zier {
     position: absolute;
-    right: -1.5rem;
-    bottom: -2rem;
-    width: 11rem;
+    right: -0.75rem;
+    top: -0.75rem;
+    width: 7rem;
     color: var(--messing);
     opacity: 0.35;
     --dach-linie: 1.25px;

@@ -1,0 +1,75 @@
+---
+// Stimmen von Kundinnen und Kunden. Erscheint erst, wenn in site.config.ts echte Bewertungen eingetragen sind.
+// Bewusst keine Beispieltexte: Erfundene Bewertungen sind unseriös und abmahnfähig (Prüfung 04.10.2026).
+import { site } from '../site.config';
+const liste = site.bewertungen;
+---
+{liste.length > 0 && (
+  <section class="bereich stimmen" aria-labelledby="stimmen-titel">
+    <div class="behaelter">
+      <div class="bereich__kopf" data-einblenden>
+        <p class="etikett">Stimmen</p>
+        <h2 id="stimmen-titel">Das sagen unsere Kundinnen und Kunden</h2>
+      </div>
+      <ul class="stimmen__liste">
+        {liste.map((b, i) => (
+          <li data-einblenden={i % 2 ? '2' : ''}>
+            <figure>
+              <blockquote><p>{b.text}</p></blockquote>
+              <figcaption>
+                {b.name}{b.ort && `, ${b.ort}`}
+                {b.quelle && <span class="stimmen__quelle">{b.quelle}</span>}
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .stimmen__liste {
+    list-style: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--a-5) var(--spalt);
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+  .stimmen__liste figure {
+    margin: 0;
+    padding-top: var(--a-3);
+    border-top: 1px solid var(--linie);
+  }
+  .stimmen__liste blockquote {
+    margin: 0 0 var(--a-2);
+  }
+  .stimmen__liste blockquote p {
+    font-family: var(--schrift-titel);
+    font-size: var(--titel-3);
+    line-height: 1.35;
+    quotes: '„' '“';
+  }
+  .stimmen__liste blockquote p::before {
+    content: open-quote;
+  }
+  .stimmen__liste blockquote p::after {
+    content: close-quote;
+  }
+  .stimmen__liste figcaption {
+    font-weight: 700;
+  }
+  .stimmen__quelle {
+    display: block;
+    font-weight: 400;
+    font-size: var(--text-klein);
+    color: var(--leise);
+  }
+  @media (min-width: 48em) {
+    .stimmen__liste {
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    }
+  }
+</style>

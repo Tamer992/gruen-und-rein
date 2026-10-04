@@ -1,0 +1,27 @@
+---
+// Text mit Pfeil dahinter. Der Pfeil hängt fest am letzten Wort: Er rutscht nie allein in die nächste Zeile
+// und schiebt die Zeile auch nicht über den Rand (vorher auf dem Handy 10 px seitlicher Überlauf, 04.10.2026).
+// Lange Wörter bekommen eine Trennstelle an der Wortfuge, damit sie auf sehr schmalen Handys (320 px)
+// sauber mit Bindestrich umbrechen statt mitten im Wort.
+import Symbol from './Symbol.astro';
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+const fugen: Record<string, string> = {
+  Alltagsbegleitung: 'Alltags­begleitung',
+  Trauerbegleitung: 'Trauer­begleitung',
+  Gebäudereinigung: 'Gebäude­reinigung',
+  Hauswirtschaft: 'Haus­wirtschaft',
+  Gartenpflege: 'Garten­pflege',
+};
+const getrennt = text
+  .split(' ')
+  .map((w) => fugen[w] ?? w)
+  .join(' ');
+// Der Pfeil bleibt beim letzten Wortteil (nach Leerzeichen oder Trennstelle)
+const i = Math.max(getrennt.lastIndexOf(' '), getrennt.lastIndexOf('­'));
+const anfang = i >= 0 ? getrennt.slice(0, i + 1) : '';
+const ende = i >= 0 ? getrennt.slice(i + 1) : getrennt;
+---
+{anfang}<span class="mit-pfeil">{ende}<Symbol name="pfeil" /></span>

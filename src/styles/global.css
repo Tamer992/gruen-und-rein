@@ -76,7 +76,8 @@
   --korn: url('./korn.svg');
   --korn-hell: url('./korn-hell.svg');
 
-  /* Schriften */
+  /* Schriften. Literata nur in zwei Stärken: 400 für große Überschriften, 560 für Zwischenüberschriften,
+     Namen und Nummern (vorher vier Stärken, Prüfung 04.10.2026) */
   --schrift-titel: 'Literata', 'Literata Ersatz', Georgia, 'Times New Roman', serif;
   --schrift-text: 'Atkinson Hyperlegible Next', 'Segoe UI', Verdana, sans-serif;
 
@@ -141,6 +142,17 @@
     --kopf-luft: 1rem;
   }
 }
+/* Große Bildschirme (ab etwa 1800 px): Schrift eine Stufe größer, damit der Inhalt nicht klein und verloren wirkt.
+   Satzspiegel nur leicht breiter (84 statt 80 rem), das Startfoto wächst dadurch kaum (Prüfung 04.10.2026). */
+@media (min-width: 112em) {
+  :root {
+    --text: 1.3125rem;
+    --text-gross: 1.5rem;
+    --text-klein: 1.125rem;
+    --titel-3: 2rem;
+    --breite: 84rem;
+  }
+}
 
 *,
 *::before,
@@ -174,6 +186,9 @@ body {
   font-size: var(--text);
   line-height: 1.6;
   overflow-wrap: break-word;
+  /* Sicherheitsnetz: Nichts darf die Seite seitlich verschiebbar machen (sonst wird die Anrufleiste
+     auf dem Handy abgeschnitten). „clip“ statt „hidden“, damit der klebende Kopf weiter funktioniert. */
+  overflow-x: clip;
   font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -239,6 +254,10 @@ a {
 a:hover {
   color: var(--waldgruen-tief);
   text-decoration-thickness: 2px;
+}
+/* Einfache Textlinks im Fließtext: größere Tippfläche nach oben und unten, ohne die Zeilen zu verschieben */
+p a:not([class]) {
+  padding-block: 0.5em;
 }
 
 /* Fokus: kräftiger Ring in Tinte mit Messing-Hof, auf dunklen Flächen hell */
@@ -414,14 +433,16 @@ a:hover {
   color: var(--waldgruen-tief);
   box-shadow: inset 0 0 0 1.5px var(--waldgruen), var(--schatten-2);
 }
+/* Heller Knopf auf Tanne: Papierweiß statt Messing, damit keine ockerfarbenen Knöpfe entstehen
+   (Prüfung 04.10.2026). Messing bleibt Linien, Zeichen und Etiketten vorbehalten. */
 .knopf--hell {
-  background: var(--messing-hell);
+  background: var(--papier);
   color: var(--tanne);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 1px 1px rgb(0 0 0 / 0.2),
     0 10px 22px -12px rgb(0 0 0 / 0.6);
 }
 .knopf--hell:hover {
-  background: var(--messing-hell-tief);
+  background: var(--sand);
   color: var(--tanne);
 }
 .knopf--rahmen {
@@ -505,6 +526,16 @@ a:hover {
   }
 }
 
+/* Ersatz für die weggefallenen Knöpfe: Nummer als Text, nur auf dem Handy mit Finger (NummerText.astro) */
+.statt-knopf {
+  display: none;
+}
+@media (max-width: 47.99em) and (not ((hover: hover) and (pointer: fine))) {
+  .statt-knopf {
+    display: grid;
+  }
+}
+
 /* Anruf-Knöpfe: mit Finger „Jetzt anrufen“, am Computer mit Maus die Nummer (siehe AnrufText.astro) */
 .anruftext__nummer {
   display: none;
@@ -522,9 +553,20 @@ a:hover {
 /* Telefonnummern: in der Überschriftenschrift, deren Null nicht durchgestrichen ist */
 .nummer {
   font-family: var(--schrift-titel);
-  font-weight: 600;
+  font-weight: 560;
   font-variant-numeric: lining-nums tabular-nums;
   letter-spacing: 0.01em;
+  /* Eine Nummer nie über mehrere Zeilen verteilen (vorher bei Zoom „0000 / 000 / 000“) */
+  white-space: nowrap;
+}
+
+/* Pfeil am letzten Wort eines Titels (MitPfeil.astro): bricht nie allein um */
+.mit-pfeil {
+  white-space: nowrap;
+}
+.mit-pfeil .symbol {
+  margin-left: 0.4em;
+  vertical-align: -0.04em;
 }
 
 /* Link mit Pfeil */
@@ -679,6 +721,62 @@ a:hover {
   .js-bereit [data-einblenden='linie']:not(.ist-sichtbar) > * {
     opacity: 0;
     transform: translateY(var(--einblenden-weg));
+  }
+}
+
+@keyframes kante-auf {
+  from {
+    opacity: 0;
+    transform: scaleX(0.2);
+  }
+}
+
+/* Zeichnungen und Zierlinien (Prüfung 04.10.2026). Nur transform und opacity, kurz, ohne Versatz.
+   Ohne JavaScript oder mit reduzierter Bewegung steht alles sofort da. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Dach mit Herz (Dach.astro, „zeichnen“): Ein Fenster gleitet von links herein, die Zeichnung selbst bleibt
+     stehen. So wirkt es, als würde die Linie gezogen. */
+  .js-bereit [data-einblenden='zeichnen'] {
+    overflow: hidden;
+    transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .js-bereit [data-einblenden='zeichnen'] > .dach-wisch__innen {
+    transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .js-bereit [data-einblenden='zeichnen']:not(.ist-sichtbar) {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+  .js-bereit [data-einblenden='zeichnen']:not(.ist-sichtbar) > .dach-wisch__innen {
+    transform: translateX(100%);
+  }
+
+  /* Zierlinie mit Dach (Fuß, Pflegekassen-Abschnitt): Die Linien wachsen von der Mitte nach außen,
+     das Dach blendet gleichzeitig ein */
+  .js-bereit [data-einblenden='zier']:not(.ist-sichtbar) {
+    opacity: 1;
+    transform: none;
+  }
+  .js-bereit [data-einblenden='zier']::before,
+  .js-bereit [data-einblenden='zier']::after {
+    transition: transform 500ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .js-bereit [data-einblenden='zier']::before {
+    transform-origin: right center;
+  }
+  .js-bereit [data-einblenden='zier']::after {
+    transform-origin: left center;
+  }
+  .js-bereit [data-einblenden='zier'] > .dach {
+    transition: opacity 400ms ease-out, transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .js-bereit [data-einblenden='zier']:not(.ist-sichtbar)::before,
+  .js-bereit [data-einblenden='zier']:not(.ist-sichtbar)::after {
+    transform: scaleX(0);
+  }
+  .js-bereit [data-einblenden='zier']:not(.ist-sichtbar) > .dach {
+    opacity: 0;
+    transform: translateY(0.375rem);
   }
 }
 

@@ -7,6 +7,7 @@ import { site } from '../site.config';
 import Bild from './Bild.astro';
 import Symbol from './Symbol.astro';
 import Kontaktwege from './Kontaktwege.astro';
+import NummerText from './NummerText.astro';
 import Krumen from './Krumen.astro';
 
 interface Props {
@@ -29,8 +30,9 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
       <p class="einleitung">{einleitung}</p>
       <slot name="zusatz" />
       <div class="seitenkopf__handeln">
-          <Kontaktwege />
-        </div>
+        <Kontaktwege />
+      </div>
+      <NummerText />
     </div>
     <div class="seitenkopf__bildbereich">
       <Bild

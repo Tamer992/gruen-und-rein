@@ -10,6 +10,7 @@ import Fragen from '../components/Fragen.astro';
 import Bild from '../components/Bild.astro';
 import Dach from '../components/Dach.astro';
 import Symbol from '../components/Symbol.astro';
+import MitPfeil from '../components/MitPfeil.astro';
 import Anrufhinweis from '../components/Anrufhinweis.astro';
 import AnrufText from '../components/AnrufText.astro';
 import { site, leistungen } from '../site.config';
@@ -105,7 +106,7 @@ const daten = {
   <section class="kassenkopf" aria-labelledby="kassenkopf-titel">
     <div class="behaelter">
       <div class="kassenkopf__flaeche flaeche-tanne">
-        <div class="kassenkopf__zier" aria-hidden="true"><Dach /></div>
+        <div class="kassenkopf__zier" aria-hidden="true"><Dach zeichnen /></div>
         <div class="kassenkopf__text">
           <p class="etikett etikett--hell"><span>Entlastungsbetrag nach <span class="paragraf">{'§ 45b SGB XI'}</span></span></p>
           {/* [ERGÄNZEN: Abrechnung offen, ob Grün & Rein direkt mit der Pflegekasse abrechnet. Bis zur Klärung neutral formuliert. Frühere Fassung: Überschrift „Wir rechnen direkt mit Ihrer Pflegekasse ab.“, letzter Satz „Die Abrechnung übernehmen wir.“] */}
@@ -191,7 +192,7 @@ const daten = {
                   sizes="(min-width: 80em) 25rem, (min-width: 48em) 31vw, 100vw"
                   alt=""
                 />
-                <span class="moeglich__titel">{l.kurz} <Symbol name="pfeil" /></span>
+                <span class="moeglich__titel"><MitPfeil text={l.kurz} /></span>
               </a>
             </li>
           );
@@ -302,7 +303,7 @@ const daten = {
   .schritte h3 {
     margin: 0.35rem 0 var(--a-1);
     font-size: clamp(1.75rem, 1.45rem + 1.1vw, 2.375rem);
-    font-weight: 450;
+    font-weight: 400;
     letter-spacing: -0.015em;
   }
   .schritte p {
@@ -351,7 +352,7 @@ const daten = {
   .fakten__liste h3 {
     margin-bottom: var(--a-1);
     font-size: clamp(1.35rem, 1.25rem + 0.4vw, 1.6rem);
-    font-weight: 450;
+    font-weight: 400;
   }
   .fakten__liste p {
     margin: 0;
@@ -367,6 +368,7 @@ const daten = {
   .moeglich__liste {
     list-style: none;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--a-5) var(--spalt);
     margin: 0 0 var(--a-5);
     padding: 0;
@@ -393,12 +395,9 @@ const daten = {
     transform: translateY(-3px);
   }
   .moeglich__titel {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
     font-family: var(--schrift-titel);
     font-size: clamp(1.5rem, 1.35rem + 0.5vw, 1.875rem);
-    font-weight: 450;
+    font-weight: 400;
     line-height: 1.2;
   }
   .moeglich__titel :global(.symbol) {

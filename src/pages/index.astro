@@ -3,10 +3,14 @@ import { p } from '../pfad';
 import Basis from '../layouts/Basis.astro';
 import Bild from '../components/Bild.astro';
 import Symbol from '../components/Symbol.astro';
+import MitPfeil from '../components/MitPfeil.astro';
 import Anrufhinweis from '../components/Anrufhinweis.astro';
 import AnrufText from '../components/AnrufText.astro';
 import Kontaktwege from '../components/Kontaktwege.astro';
+import NummerText from '../components/NummerText.astro';
 import Dach from '../components/Dach.astro';
+import Siegel from '../components/Siegel.astro';
+import Bewertungen from '../components/Bewertungen.astro';
 import { site, leistungen } from '../site.config';
 
 // Fotos: Unsplash-Lizenz (freie Nutzung), als Übergang bis zu eigenen Fotos. Quellen in src/bilder/QUELLEN.md
@@ -16,7 +20,9 @@ import fotoAlltag from '../bilder/alltag-park.jpg';
 import fotoHaus from '../bilder/hauswirtschaft-kueche.jpg';
 import fotoRein from '../bilder/reinigung-wischen.jpg';
 import fotoGarten from '../bilder/garten-rasen.jpg';
-import fotoWeg from '../bilder/weg-gruen.jpg';
+// Statt der Großstadtstraße (passte nicht zu Heppenheim, Prüfung 04.10.2026). Bewusst ohne Gesichter, damit niemand
+// für Hussain oder Ali gehalten wird. [PLATZHALTER: Foto der Inhaber] gehört später hierher.
+import fotoVorstellung from '../bilder/trauer-tee.jpg';
 import fotoTrauer from '../bilder/trauer-blumen.jpg';
 
 // Leistungen: zuerst die drei, die über die Pflegekasse möglich sind.
@@ -99,6 +105,7 @@ const groessen = [
         <div class="einstieg__handeln">
           <Kontaktwege />
         </div>
+        <NummerText />
       </div>
 
       <div class="einstieg__bildbereich">
@@ -125,11 +132,24 @@ const groessen = [
         )}
       </div>
     </div>
+    <!-- Drei Vorteile, jeweils mit einer Zeile Erklärung (vorher nur drei fette Zeilen, Prüfung 04.10.2026).
+         Die Erklärungen stammen aus Texten, die schon auf der Seite stehen. -->
     <ul class="behaelter fakten" aria-label="Das ist uns wichtig">
-      <li>Eine feste Ansprechperson</li>
-      {site.pflegekasse && <li>Mit Pflegegrad über die Pflegekasse</li>}
+      <li>
+        <strong>Eine feste Ansprechperson</strong>
+        <span>Zu Ihnen kommt immer dieselbe Person. Sie kennt Ihre Wünsche.</span>
+      </li>
+      {site.pflegekasse && (
+        <li>
+          <strong>Mit Pflegegrad über die Pflegekasse</strong>
+          <span>Für Alltagsbegleitung, Hauswirtschaft und Trauerbegleitung.</span>
+        </li>
+      )}
       {/* [ERGÄNZEN: Abrechnung offen, ob Grün & Rein direkt mit der Pflegekasse abrechnet. Bis zur Klärung neutral formuliert. Frühere Fassung: „Wir rechnen mit der Pflegekasse ab“] */}
-      <li>Für Privathaushalte und Betriebe</li>
+      <li>
+        <strong>Für Privathaushalte und Betriebe</strong>
+        <span>Reinigung und Garten auch für Büros, Treppenhäuser und Außenanlagen.</span>
+      </li>
     </ul>
   </section>
 
@@ -200,7 +220,7 @@ const groessen = [
                 alt={k.alt}
               />
               <div class="kachel__text">
-                <h3>{k.titel} {site.unterseiten && <Symbol name="pfeil" />}</h3>
+                <h3>{site.unterseiten ? <MitPfeil text={k.titel} /> : k.titel}</h3>
                 {site.pflegekasse && k.kasse && (
                   <p class="kassenmarke kachel__kasse">Mit Pflegegrad über die Pflegekasse</p>
                 )}
@@ -220,7 +240,7 @@ const groessen = [
   {site.pflegekasse && (
     <section class="kasse flaeche-tanne" id="pflegekasse" aria-labelledby="kasse-titel">
       <div class="behaelter">
-        <div class="kasse__zier" aria-hidden="true"><Dach /></div>
+        <div class="kasse__zier" aria-hidden="true" data-einblenden="zier"><Dach /></div>
         <div class="kasse__raster">
           <div class="kasse__text" data-einblenden>
             <p class="etikett etikett--hell"><span>Entlastungsbetrag nach <span class="kasse__paragraf">{'§\u00a045b\u00a0SGB\u00a0XI'}</span></span></p>
@@ -302,20 +322,22 @@ const groessen = [
   </section>
 
   <!-- Wer zu Ihnen kommt: Sandfläche, Text links, Foto rechts in Blattform ragt nach oben in den Ablauf -->
+  <Bewertungen />
+
   <section class="bereich vorstellung flaeche-sand" id="ueber-uns" aria-labelledby="vorstellung-titel">
     <div class="behaelter vorstellung__raster">
       <!-- [PLATZHALTER: Foto der Inhaber] Ein echtes Foto von Hussain und Ali wäre hier das stärkste Vertrauenszeichen -->
       <div class="vorstellung__bildbereich" data-einblenden>
         <Bild
           klasse="vorstellung__bild"
-          bild={fotoWeg}
+          bild={fotoVorstellung}
           format="4-3"
-          ausschnitt="unten"
+          ausschnitt="mitte"
           formatGross="4-5"
           form="blatt"
           parallaxe
           sizes="(min-width: 80em) 36rem, (min-width: 64em) 46vw, 100vw"
-          alt="Eine Begleiterin geht mit einer älteren Dame einen grünen Weg entlang"
+          alt="Ältere Hände an einer Tasse Tee auf einem gedeckten Tisch"
         />
       </div>
       <div class="vorstellung__text" data-einblenden="2">
@@ -340,6 +362,7 @@ const groessen = [
             <dd>{site.erreichbarkeit}</dd>
           </div>
         </dl>
+        <Siegel klasse="vorstellung__siegel" />
         {site.unterseiten && <a class="weiter" href={p('/ueber-uns/')}><span>Mehr über uns</span> <Symbol name="pfeil" /></a>}
       </div>
     </div>
@@ -396,14 +419,30 @@ const groessen = [
   .fakten {
     list-style: none;
     display: grid;
-    gap: var(--a-2);
+    gap: var(--a-3);
     margin: var(--a-7) auto 0;
-    font-weight: 700;
-    line-height: 1.35;
+    line-height: 1.45;
   }
   .fakten li {
+    display: grid;
+    gap: 0.35rem;
+    align-content: start;
     padding-top: var(--a-2);
     border-top: 1px solid var(--linie);
+  }
+  .vorstellung :global(.vorstellung__siegel) {
+    margin-block: var(--a-4) var(--a-2);
+  }
+  .fakten strong {
+    font-family: var(--schrift-titel);
+    /* Etwas kleiner als andere Zwischenüberschriften: drei schmale Spalten auf dem Tablet */
+    font-size: clamp(1.3125rem, 1rem + 0.6vw, 1.75rem);
+    font-weight: 560;
+    line-height: 1.2;
+    letter-spacing: -0.008em;
+  }
+  .fakten span {
+    color: var(--leise);
   }
   @media (min-width: 48em) {
     .fakten {
@@ -538,8 +577,15 @@ const groessen = [
     .einstieg__bildbereich::before {
       left: 0;
     }
+    /* Karte bis fast an den Rand, damit der Text nicht in schmale Zeilen zerfällt (vorher „Mit der /
+       Pflegekasse / möglich“ bei 768 px, Prüfung 04.10.2026) */
     .kassenkarte {
-      margin-left: var(--a-2);
+      margin-left: 0;
+      margin-right: var(--a-2);
+      padding: var(--a-2) 1.25rem;
+    }
+    .kassenkarte__text strong {
+      font-size: var(--text);
     }
   }
 
@@ -693,12 +739,9 @@ const groessen = [
     box-shadow: var(--schatten-2);
   }
   .kachel__text h3 {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
     margin-bottom: var(--a-1);
     font-size: clamp(1.75rem, 1.5rem + 0.7vw, 2.125rem);
-    font-weight: 450;
+    font-weight: 400;
     letter-spacing: -0.015em;
   }
   .kachel__text h3 :global(.symbol) {
@@ -954,7 +997,7 @@ const groessen = [
     padding-block: 1.1rem;
     font-family: var(--schrift-titel);
     font-size: var(--titel-3);
-    font-weight: 450;
+    font-weight: 400;
     line-height: 1.25;
     color: var(--hell);
   }
@@ -1003,7 +1046,7 @@ const groessen = [
   .schritte h3 {
     margin: 0.35rem 0 var(--a-1);
     font-size: clamp(1.75rem, 1.45rem + 1.1vw, 2.375rem);
-    font-weight: 450;
+    font-weight: 400;
     letter-spacing: -0.015em;
   }
   .schritte p {
@@ -1031,10 +1074,11 @@ const groessen = [
     --dach-linie: 1.25px;
   }
   .angebot h3 {
-    padding-right: var(--a-6);
+    /* Auf sehr schmalen Handys (320 px) etwas weniger Abstand zum Dach, damit „persönliches“ in die Zeile passt */
+    padding-right: clamp(2.5rem, 0.5rem + 8vw, 4.5rem);
     margin-bottom: var(--a-3);
     font-size: clamp(1.75rem, 1.45rem + 1.1vw, 2.375rem);
-    font-weight: 450;
+    font-weight: 400;
   }
   .angebot p {
     color: var(--leise);
@@ -1088,7 +1132,7 @@ const groessen = [
   }
   .vorstellung__fakten > div {
     display: grid;
-    grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 10.5rem) minmax(0, 1fr);
     gap: var(--a-2);
     align-items: baseline;
     padding-block: 1rem;

@@ -64,6 +64,16 @@ export const site = {
   // Liste aller Stellen: npm run platzhalter
   pflegekasse: true,
 
+  // Anerkennung als Angebot zur Unterstützung im Alltag (§ 45a SGB XI, Hessen). Zeigt das Siegel auf der Startseite
+  // und auf „Über uns“. Laut Rückmeldung vom 03.10.2026 liegt sie vor. Auf false stellen, falls nicht.
+  // [PLATZHALTER: Anerkennung bestätigen] Bescheid oder Registriernummer bei Hussain und Ali erfragen
+  anerkennung: true,
+
+  // [PLATZHALTER: echte Bewertungen] Nur echte Stimmen mit Einverständnis der Kundinnen und Kunden eintragen,
+  // zum Beispiel aus Google. Solange die Liste leer ist, erscheint auf der Seite nichts davon.
+  // Form: { text: '…', name: 'Frau M.', ort: 'Heppenheim', quelle: 'Google' }
+  bewertungen: [] as { text: string; name: string; ort?: string; quelle?: string }[],
+
   // Entlastungsbetrag nach § 45b SGB XI in Euro pro Monat (seit 1.1.2025, gilt auch 2026).
   // Steht auf der Seite „Pflegekasse“. Bei einer gesetzlichen Erhöhung hier anpassen.
   entlastungsbetrag: 131,

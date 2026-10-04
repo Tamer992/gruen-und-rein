@@ -10,6 +10,7 @@ import Fragen, { type Frage } from './Fragen.astro';
 import Bild from './Bild.astro';
 import Dach from './Dach.astro';
 import Symbol from './Symbol.astro';
+import MitPfeil from './MitPfeil.astro';
 import Anrufhinweis from './Anrufhinweis.astro';
 import AnrufText from './AnrufText.astro';
 import { site, leistungen } from '../site.config';
@@ -115,7 +116,7 @@ const dienst = {
   <!-- Band in Tanne: Pflegekasse oder, bei Reinigung und Garten, das persönliche Angebot -->
   <section class="band flaeche-tanne" aria-labelledby="band-titel">
     <div class="behaelter band__raster">
-      <div class="band__zeichen" aria-hidden="true"><Dach /></div>
+      <div class="band__zeichen" aria-hidden="true"><Dach zeichnen /></div>
       <div class="band__text" data-einblenden>
         {kasse ? (
           <>
@@ -178,7 +179,7 @@ const dienst = {
                   alt=""
                 />
                 <span class="weitere__text">
-                  <span class="weitere__titel">{l.kurz} <Symbol name="pfeil" /></span>
+                  <span class="weitere__titel"><MitPfeil text={l.kurz} /></span>
                   {site.pflegekasse && l.kasse && <span class="weitere__kasse">Mit Pflegegrad über die Pflegekasse</span>}
                 </span>
               </a>
@@ -215,7 +216,7 @@ const dienst = {
   .aufgaben__liste h3 {
     margin-bottom: 0.4rem;
     font-size: clamp(1.4rem, 1.25rem + 0.5vw, 1.75rem);
-    font-weight: 500;
+    font-weight: 560;
   }
   .aufgaben__liste p {
     margin: 0;
@@ -232,13 +233,14 @@ const dienst = {
       column-gap: var(--spalt);
       align-items: start;
     }
+    /* Fünf Spalten, damit lange Wörter wie „unternehmen“ nicht mitten im Wort umbrechen (04.10.2026) */
     .aufgaben__kopf {
-      grid-column: 1 / span 4;
+      grid-column: 1 / span 5;
       position: sticky;
       top: 8rem;
     }
     .aufgaben__liste {
-      grid-column: 5 / -1;
+      grid-column: 6 / -1;
     }
   }
 
@@ -350,6 +352,7 @@ const dienst = {
   .weitere__liste {
     list-style: none;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--a-2) var(--spalt);
     margin: 0;
     padding: 0;
@@ -357,7 +360,8 @@ const dienst = {
   }
   .weitere__karte {
     display: grid;
-    grid-template-columns: 8rem minmax(0, 1fr);
+    /* Schmales Foto auf dem Handy, damit auch „Gebäudereinigung“ mit Pfeil in die Zeile passt */
+    grid-template-columns: 6.5rem minmax(0, 1fr);
     gap: var(--a-2);
     align-items: center;
     color: var(--tinte);
@@ -382,12 +386,9 @@ const dienst = {
     gap: 0.25rem;
   }
   .weitere__titel {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
     font-family: var(--schrift-titel);
     font-size: clamp(1.375rem, 1.25rem + 0.4vw, 1.625rem);
-    font-weight: 500;
+    font-weight: 560;
     line-height: 1.2;
   }
   .weitere__titel :global(.symbol) {

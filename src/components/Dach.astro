@@ -3,19 +3,27 @@
 // Das Herz nur als dünner Umriss, nicht ausgefüllt, damit es dezent bleibt (Tamer, 04.10.2026; vorher bewusst ohne Herz).
 // Auch keine Haken als Aufzählungszeichen: Listen tragen sich über Typografie und feine Linien.
 // Rein dekorativ, für Vorleseprogramme unsichtbar.
+// „zeichnen“: Die Zeichnung wird beim Einscrollen einmal von links nach rechts freigelegt (600 ms, nur transform,
+// siehe global.css). Ohne JavaScript oder bei „Bewegung reduzieren“ steht sie einfach da.
 interface Props {
   klasse?: string;
+  zeichnen?: boolean;
 }
-const { klasse } = Astro.props;
+const { klasse, zeichnen = false } = Astro.props;
 
 // Derselbe Pfad wie im Logo (scripts/logo.mjs)
 const DACH = 'M8 21L24 8L40 21';
 const HERZ = 'M24 40L14 30A5.66 5.66 0 0 1 22 22L24 24L26 22A5.66 5.66 0 0 1 34 30Z';
+const linie = 'fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"';
+const svg =
+  `<svg class="${['dach', klasse].filter(Boolean).join(' ')}" viewBox="7 7 34 34" aria-hidden="true" focusable="false">` +
+  `<path d="${DACH}" ${linie} /><path class="dach__herz" d="${HERZ}" ${linie} /></svg>`;
 ---
-<svg class:list={['dach', klasse]} viewBox="7 7 34 34" aria-hidden="true" focusable="false">
-  <path d={DACH} fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
-  <path class="dach__herz" d={HERZ} fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
-</svg>
+{zeichnen ? (
+  <span class="dach-wisch" data-einblenden="zeichnen"><span class="dach-wisch__innen" set:html={svg} /></span>
+) : (
+  <Fragment set:html={svg} />
+)}
 
 <style is:global>
   .dach {
@@ -24,5 +32,9 @@ const HERZ = 'M24 40L14 30A5.66 5.66 0 0 1 22 22L24 24L26 22A5.66 5.66 0 0 1 34 
   }
   .dach path {
     stroke-width: var(--dach-linie, 1px);
+  }
+  .dach-wisch,
+  .dach-wisch__innen {
+    display: block;
   }
 </style>

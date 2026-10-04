@@ -1,0 +1,74 @@
+---
+// Telefonnummer als lesbarer Text, nur auf dem Handy mit Finger. Dort fallen die Anruf-Knöpfe im Inhalt weg,
+// weil die Anrufleiste unten klebt. Die Nummer selbst soll aber zu lesen sein: zum Abschreiben oder um vom
+// Festnetz anzurufen (Prüfung 04.10.2026). Bewusst ein Textlink, kein weiterer Knopf.
+// „hell“ für dunkle Flächen (Fuß), „whatsapp“ zeigt zusätzlich die WhatsApp-Nummer,
+// „zeit“ die Erreichbarkeit (im Fuß steht sie schon darunter).
+import { site } from '../site.config';
+interface Props {
+  hell?: boolean;
+  whatsapp?: boolean;
+  zeit?: boolean;
+}
+const { hell = false, whatsapp = false, zeit = true } = Astro.props;
+---
+<p class:list={['nummertext', 'statt-knopf', { 'nummertext--hell': hell }]}>
+  <span class="nummertext__art">Telefon</span>
+  <a class="nummertext__nummer nummer" href={`tel:${site.telefonLink}`}>{site.telefon}</a>
+  {zeit && <span class="nummertext__zeit">{site.erreichbarkeit}</span>}
+  {whatsapp && (
+    <span class="nummertext__whatsapp">
+      WhatsApp: <a class="nummer" href={`https://wa.me/${site.whatsappLink}`}>{site.whatsapp}</a>
+    </span>
+  )}
+</p>
+
+<style>
+  /* Sichtbar nur über .statt-knopf (global.css), daher hier kein display */
+  .nummertext {
+    justify-items: start;
+    gap: 0.1rem;
+    margin: var(--a-4) 0 0;
+  }
+  .nummertext__art {
+    font-weight: 700;
+    color: var(--tinte);
+  }
+  .nummertext__nummer {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: 1.75rem;
+    line-height: 1.15;
+    color: var(--waldgruen);
+    white-space: nowrap;
+    text-decoration-thickness: 1px;
+    text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
+  }
+  .nummertext__zeit {
+    color: var(--leise);
+  }
+  .nummertext__whatsapp {
+    margin-top: var(--a-1);
+  }
+  .nummertext__whatsapp a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    white-space: nowrap;
+  }
+  .nummertext--hell {
+    margin: 0 0 var(--a-3);
+  }
+  .nummertext--hell .nummertext__art,
+  .nummertext--hell .nummertext__whatsapp {
+    color: var(--hell);
+  }
+  .nummertext--hell .nummertext__nummer {
+    color: var(--messing-hell);
+    font-size: 2rem;
+  }
+  .nummertext--hell .nummertext__zeit {
+    color: var(--auf-tanne);
+  }
+</style>

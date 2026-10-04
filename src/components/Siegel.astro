@@ -1,0 +1,87 @@
+---
+// Siegel für die Anerkennung als Angebot zur Unterstützung im Alltag (Prüfung 04.10.2026).
+// Doppelter Ring in Messing, darin das Dach mit Herz aus dem Logo. Erscheint nur, wenn pflegekasse und anerkennung
+// in site.config.ts eingeschaltet sind. Beim Einscrollen dreht sich der Ring einmal kurz in Position (nur transform).
+import { site } from '../site.config';
+const { klasse } = Astro.props;
+const zeigen = site.pflegekasse && site.anerkennung;
+---
+{zeigen && (
+  <div class:list={['siegel', klasse]} data-einblenden="siegel">
+    <svg class="siegel__marke" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+      <g class="siegel__ring">
+        <circle cx="32" cy="32" r="30.5" />
+        <circle cx="32" cy="32" r="27" />
+      </g>
+      <g class="siegel__dach">
+        <path d="M21 31L32 22L43 31" />
+        <path d="M32 44L25.1 37.1A3.9 3.9 0 0 1 30.6 31.6L32 33L33.4 31.6A3.9 3.9 0 0 1 38.9 37.1Z" />
+      </g>
+    </svg>
+    <p class="siegel__text">
+      <strong>Anerkanntes Angebot zur Unterstützung im Alltag</strong>
+      <span>In Hessen, nach § 45a SGB XI</span>
+    </p>
+  </div>
+)}
+
+<style>
+  .siegel {
+    display: flex;
+    align-items: center;
+    gap: var(--a-2);
+    max-width: 30rem;
+  }
+  .siegel__marke {
+    flex: none;
+    width: 4rem;
+    height: 4rem;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .siegel__ring {
+    stroke: var(--messing);
+    stroke-width: 1.25;
+    transform-origin: 32px 32px;
+  }
+  .siegel__ring circle:last-child {
+    stroke-width: 0.75;
+    stroke-dasharray: 1.2 2.4;
+  }
+  .siegel__dach {
+    stroke: var(--waldgruen);
+    stroke-width: 1.6;
+  }
+  .siegel__text {
+    display: grid;
+    gap: 0.1rem;
+    margin: 0;
+    line-height: 1.35;
+  }
+  .siegel__text strong {
+    color: var(--tinte);
+  }
+  .siegel__text span {
+    font-size: var(--text-klein);
+    color: var(--leise);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js-bereit) .siegel:not(:global(.ist-sichtbar)) {
+      opacity: 1;
+      transform: none;
+    }
+    .siegel__ring,
+    .siegel__dach {
+      transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1), opacity 400ms ease-out;
+    }
+    :global(.js-bereit) .siegel:not(:global(.ist-sichtbar)) .siegel__ring {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.9);
+    }
+    :global(.js-bereit) .siegel:not(:global(.ist-sichtbar)) .siegel__dach {
+      opacity: 0;
+      transform: translateY(3px);
+    }
+  }
+</style>

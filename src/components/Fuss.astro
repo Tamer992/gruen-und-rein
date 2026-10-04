@@ -3,6 +3,7 @@ import { p } from '../pfad';
 import { site, leistungen, leistungsPfad } from '../site.config';
 import Symbol from './Symbol.astro';
 import QrCode from './QrCode.astro';
+import NummerText from './NummerText.astro';
 import Dach from './Dach.astro';
 import logo from './logo-mass.json';
 
@@ -19,6 +20,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
         <h2 class="fuss__titel">Rufen Sie uns an. Wir nehmen uns Zeit für Ihre Fragen.</h2>
       </div>
       <div class="fuss__wege">
+        <NummerText hell whatsapp zeit={false} />
         <div class="fuss__handeln">
           <a class="knopf knopf--hell nur-finger neben-anrufleiste" href={`tel:${site.telefonLink}`}>
             <Symbol name="telefon" kreis />
@@ -55,15 +57,14 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
       </div>
     </div>
 
-    <div class="fuss__zier" aria-hidden="true"><Dach /></div>
+    <div class="fuss__zier" aria-hidden="true" data-einblenden="zier"><Dach /></div>
 
     <div class="fuss__raster">
       <div class="fuss__betrieb">
         <img src={p('/logo-hell.svg') + '?v=6'} alt={site.name} width={logo.breite} height={logo.hoehe} loading="lazy" />
         <address>
           {site.adresse.strasse}<br />
-          {site.adresse.plz} {site.adresse.ort}<br />
-          <a href={`mailto:${site.email}`}>{site.email}</a>
+          {site.adresse.plz} {site.adresse.ort}
         </address>
       </div>
 
@@ -134,6 +135,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
   /* Am Computer: QR-Code zum Anrufen, daneben Nummern als Text statt Knöpfe */
   .fuss__nummern {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--a-3);
   }
@@ -158,6 +160,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
   }
   .fuss__nummer {
     display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.6rem;
     color: var(--hell);
@@ -217,10 +220,13 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
   .fuss address {
     font-style: normal;
   }
-  .fuss address a {
+  .fuss__mail a {
     display: inline-flex;
     align-items: center;
-    min-height: 3rem;
+    min-height: 2.75rem;
+  }
+  .fuss__zeiten.fuss__mail {
+    align-items: center;
   }
   .fuss__ueber {
     font-family: var(--schrift-text);
