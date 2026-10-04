@@ -107,7 +107,6 @@ const betrieb = {
 
     <script type="application/ld+json" set:html={JSON.stringify(betrieb)} />
     <slot name="kopf" />
-    <script is:inline src={p('/js/kante.js')}></script>
     <script is:inline src={p('/js/seite.js')} defer></script>
     <noscript><link rel="stylesheet" href={p('/css/ohne-js.css')} /></noscript>
   </head>

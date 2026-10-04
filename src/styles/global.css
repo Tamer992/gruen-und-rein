@@ -130,7 +130,7 @@
   --bild-ton: saturate(0.82) sepia(0.1) contrast(0.97) brightness(1.02);
 
   /* Bewegung */
-  /* Tempo der Zier-Animationen (Dach zeichnet sich, Zierlinien, Siegel, Kopf-Kante): größer = langsamer.
+  /* Tempo der Zier-Animationen (Dach zeichnet sich, Zierlinien, Siegel): größer = langsamer.
      Am 04.10.2026 von Tamer als zu schnell empfunden („fallen nicht auf“): 600 → 1500 ms. */
   --zier-dauer: 1500ms;
   /* Läuft sofort los (kein Hängen), verteilt die Bewegung aber gleichmäßiger über die Dauer */
@@ -140,7 +140,7 @@
   --einblenden-weg: 1.5rem;
   /* Einblenden von Texten und Fotos beim Scrollen: wieder wie ursprünglich (900 ms, schneller Anlauf).
      Langsamere Fassungen (1400 und 1100 ms) wirkten Tamer „laggy“ (04.10.2026). Langsam bleiben nur die
-     Zier-Animationen (--zier-dauer: Dach, Zierlinien, Siegel, Kopf-Kante). */
+     Zier-Animationen (--zier-dauer: Dach, Zierlinien, Siegel) und die Kopflinie (Kopf.astro). */
   --einblenden-dauer: 900ms;
   --einblenden-kurve: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -733,13 +733,6 @@ p a:not([class]) {
   .js-bereit [data-einblenden='linie']:not(.ist-sichtbar) > * {
     opacity: 0;
     transform: translateY(var(--einblenden-weg));
-  }
-}
-
-@keyframes kante-auf {
-  from {
-    opacity: 0;
-    transform: scaleX(0.2);
   }
 }
 
