@@ -82,9 +82,10 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
     gap: var(--a-2);
     margin-top: var(--a-5);
   }
-  @media (max-width: 29.99em) {
-    .seitenkopf__handeln .knopf {
-      flex: 1 1 100%;
+  /* Auf dem Handy klebt die Anrufleiste mit denselben zwei Knöpfen unten, hier also doppelt (Tamer, 04.10.2026) */
+  @media (max-width: 47.99em) {
+    .seitenkopf__handeln {
+      display: none;
     }
   }
 
