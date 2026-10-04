@@ -52,16 +52,6 @@ const aktuell = Astro.url.pathname;
             )
           )}
         </ul>
-        <div class="hauptnav__handeln">
-          <a class="knopf knopf--haupt nur-finger" href={`tel:${site.telefonLink}`}>
-            <Symbol name="telefon" kreis />
-            <AnrufText />
-          </a>
-          <a class="knopf knopf--neben nur-finger" href={`https://wa.me/${site.whatsappLink}`}>
-            <Symbol name="whatsapp" kreis />
-            WhatsApp schreiben
-          </a>
-        </div>
       </nav>
 
       <a class="knopf knopf--haupt kopf__anruf" href={`tel:${site.telefonLink}`}>
@@ -253,10 +243,7 @@ const aktuell = Astro.url.pathname;
   .hauptnav a[aria-current='page'] {
     color: var(--waldgruen);
   }
-  .hauptnav__handeln {
-    display: grid;
-    gap: var(--a-2);
-  }
+  /* Keine Anruf- und WhatsApp-Knöpfe im Handy-Menü: die Anrufleiste unten zeigt sie schon (Tamer, 04.10.2026) */
 
   /* Leistungen im Handy-Menü: Gruppenname und darunter die fünf Leistungen, eingerückt an einer Messinglinie */
   .hauptnav__auf {
@@ -305,9 +292,6 @@ const aktuell = Astro.url.pathname;
     }
     .kopf__menue {
       grid-column: 3;
-    }
-    .hauptnav__handeln {
-      display: none;
     }
   }
 
