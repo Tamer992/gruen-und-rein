@@ -9,31 +9,10 @@ const aktuell = Astro.url.pathname;
 ---
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
-<!-- Telefonleiste und Kopfzeile bilden zusammen den Kopf der Seite und kleben gemeinsam oben. Der Bereich ist um die Höhe der Leiste nach oben versetzt:
-     Beim Scrollen gleitet die Leiste hinaus, die Kopfzeile mit dem Anrufknopf bleibt stehen.
-     So wird der Kopf kompakter, ohne dass sich darunter etwas verschiebt. -->
+<!-- Kopf der Seite, klebt oben. Die frühere dunkle Telefonleiste darüber ist auf Tamers Wunsch entfernt (04.10.2026):
+     Am Handy gibt es die Anrufleiste unten, am Computer die Nummer mit QR-Code im Einstieg.
+     Beim Scrollen verschwindet nur die obere Luft, so wird der Kopf kompakter, ohne dass sich darunter etwas verschiebt. -->
 <header class="kopfbereich">
-  <div class="leiste">
-    <div class="behaelter leiste__innen">
-      <a class="leiste__telefon" href={`tel:${site.telefonLink}`}>
-        <Symbol name="telefon" />
-        <span><span class="leiste__frage">Rufen Sie uns an:</span> <strong class="nummer">{site.telefon}</strong></span>
-      </a>
-      <span class="leiste__zeiten">
-        <Symbol name="uhr" />
-        {site.erreichbarkeit}
-      </span>
-      <a class="leiste__whatsapp nur-finger" href={`https://wa.me/${site.whatsappLink}`}>
-        <Symbol name="whatsapp" />
-        WhatsApp schreiben
-      </a>
-      <span class="leiste__whatsapp nur-maus">
-        <Symbol name="whatsapp" />
-        <span>WhatsApp: <strong class="nummer">{site.whatsapp}</strong></span>
-      </span>
-    </div>
-  </div>
-
   <div class="kopf">
     <div class="behaelter kopf__zeile">
       <a class="kopf__marke" href={p('/')}>
@@ -101,7 +80,7 @@ const aktuell = Astro.url.pathname;
 <style>
   .kopfbereich {
     position: sticky;
-    top: calc(-1 * (var(--leiste-hoehe) + var(--kopf-luft)));
+    top: calc(-1 * var(--kopf-luft));
     z-index: 40;
   }
   /* Niedrige Fenster (Querformat, starker Zoom): Kopf scrollt normal mit, damit genug Platz für den Inhalt bleibt */
@@ -109,73 +88,6 @@ const aktuell = Astro.url.pathname;
     .kopfbereich {
       position: relative;
       top: auto;
-    }
-  }
-
-  /* Dunkle Leiste mit Telefon: feste Höhe, damit der Versatz oben genau passt */
-  .leiste {
-    height: var(--leiste-hoehe);
-    overflow: hidden;
-    background: var(--tanne) var(--korn-hell);
-    color: var(--auf-tanne);
-    font-size: var(--text-klein);
-    white-space: nowrap;
-  }
-  .leiste__innen {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--a-3);
-    height: 100%;
-  }
-  .leiste a {
-    color: var(--hell);
-    text-decoration: none;
-  }
-  .leiste a:hover {
-    text-decoration: underline;
-    text-decoration-color: var(--messing-hell);
-  }
-  .leiste :focus-visible {
-    outline-color: var(--hell);
-    outline-offset: -3px;
-    box-shadow: none;
-  }
-  .leiste__telefon,
-  .leiste__zeiten,
-  .leiste__whatsapp {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    height: 100%;
-    padding-inline: 0.25rem;
-  }
-  .leiste__telefon {
-    font-size: 1.125rem;
-  }
-  .leiste :global(.symbol) {
-    color: var(--messing-hell);
-  }
-  .leiste__zeiten,
-  .leiste__whatsapp {
-    display: none;
-  }
-  @media (min-width: 48em) {
-    .leiste__whatsapp {
-      display: inline-flex;
-    }
-  }
-  @media (min-width: 64em) {
-    .leiste__zeiten {
-      display: inline-flex;
-      margin-right: auto;
-      padding-left: var(--a-3);
-      border-left: 1px solid var(--linie-auf-tanne);
-    }
-  }
-  @media (max-width: 29.99em) {
-    .leiste__frage {
-      display: none;
     }
   }
 
