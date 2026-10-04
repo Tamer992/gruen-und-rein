@@ -130,6 +130,9 @@
   if (!rahmen.length || !('IntersectionObserver' in window)) return;
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (ruhig.matches) return;
+  // Nur am Computer mit Maus. Auf Handy und Tablet scrollt die Seite flüssiger, als das Skript nachkommt:
+  // Die Fotos hingen dort einen Tick hinterher und wirkten verzögert (Tamer 04.10.2026, „Bilder laggen“).
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
   var sichtbar = [];
   var geplant = false;
