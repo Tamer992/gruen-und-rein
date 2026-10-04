@@ -22,6 +22,7 @@ const F = {
   leinen: '#F6F1E8',
   salbei: '#A3C4AC', // Grün auf dunklem Grund
   tanne: '#11231A',
+  messing: '#A27C3C',
   messingHell: '#D6BB87',
 };
 
@@ -120,23 +121,24 @@ function ico(pngs) {
 
 // Logo: dunkle Fassung für hellen Grund (Kopf), helle Fassung für dunklen Grund (Fuß)
 // Dezenter (Tamer, 04.10.2026): Dach und Herz einfarbig in der Akzentfarbe, Schrift Medium
-const dunkel = logo({ dach: F.waldgruen, herz: F.waldgruen, text: F.tinte, et: F.waldgruen });
-const hell = logo({ dach: F.salbei, herz: F.salbei, text: F.leinen, et: F.salbei });
+// Herz, „&“ und die Punkte der Zeile in Messing (Tamer, 04.10.2026, Variante 3)
+const dunkel = logo({ dach: F.waldgruen, herz: F.messing, text: F.tinte, et: F.messing });
+const hell = logo({ dach: F.salbei, herz: F.messingHell, text: F.leinen, et: F.messingHell });
 writeFileSync('public/logo.svg', dunkel.svg);
 writeFileSync('public/logo-hell.svg', hell.svg);
-writeFileSync('public/logo-mark.svg', marke(F.tinte, F.waldgruen));
-writeFileSync('public/logo-mark-hell.svg', marke(F.leinen, F.salbei));
+writeFileSync('public/logo-mark.svg', marke(F.waldgruen, F.messing));
+writeFileSync('public/logo-mark-hell.svg', marke(F.salbei, F.messingHell));
 writeFileSync('src/components/logo-mass.json', JSON.stringify({ breite: dunkel.breite, hoehe: dunkel.hoehe }));
 
 // Favicon als SVG: passt sich hellem und dunklem Browser an
-const fav = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${ANSICHT}"><style>.d{stroke:${F.tinte}}.h{fill:${F.waldgruen}}@media (prefers-color-scheme:dark){.d{stroke:${F.leinen}}.h{fill:${F.salbei}}}</style><path class="d" d="${DACH}" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path class="h" d="${HERZ}"/></svg>`;
+const fav = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${ANSICHT}"><style>.d{stroke:${F.waldgruen}}.h{fill:${F.messing}}@media (prefers-color-scheme:dark){.d{stroke:${F.salbei}}.h{fill:${F.messingHell}}}</style><path class="d" d="${DACH}" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path class="h" d="${HERZ}"/></svg>`;
 writeFileSync('public/favicon.svg', fav);
 
 // Feste Bilder (ICO, Apple, 512): Zeichen auf einer hellen Fläche, damit es auch auf dunklen Leisten sichtbar bleibt
 // Das Zeichen liegt auf dem Raster bei y 5,5 bis 40, also 1,25 über der Mitte: beim Verkleinern nachschieben
 const flaeche = (rundung, rand) => {
   const k = (48 - 2 * rand) / 48;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="${rundung}" fill="${F.leinen}"/><g transform="translate(${rand} ${rand + 1.25 * k}) scale(${k})">${zeichen(F.tinte, F.waldgruen)}</g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="${rundung}" fill="${F.leinen}"/><g transform="translate(${rand} ${rand + 1.25 * k}) scale(${k})">${zeichen(F.waldgruen, F.messing)}</g></svg>`;
 };
 const png = (g, svg) => sharp(Buffer.from(svg), { density: 600 }).resize(g, g).png().toBuffer();
 writeFileSync(
