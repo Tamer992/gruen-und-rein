@@ -485,6 +485,19 @@ a:hover {
   color: var(--waldgruen);
 }
 
+/* Mit Finger (Handy, Tablet) Knöpfe zum Anrufen und für WhatsApp, am Computer mit Maus stattdessen
+   die Nummer als Text (Anrufhinweis.astro). Erkennung über die Bedienung, nicht über die Breite (Tamer, 04.10.2026). */
+@media not ((hover: hover) and (pointer: fine)) {
+  .nur-maus {
+    display: none !important;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .nur-finger {
+    display: none !important;
+  }
+}
+
 /* Anruf-Knöpfe: mit Finger „Jetzt anrufen“, am Computer mit Maus die Nummer (siehe AnrufText.astro) */
 .anruftext__nummer {
   display: none;

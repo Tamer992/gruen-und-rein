@@ -42,12 +42,13 @@ const vorbereitung = [
           <span class="weg__art">Telefon</span>
           <span class="weg__wert nummer">{site.telefon}</span>
           <span class="weg__info"><Symbol name="uhr" /> {site.erreichbarkeit}</span>
-          <span class="weg__los" aria-hidden="true">Anrufen <Symbol name="pfeil" /></span>
+          <span class="weg__los nur-finger" aria-hidden="true">Anrufen <Symbol name="pfeil" /></span>
         </a>
-        <a class="weg" href={`https://wa.me/${site.whatsappLink}`} data-einblenden="2">
+        <a class="weg weg--whatsapp" href={`https://wa.me/${site.whatsappLink}`} data-einblenden="2">
           <span class="weg__zeichen"><Symbol name="whatsapp" /></span>
           <span class="weg__art">WhatsApp</span>
-          <span class="weg__wert">Nachricht schreiben</span>
+          <span class="weg__wert nur-finger">Nachricht schreiben</span>
+          <span class="weg__wert nummer nur-maus">{site.whatsapp}</span>
           <span class="weg__info">Wir melden uns schnell zurück.</span>
         </a>
         <a class="weg" href={`mailto:${site.email}`} data-einblenden="2">
@@ -347,6 +348,13 @@ const vorbereitung = [
     }
     .gebiet {
       grid-column: 9 / -1;
+    }
+  }
+  /* Am Computer sind Telefon- und WhatsApp-Karte reine Info (Nummer, QR-Code), kein Klickziel */
+  @media (hover: hover) and (pointer: fine) {
+    .weg--telefon,
+    .weg--whatsapp {
+      pointer-events: none;
     }
   }
 </style>

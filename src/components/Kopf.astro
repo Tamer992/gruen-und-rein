@@ -23,10 +23,14 @@ const aktuell = Astro.url.pathname;
         <Symbol name="uhr" />
         {site.erreichbarkeit}
       </span>
-      <a class="leiste__whatsapp" href={`https://wa.me/${site.whatsappLink}`}>
+      <a class="leiste__whatsapp nur-finger" href={`https://wa.me/${site.whatsappLink}`}>
         <Symbol name="whatsapp" />
         WhatsApp schreiben
       </a>
+      <span class="leiste__whatsapp nur-maus">
+        <Symbol name="whatsapp" />
+        <span>WhatsApp: <strong class="nummer">{site.whatsapp}</strong></span>
+      </span>
     </div>
   </div>
 
@@ -70,11 +74,11 @@ const aktuell = Astro.url.pathname;
           )}
         </ul>
         <div class="hauptnav__handeln">
-          <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
+          <a class="knopf knopf--haupt nur-finger" href={`tel:${site.telefonLink}`}>
             <Symbol name="telefon" kreis />
             <AnrufText />
           </a>
-          <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
+          <a class="knopf knopf--neben nur-finger" href={`https://wa.me/${site.whatsappLink}`}>
             <Symbol name="whatsapp" kreis />
             WhatsApp schreiben
           </a>

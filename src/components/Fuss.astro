@@ -19,14 +19,18 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
       </div>
       <div class="fuss__wege">
         <div class="fuss__handeln">
-          <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
+          <a class="knopf knopf--hell nur-finger" href={`tel:${site.telefonLink}`}>
             <Symbol name="telefon" kreis />
             <span class="nummer">{site.telefon}</span>
           </a>
-          <a class="knopf knopf--rahmen" href={`https://wa.me/${site.whatsappLink}`}>
+          <a class="knopf knopf--rahmen nur-finger" href={`https://wa.me/${site.whatsappLink}`}>
             <Symbol name="whatsapp" kreis />
             WhatsApp schreiben
           </a>
+          <p class="fuss__nummern nur-maus">
+            <span class="fuss__nummer"><Symbol name="telefon" /> <span class="nummer">{site.telefon}</span></span>
+            <span class="fuss__nummer"><Symbol name="whatsapp" /> WhatsApp: <span class="nummer">{site.whatsapp}</span></span>
+          </p>
         </div>
         {site.telefon2 && (
           <p class="fuss__zweite">
@@ -115,6 +119,22 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
   .fuss__handeln .knopf {
     font-size: var(--text-gross);
     min-height: 4rem;
+  }
+  /* Am Computer: Nummern als Text statt Knöpfe */
+  .fuss__nummern {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+  }
+  .fuss__nummer {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--hell);
+  }
+  .fuss__nummer:first-child .nummer {
+    font-size: clamp(1.6rem, 1.3rem + 0.9vw, 2.1rem);
+    color: var(--messing-hell);
   }
   .fuss__zeiten {
     display: flex;

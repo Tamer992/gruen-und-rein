@@ -10,6 +10,7 @@ import Fragen, { type Frage } from './Fragen.astro';
 import Bild from './Bild.astro';
 import Dach from './Dach.astro';
 import Symbol from './Symbol.astro';
+import Anrufhinweis from './Anrufhinweis.astro';
 import AnrufText from './AnrufText.astro';
 import { site, leistungen } from '../site.config';
 import { leistungsbilder } from '../leistungsbilder';
@@ -141,10 +142,13 @@ const dienst = {
             <Symbol name="pfeil" />
           </a>
         ) : (
-          <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
-            <Symbol name="telefon" kreis />
-            <AnrufText />
-          </a>
+          <>
+            <a class="knopf knopf--hell nur-finger" href={`tel:${site.telefonLink}`}>
+              <Symbol name="telefon" kreis />
+              <AnrufText />
+            </a>
+            <Anrufhinweis hell qr />
+          </>
         )}
       </div>
     </div>

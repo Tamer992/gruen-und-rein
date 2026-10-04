@@ -28,6 +28,8 @@ export const site = {
   telefon2Link: '',
   // [PLATZHALTER: WhatsApp-Nummer] Ziffern mit 49 vorne, ohne + und ohne 0
   whatsappLink: '49000000000',
+  // [PLATZHALTER: WhatsApp-Nummer zur Anzeige] Am Computer steht sie als Text statt des WhatsApp-Knopfs
+  whatsapp: '0000 000 000',
   // [PLATZHALTER: E-Mail-Adresse] Achtung: gruenundrein.de gehört einer anderen Firma (Grün und Rein GbR, Pforzheim)
   email: 'name@beispiel.de',
 

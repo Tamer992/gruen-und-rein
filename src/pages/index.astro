@@ -3,6 +3,7 @@ import { p } from '../pfad';
 import Basis from '../layouts/Basis.astro';
 import Bild from '../components/Bild.astro';
 import Symbol from '../components/Symbol.astro';
+import Anrufhinweis from '../components/Anrufhinweis.astro';
 import AnrufText from '../components/AnrufText.astro';
 import Kontaktwege from '../components/Kontaktwege.astro';
 import Dach from '../components/Dach.astro';
@@ -234,10 +235,11 @@ const groessen = [
               Wie die Abrechnung bei Ihnen am einfachsten läuft, besprechen wir gern persönlich mit Ihnen.
               Was über den Entlastungsbetrag hinausgeht, klären wir immer vorher.
             </p>
-            <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
+            <a class="knopf knopf--hell nur-finger" href={`tel:${site.telefonLink}`}>
               <Symbol name="telefon" kreis />
               <AnrufText />
             </a>
+            <Anrufhinweis hell qr />
           </div>
           <div class="kasse__liste" data-einblenden="2">
             <p class="kasse__ueber">Mit Pflegegrad abrechenbar</p>

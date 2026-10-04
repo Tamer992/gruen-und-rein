@@ -4,6 +4,7 @@ import { p } from '../pfad';
 import Basis from '../layouts/Basis.astro';
 import Dach from '../components/Dach.astro';
 import Symbol from '../components/Symbol.astro';
+import Anrufhinweis from '../components/Anrufhinweis.astro';
 import AnrufText from '../components/AnrufText.astro';
 import { site } from '../site.config';
 ---
@@ -22,7 +23,7 @@ import { site } from '../site.config';
           Oder Sie rufen uns einfach an, wir helfen gern weiter.
         </p>
         <div class="fehlt__handeln">
-          <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
+          <a class="knopf knopf--haupt nur-finger" href={`tel:${site.telefonLink}`}>
             <Symbol name="telefon" kreis />
             <AnrufText />
           </a>
@@ -30,6 +31,7 @@ import { site } from '../site.config';
             Zur Startseite
           </a>
         </div>
+        <Anrufhinweis klasse="fehlt__anruf" />
       </div>
       <div class="fehlt__zeichen" aria-hidden="true">
         <Dach />
@@ -53,6 +55,9 @@ import { site } from '../site.config';
   }
   .fehlt .einleitung {
     max-width: 38ch;
+  }
+  .fehlt :global(.fehlt__anruf) {
+    margin-top: var(--a-5);
   }
   .fehlt__handeln {
     display: flex;
