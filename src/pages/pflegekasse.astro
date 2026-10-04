@@ -10,6 +10,7 @@ import Fragen from '../components/Fragen.astro';
 import Bild from '../components/Bild.astro';
 import Dach from '../components/Dach.astro';
 import Symbol from '../components/Symbol.astro';
+import AnrufText from '../components/AnrufText.astro';
 import { site, leistungen } from '../site.config';
 import { leistungsbilder } from '../leistungsbilder';
 
@@ -116,7 +117,7 @@ const daten = {
           <div class="kassenkopf__handeln">
             <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
               <Symbol name="telefon" kreis />
-              Jetzt anrufen
+              <AnrufText />
             </a>
             <a class="knopf knopf--rahmen" href={`https://wa.me/${site.whatsappLink}`}>
               <Symbol name="whatsapp" kreis />

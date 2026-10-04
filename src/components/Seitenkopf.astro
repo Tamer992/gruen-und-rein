@@ -6,6 +6,7 @@ import type { ImageMetadata } from 'astro';
 import { site } from '../site.config';
 import Bild from './Bild.astro';
 import Symbol from './Symbol.astro';
+import Kontaktwege from './Kontaktwege.astro';
 import Krumen from './Krumen.astro';
 
 interface Props {
@@ -28,15 +29,8 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
       <p class="einleitung">{einleitung}</p>
       <slot name="zusatz" />
       <div class="seitenkopf__handeln">
-        <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
-          <Symbol name="telefon" kreis />
-          Jetzt anrufen
-        </a>
-        <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
-          <Symbol name="whatsapp" kreis />
-          WhatsApp schreiben
-        </a>
-      </div>
+          <Kontaktwege />
+        </div>
     </div>
     <div class="seitenkopf__bildbereich">
       <Bild

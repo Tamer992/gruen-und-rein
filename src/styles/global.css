@@ -485,6 +485,20 @@ a:hover {
   color: var(--waldgruen);
 }
 
+/* Anruf-Knöpfe: mit Finger „Jetzt anrufen“, am Computer mit Maus die Nummer (siehe AnrufText.astro) */
+.anruftext__nummer {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .anruftext__wort {
+    display: none;
+  }
+  .anruftext__nummer {
+    display: inline;
+    font-size: 1.08em;
+  }
+}
+
 /* Telefonnummern: in der Überschriftenschrift, deren Null nicht durchgestrichen ist */
 .nummer {
   font-family: var(--schrift-titel);

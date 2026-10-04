@@ -10,6 +10,7 @@ import Fragen, { type Frage } from './Fragen.astro';
 import Bild from './Bild.astro';
 import Dach from './Dach.astro';
 import Symbol from './Symbol.astro';
+import AnrufText from './AnrufText.astro';
 import { site, leistungen } from '../site.config';
 import { leistungsbilder } from '../leistungsbilder';
 
@@ -142,7 +143,7 @@ const dienst = {
         ) : (
           <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
             <Symbol name="telefon" kreis />
-            Jetzt anrufen
+            <AnrufText />
           </a>
         )}
       </div>

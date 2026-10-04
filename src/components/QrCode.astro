@@ -1,0 +1,30 @@
+---
+// QR-Code als SVG, beim Bauen der Seite erzeugt (kein JavaScript im Browser).
+// Wird aus den Angaben in site.config.ts gebaut: Stimmt die Nummer dort, stimmt auch der Code.
+import QRCode from 'qrcode';
+
+interface Props {
+  inhalt: string;
+  beschriftung: string;
+  klasse?: string;
+}
+const { inhalt, beschriftung, klasse } = Astro.props;
+const svg = await QRCode.toString(inhalt, {
+  type: 'svg',
+  margin: 0,
+  errorCorrectionLevel: 'M',
+  color: { dark: '#17221B', light: '#0000' },
+});
+// Nur den Inhalt übernehmen, das äußere svg setzen wir selbst (Größe kommt aus dem CSS)
+const ansicht = svg.match(/viewBox="([^"]+)"/)?.[1] ?? '0 0 1 1';
+const innen = svg.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+---
+<svg class:list={['qr', klasse]} viewBox={ansicht} role="img" aria-label={beschriftung} shape-rendering="crispEdges" set:html={innen} />
+
+<style>
+  .qr {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

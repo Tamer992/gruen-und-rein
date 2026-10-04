@@ -2,6 +2,7 @@
 import { p } from '../pfad';
 import { site, navigation } from '../site.config';
 import Symbol from './Symbol.astro';
+import AnrufText from './AnrufText.astro';
 import logo from './logo-mass.json';
 
 const aktuell = Astro.url.pathname;
@@ -71,7 +72,7 @@ const aktuell = Astro.url.pathname;
         <div class="hauptnav__handeln">
           <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
             <Symbol name="telefon" kreis />
-            Jetzt anrufen
+            <AnrufText />
           </a>
           <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
             <Symbol name="whatsapp" kreis />
@@ -82,7 +83,7 @@ const aktuell = Astro.url.pathname;
 
       <a class="knopf knopf--haupt kopf__anruf" href={`tel:${site.telefonLink}`}>
         <Symbol name="telefon" kreis />
-        Jetzt anrufen
+        <AnrufText />
       </a>
 
       <button class="kopf__menue" type="button" aria-expanded="false" aria-controls="hauptnavigation">

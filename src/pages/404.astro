@@ -4,6 +4,7 @@ import { p } from '../pfad';
 import Basis from '../layouts/Basis.astro';
 import Dach from '../components/Dach.astro';
 import Symbol from '../components/Symbol.astro';
+import AnrufText from '../components/AnrufText.astro';
 import { site } from '../site.config';
 ---
 <Basis
@@ -23,7 +24,7 @@ import { site } from '../site.config';
         <div class="fehlt__handeln">
           <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
             <Symbol name="telefon" kreis />
-            Jetzt anrufen
+            <AnrufText />
           </a>
           <a class="knopf knopf--neben" href={p('/')}>
             Zur Startseite

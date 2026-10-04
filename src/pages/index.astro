@@ -3,6 +3,8 @@ import { p } from '../pfad';
 import Basis from '../layouts/Basis.astro';
 import Bild from '../components/Bild.astro';
 import Symbol from '../components/Symbol.astro';
+import AnrufText from '../components/AnrufText.astro';
+import Kontaktwege from '../components/Kontaktwege.astro';
 import Dach from '../components/Dach.astro';
 import { site, leistungen } from '../site.config';
 
@@ -94,14 +96,7 @@ const groessen = [
           Wir begleiten Sie zum Arzt, helfen im Haushalt, putzen und machen den Garten. In {site.ort} und Umgebung.
         </p>
         <div class="einstieg__handeln">
-          <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
-            <Symbol name="telefon" kreis />
-            Jetzt anrufen
-          </a>
-          <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
-            <Symbol name="whatsapp" kreis />
-            WhatsApp schreiben
-          </a>
+          <Kontaktwege />
         </div>
       </div>
 
@@ -241,7 +236,7 @@ const groessen = [
             </p>
             <a class="knopf knopf--hell" href={`tel:${site.telefonLink}`}>
               <Symbol name="telefon" kreis />
-              Jetzt anrufen
+              <AnrufText />
             </a>
           </div>
           <div class="kasse__liste" data-einblenden="2">
