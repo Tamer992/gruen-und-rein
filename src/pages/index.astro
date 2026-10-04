@@ -93,7 +93,7 @@ const groessen = [
   titel={`Alltagsbegleitung, Hauswirtschaft und Reinigung in ${site.ort} | ${site.name}`}
   beschreibung={`${site.name} in ${site.ort}: Alltagsbegleitung und Betreuung, Trauerbegleitung, Hauswirtschaft, Gebäudereinigung und Gartenpflege. Für Senioren, Familien und Betriebe.`}
 >
-  <!-- Einstieg -->
+  {/* Einstieg */}
   <section class="einstieg" aria-labelledby="einstieg-titel">
     <div class="behaelter einstieg__raster">
       <div class="einstieg__text">
@@ -132,8 +132,8 @@ const groessen = [
         )}
       </div>
     </div>
-    <!-- Drei Vorteile, jeweils mit einer Zeile Erklärung (vorher nur drei fette Zeilen, Prüfung 04.10.2026).
-         Die Erklärungen stammen aus Texten, die schon auf der Seite stehen. -->
+    {/* Drei Vorteile, jeweils mit einer Zeile Erklärung (vorher nur drei fette Zeilen, Prüfung 04.10.2026).
+         Die Erklärungen stammen aus Texten, die schon auf der Seite stehen. */}
     <ul class="behaelter fakten" aria-label="Das ist uns wichtig">
       <li>
         <strong>Eine feste Ansprechperson</strong>
@@ -153,7 +153,7 @@ const groessen = [
     </ul>
   </section>
 
-  <!-- Für Sie selbst oder für Ihre Eltern -->
+  {/* Für Sie selbst oder für Ihre Eltern */}
   <section class="bereich zwei-wege flaeche-sand" aria-labelledby="zwei-wege-titel">
     <div class="behaelter zwei-wege__raster">
       <div class="zwei-wege__text">
@@ -193,7 +193,7 @@ const groessen = [
     </div>
   </section>
 
-  <!-- Leistungen: zwei versetzte Spalten mit wechselnden Formaten, die letzte Leistung breit -->
+  {/* Leistungen: zwei versetzte Spalten mit wechselnden Formaten, die letzte Leistung breit */}
   <section class="bereich leistungen" id="leistungen" aria-labelledby="leistungen-titel">
     <div class="behaelter">
       <div class="bereich__kopf leistungen__kopf" data-einblenden>
@@ -235,7 +235,7 @@ const groessen = [
     </div>
   </section>
 
-  <!-- Unterstützung durch die Pflegekasse: dunkle Tannenfläche über die ganze Breite -->
+  {/* Unterstützung durch die Pflegekasse: dunkle Tannenfläche über die ganze Breite */}
   {site.pflegekasse && (
     <section class="kasse flaeche-tanne" id="pflegekasse" aria-labelledby="kasse-titel">
       <div class="behaelter">
@@ -274,7 +274,7 @@ const groessen = [
     </section>
   )}
 
-  <!-- Ablauf: links Überschrift und Angebot, rechts drei Schritte mit hereingleitenden Trennlinien -->
+  {/* Ablauf: links Überschrift und Angebot, rechts drei Schritte mit hereingleitenden Trennlinien */}
   <section class="bereich ablauf" id="ablauf" aria-labelledby="ablauf-titel">
     <div class="behaelter ablauf__raster">
       <div class="bereich__kopf ablauf__kopf" data-einblenden>
@@ -320,12 +320,12 @@ const groessen = [
     </div>
   </section>
 
-  <!-- Wer zu Ihnen kommt: Sandfläche, Text links, Foto rechts in Blattform ragt nach oben in den Ablauf -->
+  {/* Wer zu Ihnen kommt: Sandfläche, Text links, Foto rechts in Blattform ragt nach oben in den Ablauf */}
   <Bewertungen />
 
   <section class="bereich vorstellung flaeche-sand" id="ueber-uns" aria-labelledby="vorstellung-titel">
     <div class="behaelter vorstellung__raster">
-      <!-- [PLATZHALTER: Foto der Inhaber] Ein echtes Foto von Hussain und Ali wäre hier das stärkste Vertrauenszeichen -->
+      {/* [PLATZHALTER: Foto der Inhaber] Ein echtes Foto von Hussain und Ali wäre hier das stärkste Vertrauenszeichen */}
       <div class="vorstellung__bildbereich" data-einblenden>
         <Bild
           klasse="vorstellung__bild"
@@ -345,7 +345,7 @@ const groessen = [
         <p class="vorstellung__satz">
           {site.name}, das {site.mehrereInhaber ? 'sind' : 'ist'} {site.inhaberin}. Sie haben bei uns eine feste Ansprechperson,
           die nach ein paar Besuchen weiß, was Ihnen wichtig ist.
-          <!-- [ERGÄNZEN: ein Satz zu Hussain und Ali, zum Beispiel was sie vorher gemacht haben oder warum sie den Betrieb gegründet haben] -->
+          {/* [ERGÄNZEN: ein Satz zu Hussain und Ali, zum Beispiel was sie vorher gemacht haben oder warum sie den Betrieb gegründet haben] */}
         </p>
         <dl class="vorstellung__fakten">
           <div>
