@@ -112,7 +112,7 @@ const aktuell = Astro.url.pathname;
   /* Einmal pro Besuch zieht sich die Kante von der Mitte aus auf (js/kante.js, Prüfung 04.10.2026) */
   @media (prefers-reduced-motion: no-preference) {
     :global(.kante-auf) .kopf::after {
-      animation: kante-auf 600ms cubic-bezier(0.25, 1, 0.5, 1) 150ms both;
+      animation: kante-auf var(--zier-dauer) var(--zier-kurve) 200ms both;
     }
   }
 

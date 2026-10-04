@@ -130,6 +130,11 @@
   --bild-ton: saturate(0.82) sepia(0.1) contrast(0.97) brightness(1.02);
 
   /* Bewegung */
+  /* Tempo der Zier-Animationen (Dach zeichnet sich, Zierlinien, Siegel, Kopf-Kante): größer = langsamer.
+     Am 04.10.2026 von Tamer als zu schnell empfunden („fallen nicht auf“): 600 → 1500 ms. */
+  --zier-dauer: 1500ms;
+  /* Läuft sofort los (kein Hängen), verteilt die Bewegung aber gleichmäßiger über die Dauer */
+  --zier-kurve: cubic-bezier(0.25, 0.6, 0.3, 1);
   --uebergang: 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
   --uebergang-lang: 900ms cubic-bezier(0.16, 1, 0.3, 1);
   --einblenden-weg: 1.5rem;
@@ -650,10 +655,11 @@ p a:not([class]) {
 .ausschnitt-links img { object-position: 25% center; }
 .ausschnitt-rechts img { object-position: 72% center; }
 
-/* Leichte Parallaxe: Das Foto ist etwas größer als sein Rahmen und gleitet beim Scrollen.
-   Nur mit JavaScript (Klasse js-parallaxe) und nur, wenn Bewegung erwünscht ist. */
+/* Leichte Parallaxe: Das Foto ist etwas größer als sein Rahmen und gleitet beim Scrollen (js/seite.js).
+   Die Vergrößerung gilt von Anfang an, nicht erst nach dem Skript: Vorher erschienen die Fotos normal groß
+   und sprangen knapp eine Sekunde später auf 108 % (Tamer: „Bilder laggen beim Aufrufen“, 04.10.2026). */
 @media (prefers-reduced-motion: no-preference) {
-  .js-parallaxe [data-parallaxe] img {
+  [data-parallaxe] img {
     transform: translate3d(0, var(--parallaxe, 0px), 0) scale(1.08);
     will-change: transform;
   }
@@ -731,17 +737,18 @@ p a:not([class]) {
   }
 }
 
-/* Zeichnungen und Zierlinien (Prüfung 04.10.2026). Nur transform und opacity, kurz, ohne Versatz.
+/* Zeichnungen und Zierlinien (Prüfung 04.10.2026). Nur transform und opacity, Dauer über --zier-dauer.
    Ohne JavaScript oder mit reduzierter Bewegung steht alles sofort da. */
 @media (prefers-reduced-motion: no-preference) {
   /* Dach mit Herz (Dach.astro, „zeichnen“): Ein Fenster gleitet von links herein, die Zeichnung selbst bleibt
-     stehen. So wirkt es, als würde die Linie gezogen. */
+     stehen. So wirkt es, als würde die Linie gezogen. Startet erst, wenn die Zeichnung ein gutes Stück im Bild
+     ist (js/seite.js), damit man es auch sieht. */
   .js-bereit [data-einblenden='zeichnen'] {
     overflow: hidden;
-    transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform var(--zier-dauer) var(--zier-kurve);
   }
   .js-bereit [data-einblenden='zeichnen'] > .dach-wisch__innen {
-    transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform var(--zier-dauer) var(--zier-kurve);
   }
   .js-bereit [data-einblenden='zeichnen']:not(.ist-sichtbar) {
     opacity: 1;
@@ -759,7 +766,7 @@ p a:not([class]) {
   }
   .js-bereit [data-einblenden='zier']::before,
   .js-bereit [data-einblenden='zier']::after {
-    transition: transform 500ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform var(--zier-dauer) var(--zier-kurve);
   }
   .js-bereit [data-einblenden='zier']::before {
     transform-origin: right center;
@@ -768,7 +775,7 @@ p a:not([class]) {
     transform-origin: left center;
   }
   .js-bereit [data-einblenden='zier'] > .dach {
-    transition: opacity 400ms ease-out, transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition: opacity calc(var(--zier-dauer) * 0.7) ease-out, transform calc(var(--zier-dauer) * 0.7) var(--zier-kurve);
   }
   .js-bereit [data-einblenden='zier']:not(.ist-sichtbar)::before,
   .js-bereit [data-einblenden='zier']:not(.ist-sichtbar)::after {

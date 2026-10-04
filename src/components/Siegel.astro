@@ -1,7 +1,7 @@
 ---
 // Siegel für die Anerkennung als Angebot zur Unterstützung im Alltag (Prüfung 04.10.2026).
 // Doppelter Ring in Messing, darin das Dach mit Herz aus dem Logo. Erscheint nur, wenn pflegekasse und anerkennung
-// in site.config.ts eingeschaltet sind. Beim Einscrollen dreht sich der Ring einmal kurz in Position (nur transform).
+// in site.config.ts eingeschaltet sind. Beim Einscrollen dreht sich der Ring einmal in Position (nur transform, Dauer --zier-dauer).
 import { site } from '../site.config';
 const { klasse } = Astro.props;
 const zeigen = site.pflegekasse && site.anerkennung;
@@ -73,7 +73,7 @@ const zeigen = site.pflegekasse && site.anerkennung;
     }
     .siegel__ring,
     .siegel__dach {
-      transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1), opacity 400ms ease-out;
+      transition: transform var(--zier-dauer) var(--zier-kurve), opacity calc(var(--zier-dauer) * 0.7) ease-out;
     }
     :global(.js-bereit) .siegel:not(:global(.ist-sichtbar)) .siegel__ring {
       opacity: 0;

@@ -100,10 +100,25 @@
     { rootMargin: '0px 0px -8% 0px' }
   );
 
+  // Zier-Animationen (Dach, Zierlinien, Siegel) starten erst, wenn sie ein Viertel weit im Bild sind.
+  // Vorher liefen sie schon am unteren Rand ab und fielen kaum auf (Tamer, 04.10.2026).
+  var spaet = new IntersectionObserver(
+    function (eintraege) {
+      eintraege.forEach(function (eintrag) {
+        if (!eintrag.isIntersecting) return;
+        eintrag.target.classList.add('ist-sichtbar');
+        spaet.unobserve(eintrag.target);
+      });
+    },
+    { rootMargin: '0px 0px -25% 0px' }
+  );
+  var zier = /^(zeichnen|zier|siegel)$/;
+
   var hoehe = window.innerHeight;
   teile.forEach(function (teil) {
-    if (teil.getBoundingClientRect().top < hoehe) teil.classList.add('ist-sichtbar');
-    else beobachter.observe(teil);
+    var istZier = zier.test(teil.getAttribute('data-einblenden'));
+    if (teil.getBoundingClientRect().top < hoehe * (istZier ? 0.75 : 1)) teil.classList.add('ist-sichtbar');
+    else (istZier ? spaet : beobachter).observe(teil);
   });
   document.documentElement.classList.add('js-bereit');
 })();
@@ -119,15 +134,26 @@
   var sichtbar = [];
   var geplant = false;
 
+  // Abstand der Rahmenmitte zur Fenstermitte, begrenzt auf ±1
+  function anteilVon(el) {
+    var r = el.getBoundingClientRect();
+    var mitte = window.innerHeight / 2;
+    return { r: r, a: Math.max(-1, Math.min(1, (r.top + r.height / 2 - mitte) / (mitte + r.height / 2))) };
+  }
+  // Ausgangslage beim Laden merken: Das Foto steht dort, wo die Seite es zeigt, und gleitet erst beim Scrollen.
+  // Vorher sprang es kurz nach dem Laden um ein paar Pixel (Tamer: „Bilder laggen beim Aufrufen“, 04.10.2026).
+  var basis = new Map();
+  rahmen.forEach(function (el) {
+    basis.set(el, anteilVon(el).a);
+  });
+
   function rechne() {
     geplant = false;
-    var mitte = window.innerHeight / 2;
     sichtbar.forEach(function (el) {
-      var r = el.getBoundingClientRect();
-      // Abstand der Rahmenmitte zur Fenstermitte, begrenzt auf ±1
-      var anteil = Math.max(-1, Math.min(1, (r.top + r.height / 2 - mitte) / (mitte + r.height / 2)));
-      // Höchstens 3 % der Rahmenhöhe: Das Bild ist um 8 % vergrößert, die Kanten bleiben verdeckt
-      el.style.setProperty('--parallaxe', (anteil * r.height * 0.03).toFixed(1) + 'px');
+      var m = anteilVon(el);
+      // Höchstens 3,5 % der Rahmenhöhe: Das Bild ist um 8 % vergrößert, die Kanten bleiben verdeckt
+      var weg = Math.max(-0.035, Math.min(0.035, (m.a - basis.get(el)) * 0.03));
+      el.style.setProperty('--parallaxe', (weg * m.r.height).toFixed(1) + 'px');
     });
   }
   function plane() {
