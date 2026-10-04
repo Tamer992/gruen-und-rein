@@ -130,7 +130,7 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
       margin-right: calc(-1 * max(var(--rand), (100vw - var(--breite)) / 2));
     }
     .seitenkopf :global(.seitenkopf__bild .bild__rahmen) {
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1 / 1;
     }
   }
   @media (min-width: 48em) and (max-width: 63.99em) {
@@ -138,9 +138,15 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
       flex: 1 1 100%;
     }
   }
+  /* Desktop: Foto so groß wie auf der Startseite (Tamer, 04.10.2026), eine Spalte schmaler und quadratisch */
   @media (min-width: 64em) {
+    .seitenkopf__bildbereich {
+      grid-column: 9 / -1;
+    }
+  }
+  @media (min-width: 64em) and (max-height: 50em) {
     .seitenkopf :global(.seitenkopf__bild .bild__rahmen) {
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 5 / 4;
     }
   }
 </style>
