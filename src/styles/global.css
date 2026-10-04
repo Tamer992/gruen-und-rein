@@ -608,6 +608,64 @@ a:hover {
   }
 }
 
+/* Liste mit feinen Trennlinien (z. B. Ablauf-Schritte). Die Linien liegen als eigene Ebene im Eintrag,
+   damit sie beim Scrollen von links hereingleiten können, während der Text darüber einblendet.
+   Ohne JavaScript oder mit reduzierter Bewegung stehen die Linien einfach da. */
+.linien-liste > li {
+  position: relative;
+}
+.linien-liste > li::before,
+.linien-liste > li:last-child::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--linie);
+  transform-origin: left center;
+}
+.linien-liste > li:last-child::after {
+  top: auto;
+  bottom: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Eintrag selbst bleibt stehen, nur die Linie gleitet und der Inhalt blendet ein */
+  .js-bereit [data-einblenden='linie']:not(.ist-sichtbar) {
+    opacity: 1;
+    transform: none;
+  }
+  /* Gleichmäßig statt schlagartig, damit man das Hereingleiten auch sieht; Einträge leicht versetzt */
+  .js-bereit [data-einblenden='linie']::before,
+  .js-bereit [data-einblenden='linie']:last-child::after {
+    transition: transform 800ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .js-bereit [data-einblenden='linie']:nth-child(2)::before {
+    transition-delay: 120ms;
+  }
+  .js-bereit [data-einblenden='linie']:nth-child(3)::before {
+    transition-delay: 240ms;
+  }
+  .js-bereit [data-einblenden='linie']:nth-child(4)::before {
+    transition-delay: 360ms;
+  }
+  .js-bereit [data-einblenden='linie']:last-child::after {
+    transition-delay: 360ms;
+  }
+  .js-bereit [data-einblenden='linie']:not(.ist-sichtbar)::before,
+  .js-bereit [data-einblenden='linie']:not(.ist-sichtbar):last-child::after {
+    transform: scaleX(0);
+  }
+  .js-bereit [data-einblenden='linie'] > * {
+    transition: opacity var(--uebergang-lang), transform var(--uebergang-lang);
+    transition-delay: 120ms;
+  }
+  .js-bereit [data-einblenden='linie']:not(.ist-sichtbar) > * {
+    opacity: 0;
+    transform: translateY(var(--einblenden-weg));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

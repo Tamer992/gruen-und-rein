@@ -136,10 +136,9 @@ const daten = {
         <h2 id="ablauf-titel">Vom ersten Anruf bis zur Abrechnung</h2>
         <p class="leise">Sie erzählen uns, was Sie sich wünschen. Alles Weitere regeln wir mit Ihrer Pflegekasse.</p>
       </div>
-      <ol class="schritte">
-        {schritte.map((s, i) => (
-          <li data-einblenden>
-            <span class="schritte__zahl" aria-hidden="true">{i + 1}</span>
+      <ol class="schritte linien-liste">
+        {schritte.map((s) => (
+          <li data-einblenden="linie">
             <div>
               <h3>{s.titel}</h3>
               <p>{s.text}</p>
@@ -292,24 +291,10 @@ const daten = {
     padding: 0;
     margin: 0;
     max-width: none;
-    border-bottom: 1px solid var(--linie);
   }
+  /* Ohne Ziffern (wirkten zu sehr nach KI, Tamer 04.10.2026). Trennlinien kommen aus .linien-liste und gleiten beim Scrollen herein */
   .schritte li {
-    display: grid;
-    grid-template-columns: clamp(4rem, 2.5rem + 5vw, 8.5rem) minmax(0, 1fr);
-    gap: var(--a-3);
-    align-items: start;
     padding-block: var(--a-4) var(--a-5);
-    border-top: 1px solid var(--linie);
-  }
-  .schritte__zahl {
-    font-family: var(--schrift-titel);
-    font-size: clamp(4.5rem, 2.8rem + 6vw, 9rem);
-    font-weight: 400;
-    font-variant-numeric: lining-nums;
-    line-height: 0.8;
-    letter-spacing: -0.04em;
-    color: var(--messing);
   }
   .schritte h3 {
     margin: 0.35rem 0 var(--a-1);

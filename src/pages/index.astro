@@ -258,30 +258,27 @@ const groessen = [
     </section>
   )}
 
-  <!-- Ablauf: links Überschrift und Angebot, rechts drei Schritte mit großen Messing-Ziffern -->
+  <!-- Ablauf: links Überschrift und Angebot, rechts drei Schritte mit hereingleitenden Trennlinien -->
   <section class="bereich ablauf" id="ablauf" aria-labelledby="ablauf-titel">
     <div class="behaelter ablauf__raster">
       <div class="bereich__kopf ablauf__kopf" data-einblenden>
         <p class="etikett">Ablauf</p>
         <h2 id="ablauf-titel">So fangen wir an</h2>
       </div>
-      <ol class="schritte">
-        <li data-einblenden>
-          <span class="schritte__zahl" aria-hidden="true">1</span>
+      <ol class="schritte linien-liste">
+        <li data-einblenden="linie">
           <div>
             <h3>Anrufen</h3>
             <p>Sie erzählen uns, wobei Sie Hilfe brauchen. Fragen Sie ruhig alles, auch die kleinen Dinge.</p>
           </div>
         </li>
-        <li data-einblenden>
-          <span class="schritte__zahl" aria-hidden="true">2</span>
+        <li data-einblenden="linie">
           <div>
             <h3>Kennenlernen</h3>
             <p>Wir besuchen Sie zu Hause, gern zusammen mit Ihren Angehörigen, und schauen uns alles in Ruhe an.</p>
           </div>
         </li>
-        <li data-einblenden>
-          <span class="schritte__zahl" aria-hidden="true">3</span>
+        <li data-einblenden="linie">
           <div>
             <h3>Loslegen</h3>
             <p>Wir machen feste Tage und Uhrzeiten aus. Ihre Ansprechperson weiß bald, wo bei Ihnen die Handtücher liegen.</p>
@@ -993,25 +990,10 @@ const groessen = [
     padding: 0;
     margin: 0;
     max-width: none;
-    border-bottom: 1px solid var(--linie);
   }
+  /* Ohne Ziffern (wirkten zu sehr nach KI, Tamer 04.10.2026). Trennlinien kommen aus .linien-liste und gleiten beim Scrollen herein */
   .schritte li {
-    display: grid;
-    grid-template-columns: clamp(4rem, 2.5rem + 5vw, 8.5rem) minmax(0, 1fr);
-    gap: var(--a-3);
-    align-items: start;
     padding-block: var(--a-4) var(--a-5);
-    border-top: 1px solid var(--linie);
-  }
-  /* Große Ziffern in Messing (Schmuck, deshalb für Vorleseprogramme ausgeblendet) */
-  .schritte__zahl {
-    font-family: var(--schrift-titel);
-    font-size: clamp(4.5rem, 2.8rem + 6vw, 9rem);
-    font-weight: 400;
-    font-variant-numeric: lining-nums;
-    line-height: 0.8;
-    letter-spacing: -0.04em;
-    color: var(--messing);
   }
   .schritte h3 {
     margin: 0.35rem 0 var(--a-1);
