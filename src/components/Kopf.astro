@@ -63,7 +63,7 @@ const aktuell = Astro.url.pathname;
                 </ul>
               </li>
             ) : (
-              <li>
+              <li class:list={{ hauptnav__kontakt: punkt.pfad === '/kontakt/' }}>
                 <a href={p(punkt.pfad)} aria-current={aktuell.startsWith(p(punkt.pfad)) ? 'page' : undefined}>{punkt.titel}</a>
               </li>
             )
@@ -556,6 +556,32 @@ const aktuell = Astro.url.pathname;
     }
     .kopf__anruf {
       flex: none;
+    }
+  }
+  /* Am Computer mit Maus: kein grüner Anrufknopf (die Nummer steht schon in der Leiste darüber).
+     Stattdessen wird „Kontakt“ in der Navigation zum ruhigen Knopf (Tamer, 04.10.2026). */
+  @media (hover: hover) and (pointer: fine) {
+    .kopf__anruf {
+      display: none !important;
+    }
+  }
+  @media (min-width: 64em) and (hover: hover) and (pointer: fine) {
+    .hauptnav__kontakt a {
+      display: inline-flex;
+      align-items: center;
+      padding-inline: 1.35rem;
+      border-radius: var(--r-knopf);
+      color: var(--waldgruen);
+      box-shadow: inset 0 0 0 1.5px var(--linie-knopf);
+      transition: background var(--uebergang);
+    }
+    .hauptnav__kontakt a::after {
+      display: none;
+    }
+    .hauptnav__kontakt a:hover,
+    .hauptnav__kontakt a[aria-current='page'] {
+      background: var(--sand);
+      color: var(--waldgruen);
     }
   }
   @media (min-width: 64em) and (max-width: 74.99em) {
