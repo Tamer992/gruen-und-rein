@@ -531,6 +531,14 @@ const groessen = [
     .einstieg__handeln .knopf {
       flex: 1 1 100%;
     }
+    /* Seit dem quadratischen Foto liegen Sandfläche und Karte neben den Knöpfen:
+       nicht nach links in die Textspalte ragen lassen (Handy in Desktop-Ansicht, Tamer 04.10.2026) */
+    .einstieg__bildbereich::before {
+      left: 0;
+    }
+    .kassenkarte {
+      margin-left: var(--a-2);
+    }
   }
 
   /* Desktop: Foto größer und quer, Karte ragt in die Textspalte */

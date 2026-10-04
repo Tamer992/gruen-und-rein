@@ -137,6 +137,10 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
     .seitenkopf__handeln .knopf {
       flex: 1 1 100%;
     }
+    /* Sandfläche nicht in die Textspalte und an die Knöpfe ragen lassen */
+    .seitenkopf__bildbereich::before {
+      left: 0;
+    }
   }
   /* Desktop: Foto so groß wie auf der Startseite (Tamer, 04.10.2026), eine Spalte schmaler und quadratisch */
   @media (min-width: 64em) {
