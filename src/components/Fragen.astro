@@ -4,6 +4,7 @@
 import { p } from '../pfad';
 import { site } from '../site.config';
 import Symbol from './Symbol.astro';
+import Anrufhinweis from './Anrufhinweis.astro';
 
 export interface Frage {
   frage: string;
@@ -22,10 +23,11 @@ const { fragen, titel = 'Gut zu wissen', klasse } = Astro.props;
     <div class="fragen__kopf" data-einblenden>
       <p class="etikett">Häufige Fragen</p>
       <h2 id="fragen-titel">{titel}</h2>
-      <p class="fragen__hinweis">Noch eine Frage? Rufen Sie uns gern an.</p>
-      <a class="weiter" href={`tel:${site.telefonLink}`}>
+      <p class="fragen__hinweis nur-finger">Noch eine Frage? Rufen Sie uns gern an.</p>
+      <a class="weiter nur-finger" href={`tel:${site.telefonLink}`}>
         <Symbol name="telefon" /> <span class="nummer">{site.telefon}</span>
       </a>
+      <Anrufhinweis klasse="fragen__anruf" />
     </div>
     <div class="fragen__liste" data-einblenden="2">
       {fragen.map((f) => (
@@ -61,6 +63,9 @@ const { fragen, titel = 'Gut zu wissen', klasse } = Astro.props;
   }
   .fragen__kopf .weiter :global(.symbol) {
     color: var(--messing-text);
+  }
+  .fragen__kopf :global(.fragen__anruf) {
+    margin-top: var(--a-3);
   }
   .fragen__liste {
     border-bottom: 1px solid var(--linie);

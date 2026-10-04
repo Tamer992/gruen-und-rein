@@ -2,6 +2,7 @@
 import { p } from '../pfad';
 import { site, leistungen, leistungsPfad } from '../site.config';
 import Symbol from './Symbol.astro';
+import QrCode from './QrCode.astro';
 import Dach from './Dach.astro';
 import logo from './logo-mass.json';
 
@@ -27,10 +28,16 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
             <Symbol name="whatsapp" kreis />
             WhatsApp schreiben
           </a>
-          <p class="fuss__nummern nur-maus">
-            <span class="fuss__nummer"><Symbol name="telefon" /> <span class="nummer">{site.telefon}</span></span>
-            <span class="fuss__nummer"><Symbol name="whatsapp" /> WhatsApp: <span class="nummer">{site.whatsapp}</span></span>
-          </p>
+          <div class="fuss__nummern nur-maus">
+            <figure class="fuss__code">
+              <QrCode inhalt={`tel:${site.telefonLink}`} beschriftung={`QR-Code: ${site.telefon} anrufen`} />
+              <figcaption>Scannen und anrufen</figcaption>
+            </figure>
+            <p class="fuss__liste">
+              <span class="fuss__nummer"><Symbol name="telefon" /> <span class="nummer">{site.telefon}</span></span>
+              <span class="fuss__nummer"><Symbol name="whatsapp" /> WhatsApp: <span class="nummer">{site.whatsapp}</span></span>
+            </p>
+          </div>
         </div>
         {site.telefon2 && (
           <p class="fuss__zweite">
@@ -40,6 +47,10 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
         <p class="fuss__zeiten">
           <Symbol name="uhr" />
           <strong class="fuss__zeit">{site.erreichbarkeit}</strong>
+        </p>
+        <p class="fuss__zeiten fuss__mail">
+          <Symbol name="brief" />
+          <a href={`mailto:${site.email}`}>{site.email}</a>
         </p>
       </div>
     </div>
@@ -120,8 +131,27 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
     font-size: var(--text-gross);
     min-height: 4rem;
   }
-  /* Am Computer: Nummern als Text statt Knöpfe */
+  /* Am Computer: QR-Code zum Anrufen, daneben Nummern als Text statt Knöpfe */
   .fuss__nummern {
+    display: flex;
+    align-items: center;
+    gap: var(--a-3);
+  }
+  .fuss__code {
+    display: grid;
+    justify-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    font-size: var(--text-klein);
+    color: var(--auf-tanne);
+  }
+  .fuss__code :global(.qr) {
+    width: 5.5rem;
+    padding: 0.45rem;
+    border-radius: 0.6rem;
+    background: var(--papier);
+  }
+  .fuss__liste {
     display: grid;
     gap: 0.35rem;
     margin: 0;
@@ -135,6 +165,9 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
   .fuss__nummer:first-child .nummer {
     font-size: clamp(1.6rem, 1.3rem + 0.9vw, 2.1rem);
     color: var(--messing-hell);
+  }
+  .fuss__zeiten.fuss__mail {
+    margin-top: var(--a-1);
   }
   .fuss__zeiten {
     display: flex;

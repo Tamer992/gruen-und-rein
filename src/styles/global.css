@@ -496,6 +496,13 @@ a:hover {
   .nur-finger {
     display: none !important;
   }
+  /* Dunkle Telefon- und WhatsApp-Leiste über dem Kopf braucht es am Computer nicht (Tamer, 04.10.2026) */
+  :root {
+    --leiste-hoehe: 0rem;
+  }
+  .leiste {
+    display: none !important;
+  }
 }
 
 /* Anruf-Knöpfe: mit Finger „Jetzt anrufen“, am Computer mit Maus die Nummer (siehe AnrufText.astro) */
