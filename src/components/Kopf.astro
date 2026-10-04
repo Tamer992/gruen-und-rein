@@ -64,8 +64,8 @@ const aktuell = Astro.url.pathname;
         <span class="kopf__menue-wort">Menü</span>
       </button>
     </div>
-    <!-- Messinglinie unten: zieht sich beim Aufruf von der Mitte auf, danach gleitet einmal ein Lichtschimmer darüber -->
-    <span class="kopf__kante" aria-hidden="true"><span class="kopf__linie"></span><span class="kopf__glanz"></span></span>
+    <!-- Messinglinie unten: zieht sich beim ersten Aufruf eines Besuchs von der Mitte auf -->
+    <span class="kopf__kante" aria-hidden="true"><span class="kopf__linie"></span></span>
   </div>
 </header>
 
@@ -95,91 +95,40 @@ const aktuell = Astro.url.pathname;
     border-bottom-color: transparent;
     box-shadow: 0 12px 28px -20px rgb(46 38 24 / 0.45);
   }
-  /* Leuchtkante unten wie bei ihreitrn.de (Tamer, 04.10.2026): feine Messinglinie, die zu den Seiten ausläuft,
-     darüber ein zarter Schimmer. Ersetzt die graue Trennlinie. Schimmer seit 04.10.2026 weiß statt Messing
-     (Tamer: „Verlauf wieder normal weiß, der Strich bleibt Messing“). Die Linie selbst ist .kopf__kante. */
+  /* Messinglinie unten (Tamer, 04.10.2026): feine Linie, die zu den Seiten ausläuft, ersetzt die graue Trennlinie.
+     Nur der Strich: Schein und Lichtschimmer darüber auf Tamers Wunsch entfernt (04.10.2026). */
   .kopf {
     border-bottom-color: transparent;
     isolation: isolate;
   }
-  .kopf::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(40% 60% at 50% 100%, rgb(255 255 255 / 0.75), transparent 100%);
-  }
-
-  /* Messinglinie. Die Maske lässt Linie und Schimmer zu den Seiten auslaufen. */
+  /* Die Maske lässt die Linie zu den Seiten auslaufen */
   .kopf__kante {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -6px;
+    bottom: 0;
     z-index: -1;
-    height: 13.5px;
-    overflow: hidden;
+    height: 1.5px;
     pointer-events: none;
     -webkit-mask-image: linear-gradient(90deg, transparent 6%, #000 50%, transparent 94%);
     mask-image: linear-gradient(90deg, transparent 6%, #000 50%, transparent 94%);
   }
   .kopf__linie {
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 6px;
-    height: 1.5px;
+    inset: 0;
     background: rgb(162 124 60 / 0.95);
   }
-  /* Lichtschimmer: ein heller, weicher Punkt, der einmal über die Linie gleitet */
-  .kopf__glanz {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    background: radial-gradient(7% 6px at 50% 6.75px, rgb(255 244 214 / 0.95), rgb(214 187 135 / 0.35) 45%, transparent 100%);
-  }
 
-  /* Beim Aufruf jeder Seite (Tamer 04.10.2026: „soll sehr edel aussehen“):
-     1. die Linie zieht sich ruhig von der Mitte nach außen auf (1,4 s),
-     2. der weiße Schein darüber blendet weich ein,
-     3. ein Lichtschimmer gleitet einmal von links nach rechts darüber.
-     Nur transform und opacity. Bei „Bewegung reduzieren“ steht alles sofort da. */
+  /* Beim ersten Aufruf eines Besuchs zieht sich die Linie ruhig von der Mitte nach außen auf (1,4 s, nur transform).
+     Die Klasse kante-auf setzt js/kante.js. Bei „Bewegung reduzieren“ steht sie sofort da. */
   @media (prefers-reduced-motion: no-preference) {
-    .kopf__linie {
+    :global(.kante-auf) .kopf__linie {
       animation: kante-linie 1400ms cubic-bezier(0.45, 0, 0.15, 1) 250ms both;
-    }
-    .kopf::after {
-      animation: kante-schein 1200ms ease-out 700ms both;
-    }
-    .kopf__glanz {
-      animation: kante-glanz 1600ms cubic-bezier(0.45, 0, 0.25, 1) 1300ms both;
     }
   }
   @keyframes kante-linie {
     from {
       transform: scaleX(0);
-    }
-  }
-  @keyframes kante-schein {
-    from {
-      opacity: 0;
-    }
-  }
-  @keyframes kante-glanz {
-    0% {
-      opacity: 0;
-      transform: translateX(-55%);
-    }
-    20% {
-      opacity: 1;
-    }
-    80% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-      transform: translateX(55%);
     }
   }
 
