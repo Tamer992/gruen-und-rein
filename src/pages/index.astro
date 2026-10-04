@@ -583,7 +583,7 @@ const groessen = [
   /* Breite Fenster: Das Foto läuft weiter bis an den Fensterrand */
   @media (min-width: 48em) {
     .einstieg__bildbereich {
-      margin-right: calc(-1 * max(var(--rand), (100vw - var(--breite)) / 2));
+      margin-right: calc(-1 * min(max(var(--rand), (100vw - var(--breite)) / 2), 24rem));
     }
   }
 
@@ -1124,6 +1124,14 @@ const groessen = [
       grid-column: 7 / -1;
       grid-row: 1;
       margin-top: calc(-1 * var(--a-bereich) - var(--a-6));
+    }
+  }
+  /* Sehr breite Fenster (ab 128em, z. B. stark herausgezoomt): Das Foto läuft höchstens 24rem über den Inhalt hinaus
+     und endet dann vor dem Fensterrand, deshalb rechts wieder runde Ecken (Tamer, 04.10.2026) */
+  @media (min-width: 128em) {
+    .einstieg :global(.einstieg__bild .bild__rahmen) {
+      border-top-right-radius: var(--r-bild);
+      border-bottom-right-radius: var(--r-bild);
     }
   }
 </style>

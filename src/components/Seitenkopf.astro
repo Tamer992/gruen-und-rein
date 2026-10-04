@@ -129,7 +129,7 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
     .seitenkopf__bildbereich {
       grid-column: 8 / -1;
       grid-row: 1;
-      margin-right: calc(-1 * max(var(--rand), (100vw - var(--breite)) / 2));
+      margin-right: calc(-1 * min(max(var(--rand), (100vw - var(--breite)) / 2), 24rem));
     }
     .seitenkopf :global(.seitenkopf__bild .bild__rahmen) {
       aspect-ratio: 1 / 1;
@@ -153,6 +153,14 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
   @media (min-width: 64em) and (max-height: 50em) {
     .seitenkopf :global(.seitenkopf__bild .bild__rahmen) {
       aspect-ratio: 5 / 4;
+    }
+  }
+  /* Sehr breite Fenster (ab 128em, z. B. stark herausgezoomt): Das Foto läuft höchstens 24rem über den Inhalt hinaus
+     und endet dann vor dem Fensterrand, deshalb rechts wieder runde Ecken (Tamer, 04.10.2026) */
+  @media (min-width: 128em) {
+    .seitenkopf :global(.seitenkopf__bild .bild__rahmen) {
+      border-top-right-radius: var(--r-bild);
+      border-bottom-right-radius: var(--r-bild);
     }
   }
 </style>
