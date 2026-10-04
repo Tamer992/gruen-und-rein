@@ -520,7 +520,7 @@ const groessen = [
       font-size: min(var(--titel-1), max(2.75rem, 6vw));
     }
     .einstieg :global(.einstieg__bild .bild__rahmen) {
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1 / 1;
     }
     .kassenkarte {
       margin: calc(-1 * var(--a-5)) calc(var(--rand) + var(--a-1)) 0 calc(-1 * var(--a-2));
@@ -545,14 +545,21 @@ const groessen = [
     .einstieg h1 {
       font-size: min(var(--titel-1), 5.6vw);
     }
+    /* Foto etwas kleiner als früher (Tamer, 04.10.2026): eine Spalte schmaler und quadratisch statt hoch */
+    .einstieg__text {
+      grid-column: 1 / span 7;
+    }
+    .einstieg__bildbereich {
+      grid-column: 9 / -1;
+    }
     .einstieg :global(.einstieg__bild .bild__rahmen) {
-      aspect-ratio: 5 / 6;
+      aspect-ratio: 1 / 1;
     }
     .kassenkarte {
       position: absolute;
       left: calc(-1 * var(--a-7));
-      bottom: var(--a-6);
-      width: min(30rem, 100%);
+      bottom: calc(-1 * var(--a-5)); /* sitzt auf der Unterkante, damit sie das kleinere Foto nicht verdeckt */
+      width: min(28rem, 100%);
       margin: 0;
       padding: var(--a-3);
     }
@@ -560,7 +567,7 @@ const groessen = [
   @media (min-width: 64em) and (max-height: 50em) {
     /* Niedrige Fenster: Foto flacher, damit Text und Knöpfe sichtbar bleiben */
     .einstieg :global(.einstieg__bild .bild__rahmen) {
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 5 / 4;
     }
   }
   /* Breite Fenster: Das Foto läuft weiter bis an den Fensterrand */

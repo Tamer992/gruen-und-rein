@@ -1,6 +1,6 @@
 // Erzeugt Logo, Favicon und Vorschaubild für geteilte Links.
 // Zeichen: ein Dach über einem Herz (Fürsorge zu Hause), von Hand auf einem 48er-Raster gezeichnet.
-// Die Schrift (Hanken Grotesk SemiBold) wird in Pfade umgewandelt, damit das Logo überall gleich aussieht.
+// Die Schrift (Hanken Grotesk Medium, seit 04.10.2026 dezenter statt SemiBold) wird in Pfade umgewandelt, damit das Logo überall gleich aussieht.
 // Aufruf: python scripts/instanzen.py && node scripts/logo.mjs
 // Nach einer Änderung am Logo in Kopf.astro und Fuss.astro die Zahl hinter „?v=“ erhöhen, damit Browser es neu laden.
 import * as fontkit from 'fontkit';
@@ -10,6 +10,10 @@ import { writeFileSync } from 'node:fs';
 const I = 'scripts/_instanzen/';
 const wort = fontkit.openSync(I + 'wort.ttf');
 const titel = fontkit.openSync(I + 'titel.ttf');
+const zeile = fontkit.openSync(I + 'zeile.ttf');
+
+// Zeile unter Zeichen und Wortmarke (Tamer, 04.10.2026)
+const ZEILE = ['Zuverlässig', 'mit Herz', 'individuell'];
 
 // Wie in src/styles/global.css (:root). Höchstens zwei Farben je Fassung.
 const F = {
@@ -44,7 +48,8 @@ function setze(font, text, groesse, x0, grundlinie, sperrung = 0) {
   return { d: rund(teile.join('')), breite: x - x0 - sperrung };
 }
 
-// Bild- plus Wortmarke: Zeichen 32 hoch, Versalhöhe der Schrift 17, „&“ in der Akzentfarbe
+// Bild- plus Wortmarke: Zeichen 32 hoch, Versalhöhe der Schrift 17, „&“ in der Akzentfarbe.
+// Darunter über die ganze Breite die Zeile „Zuverlässig · mit Herz · individuell“, Punkte in der Akzentfarbe.
 function logo({ dach, herz, text, et }) {
   const H = 32;
   const VERSAL = 17;
@@ -58,9 +63,35 @@ function logo({ dach, herz, text, et }) {
   const b = setze(wort, '&', groesse, x0 + a.breite + raum, linie, sp);
   const c = setze(wort, 'Rein', groesse, x0 + a.breite + raum + b.breite + raum, linie, sp);
   const breite = Math.ceil(x0 + a.breite + b.breite + c.breite + raum * 2 + 1);
+
+  // Zeile: Schriftgröße so wählen, dass sie genau die Breite des Logos füllt
+  const zsp = 0.03; // Sperrung in em
+  const mitte = ' · ';
+  const messen = (g) => {
+    const t = ZEILE.join(mitte);
+    return setze(zeile, t, g, 0, 0, zsp * g).breite;
+  };
+  const zg = (10 * (breite - 1)) / messen(10);
+  const zVersal = (zeile.glyphForCodePoint(72).bbox.maxY / zeile.unitsPerEm) * zg;
+  const zLinie = H + 5 + zVersal;
+  const unten = Math.ceil(zLinie + (Math.abs(zeile.descent) / zeile.unitsPerEm) * zg * 0.6);
+  let x = 0;
+  const woerter = [];
+  const punkte = [];
+  ZEILE.forEach((w, i) => {
+    if (i) {
+      const m = setze(zeile, mitte, zg, x, zLinie, zsp * zg);
+      punkte.push(m.d);
+      x += m.breite + zsp * zg;
+    }
+    const t = setze(zeile, w, zg, x, zLinie, zsp * zg);
+    woerter.push(t.d);
+    x += t.breite + zsp * zg;
+  });
+
   const marke = `<g transform="translate(${rund((-BOX[0] * s).toFixed(2))} ${rund((-BOX[1] * s).toFixed(2))}) scale(${s.toFixed(4)})">${zeichen(dach, herz)}</g>`;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${breite} ${H}" width="${breite}" height="${H}" role="img" aria-labelledby="t"><title id="t">Grün &amp; Rein</title>${marke}<path fill="${text}" d="${a.d}${c.d}"/><path fill="${et}" d="${b.d}"/></svg>`;
-  return { svg, breite, hoehe: H };
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${breite} ${unten}" width="${breite}" height="${unten}" role="img" aria-labelledby="t"><title id="t">Grün &amp; Rein. ${ZEILE.join(', ')}</title>${marke}<path fill="${text}" d="${a.d}${c.d}${woerter.join('')}"/><path fill="${et}" d="${b.d}${punkte.join('')}"/></svg>`;
+  return { svg, breite, hoehe: unten, schrift: zg };
 }
 
 // Nur das Zeichen, knapp zugeschnitten
@@ -88,8 +119,9 @@ function ico(pngs) {
 }
 
 // Logo: dunkle Fassung für hellen Grund (Kopf), helle Fassung für dunklen Grund (Fuß)
-const dunkel = logo({ dach: F.tinte, herz: F.waldgruen, text: F.tinte, et: F.waldgruen });
-const hell = logo({ dach: F.leinen, herz: F.salbei, text: F.leinen, et: F.salbei });
+// Dezenter (Tamer, 04.10.2026): Dach und Herz einfarbig in der Akzentfarbe, Schrift Medium
+const dunkel = logo({ dach: F.waldgruen, herz: F.waldgruen, text: F.tinte, et: F.waldgruen });
+const hell = logo({ dach: F.salbei, herz: F.salbei, text: F.leinen, et: F.salbei });
 writeFileSync('public/logo.svg', dunkel.svg);
 writeFileSync('public/logo-hell.svg', hell.svg);
 writeFileSync('public/logo-mark.svg', marke(F.tinte, F.waldgruen));
@@ -131,4 +163,4 @@ writeFileSync(
   'public/og-bild.jpg',
   await sharp(Buffer.from(og)).composite([{ input: foto, left: 740, top: 0 }]).jpeg({ quality: 84, mozjpeg: true }).toBuffer(),
 );
-console.log('Logo', dunkel.breite, 'x', dunkel.hoehe);
+console.log('Logo', dunkel.breite, 'x', dunkel.hoehe, 'Zeile', dunkel.schrift.toFixed(2), 'px');

@@ -32,7 +32,7 @@ const aktuell = Astro.url.pathname;
   <div class="kopf">
     <div class="behaelter kopf__zeile">
       <a class="kopf__marke" href={p('/')}>
-        <img src={p('/logo.svg') + '?v=3'} alt={`${site.name}, zur Startseite`} width={logo.breite} height={logo.hoehe} />
+        <img src={p('/logo.svg') + '?v=5'} alt={`${site.name}, zur Startseite`} width={logo.breite} height={logo.hoehe} />
       </a>
 
       <nav id="hauptnavigation" class="hauptnav" aria-label="Hauptnavigation">
@@ -205,7 +205,7 @@ const aktuell = Astro.url.pathname;
     width: auto;
     height: auto;
     max-width: 100%;
-    max-height: 2.25rem;
+    max-height: 2.85rem; /* mit der Zeile „Zuverlässig · mit Herz · individuell“ */
     transform-origin: left center;
     transition: transform var(--uebergang-lang);
   }
@@ -389,7 +389,7 @@ const aktuell = Astro.url.pathname;
       flex: none;
     }
     .kopf__marke img {
-      height: 2.5rem;
+      height: 3rem;
       max-height: none;
     }
     .kopf__menue {
@@ -559,7 +559,7 @@ const aktuell = Astro.url.pathname;
   }
   @media (min-width: 64em) and (max-width: 74.99em) {
     .kopf__marke img {
-      height: 2.25rem;
+      height: 2.85rem;
     }
   }
 </style>
