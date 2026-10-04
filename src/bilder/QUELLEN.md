@@ -11,7 +11,6 @@ ohne Namensnennung. Sie sind ein Übergang, bis eigene Fotos von Grün & Rein vo
 | hauswirtschaft-kueche.jpg | https://unsplash.com/photos/W9Vu-Cy2vtg |
 | reinigung-wischen.jpg | https://unsplash.com/photos/2NcTLdFHpH8 |
 | garten-rasen.jpg | https://unsplash.com/photos/YhxOrHGrQQc |
-| weg-gruen.jpg | https://unsplash.com/photos/qgmojlGhb7k |
 | trauer-blumen.jpg | https://unsplash.com/photos/nIynZQhcQBM |
 | alltag-gesellschaft.jpg | https://unsplash.com/photos/dMhB7w99ju8 |
 | hauswirtschaft-waesche.jpg | https://unsplash.com/photos/oa7pqZmmhuA |
