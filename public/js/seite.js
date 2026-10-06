@@ -9,6 +9,7 @@
   function setze(offen) {
     knopf.setAttribute('aria-expanded', offen ? 'true' : 'false');
     nav.classList.toggle('ist-offen', offen);
+    document.documentElement.classList.toggle('menue-offen', offen);
     if (wort) wort.textContent = offen ? 'Schließen' : 'Menü';
   }
 

@@ -230,6 +230,14 @@ const aktuell = Astro.url.pathname;
   .hauptnav:global(.ist-offen) {
     display: block;
   }
+  /* Offenes Menü: Seite dahinter nicht mitscrollen lassen; nur das Menü scrollt, falls es nicht passt */
+  @media (max-width: 63.99em) {
+    :global(html.menue-offen),
+    :global(html.menue-offen body) {
+      overflow: hidden;
+      overscroll-behavior: none;
+    }
+  }
   @media (prefers-reduced-motion: no-preference) {
     .hauptnav:global(.ist-offen) {
       animation: menue-auf var(--uebergang-lang) both;
