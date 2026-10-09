@@ -570,6 +570,11 @@ p a:not([class]) {
   white-space: nowrap;
 }
 
+/* Kurzer Link, der als Ganzes umbricht (z. B. „auch per WhatsApp“ neben der zweiten Nummer) */
+.am-stueck {
+  white-space: nowrap;
+}
+
 /* Pfeil am letzten Wort eines Titels (MitPfeil.astro): bricht nie allein um */
 .mit-pfeil {
   white-space: nowrap;

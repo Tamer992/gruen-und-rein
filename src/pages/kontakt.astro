@@ -70,6 +70,7 @@ const vorbereitung = [
       {site.telefon2 && (
         <p class="wege__zweite">
           {site.telefon2Name} direkt: <a href={`tel:${site.telefon2Link}`}><span class="nummer">{site.telefon2}</span></a>
+            {site.whatsapp2Link && <> · <a class="am-stueck" href={`https://wa.me/${site.whatsapp2Link}`}>auch per WhatsApp</a></>}
         </p>
       )}
     </div>

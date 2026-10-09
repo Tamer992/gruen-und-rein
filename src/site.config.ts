@@ -30,8 +30,11 @@ export const site = {
   telefon2Link: '+491716958218',
   // Vorname, der vor der zweiten Nummer steht
   telefon2Name: 'Alireza',
-  // [PLATZHALTER: WhatsApp-Nummer bestätigen] Vorläufig Hussains Handynummer. Ziffern mit 49 vorne, ohne + und ohne 0
+  // Beide Nummern haben WhatsApp (Tamer, 09.10.2026). Hauptnummer für Knöpfe und Anrufleiste: Hussain.
+  // Ziffern mit 49 vorne, ohne + und ohne 0
   whatsappLink: '491717057151',
+  // WhatsApp zur zweiten Nummer (Alireza), steht neben „Alireza direkt“. Leer lassen, wenn es keins gibt.
+  whatsapp2Link: '491716958218',
   // Am Computer steht sie als Text statt des WhatsApp-Knopfs
   whatsapp: '0171 7057151',
   // Von Tamer am 09.10.2026
