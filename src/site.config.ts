@@ -13,10 +13,10 @@ export const site = {
   domain: 'https://herzglanz-service.de',
 
   // Kurz, so sprechen die Inhaber ihre Kundschaft an
-  inhaberin: 'Hussain und Ali',
+  inhaberin: 'Hussain und Alireza',
   // Volle Namen für Impressum, Datenschutz und Suchmaschinen (von Tamer am 09.10.2026)
   inhaberVoll: 'Mohammad Hussain Zafari und Alireza Moradi',
-  inhaberinVorname: 'Hussain und Ali',
+  inhaberinVorname: 'Hussain und Alireza',
   // „Inhaberin“, „Inhaber“ oder „Inhaber“ (Mehrzahl)
   inhaberTitel: 'Inhaber',
   mehrereInhaber: true,
@@ -25,11 +25,11 @@ export const site = {
   telefon: '0171 7057151',
   // Ziffern mit +49, ohne 0 vorne
   telefonLink: '+491717057151',
-  // Zweite Nummer: Ali (Alireza Moradi). Leer lassen, wenn es keine gibt.
+  // Zweite Nummer: Alireza Moradi. Leer lassen, wenn es keine gibt.
   telefon2: '0171 6958218',
   telefon2Link: '+491716958218',
   // Vorname, der vor der zweiten Nummer steht
-  telefon2Name: 'Ali',
+  telefon2Name: 'Alireza',
   // [PLATZHALTER: WhatsApp-Nummer bestätigen] Vorläufig Hussains Handynummer. Ziffern mit 49 vorne, ohne + und ohne 0
   whatsappLink: '491717057151',
   // Am Computer steht sie als Text statt des WhatsApp-Knopfs
@@ -60,7 +60,7 @@ export const site = {
   oeffnungszeiten: [{ tage: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'], von: '00:00', bis: '23:59' }],
 
   // Abrechnung über die Pflegekasse (Entlastungsbetrag nach § 45b SGB XI) für Alltagsbegleitung,
-  // Hauswirtschaft und Trauerbegleitung. Laut Hussain und Ali möglich (03.10.2026).
+  // Hauswirtschaft und Trauerbegleitung. Laut Hussain und Alireza möglich (03.10.2026).
   // Anerkennung als Angebot zur Unterstützung im Alltag (Hessen) liegt vor, auch für die Trauerbegleitung
   // (Rückmeldung vom 03.10.2026).
   // Auf false stellen, falls die Anerkennung doch fehlt: Dann verschwinden alle Hinweise.
@@ -72,7 +72,7 @@ export const site = {
 
   // Anerkennung als Angebot zur Unterstützung im Alltag (§ 45a SGB XI, Hessen). Zeigt das Siegel auf der Startseite
   // und auf „Über uns“. Laut Rückmeldung vom 03.10.2026 liegt sie vor. Auf false stellen, falls nicht.
-  // [PLATZHALTER: Anerkennung bestätigen] Bescheid oder Registriernummer bei Hussain und Ali erfragen
+  // [PLATZHALTER: Anerkennung bestätigen] Bescheid oder Registriernummer bei Hussain und Alireza erfragen
   anerkennung: true,
 
   // [PLATZHALTER: echte Bewertungen] Nur echte Stimmen mit Einverständnis der Kundinnen und Kunden eintragen,
@@ -89,8 +89,8 @@ export const site = {
   unterseiten: true,
 };
 
-// Leistungen wie auf dem Flyer von Hussain und Ali, ergänzt am 03.10.2026 (Bügeln, Mahlzeiten, Rezepte und
-// Medikamente, Post und Termine, Behördengänge, Fenster und Gardinen). Mit Hussain und Ali bestätigen.
+// Leistungen wie auf dem Flyer von Hussain und Alireza, ergänzt am 03.10.2026 (Bügeln, Mahlzeiten, Rezepte und
+// Medikamente, Post und Termine, Behördengänge, Fenster und Gardinen). Mit Hussain und Alireza bestätigen.
 // Alltagsbegleitung am 04.10.2026 nach Liste der Inhaber ergänzt: Demenz, Erwachsene und Kinder, Gespräche.
 // kasse: Abrechnung über die Pflegekasse möglich (nur sichtbar, wenn pflegekasse: true)
 export const leistungen = [
