@@ -1,9 +1,12 @@
 ---
 // Zwei Inhaber, zwei Nummern, beide mit WhatsApp (Tamer, 09.10.2026): gleichwertig nebeneinander statt
 // Haupt- und „Zweite Nummer“. Je Person Vorname, Nummer (zum Antippen) und ein ruhiger WhatsApp-Link.
+// Am Computer (Maus) steht neben jeder Person ein QR-Code zum Anrufen, weil Klicks auf Nummern dort meist
+// nichts tun (Tamer, 09.10.2026). Mit Finger fällt er weg, da tippt man direkt auf Nummer und WhatsApp.
 // „hell“ für dunkle Flächen (Fuß), „gross“ für größere Nummern (Telefonband auf der Kontaktseite). Ohne zweite Nummer steht nur die erste Person da.
 import { site } from '../site.config';
 import Symbol from './Symbol.astro';
+import QrCode from './QrCode.astro';
 interface Props {
   hell?: boolean;
   gross?: boolean;
@@ -20,13 +23,19 @@ const personen = [
 <ul class:list={['partner', { 'partner--hell': hell, 'partner--gross': gross }]} aria-label="Ihre Ansprechpartner">
   {personen.map((p) => (
     <li class="partner__person">
-      <p class="partner__name">{p.name}</p>
-      <a class="partner__nummer nummer" href={`tel:${p.tel}`} aria-label={`${p.name} anrufen: ${p.nummer}`}>{p.nummer}</a>
-      {p.wa && (
-        <a class="partner__wa" href={`https://wa.me/${p.wa}`} aria-label={`${p.name} per WhatsApp schreiben`}>
-          <Symbol name="whatsapp" /> WhatsApp
-        </a>
-      )}
+      <div class="partner__text">
+        <p class="partner__name">{p.name}</p>
+        <a class="partner__nummer nummer" href={`tel:${p.tel}`} aria-label={`${p.name} anrufen: ${p.nummer}`}>{p.nummer}</a>
+        {p.wa && (
+          <a class="partner__wa" href={`https://wa.me/${p.wa}`} aria-label={`${p.name} per WhatsApp schreiben`}>
+            <Symbol name="whatsapp" /> WhatsApp
+          </a>
+        )}
+      </div>
+      <figure class="partner__code nur-maus">
+        <QrCode inhalt={`tel:${p.tel}`} beschriftung={`QR-Code: ${p.name} unter ${p.nummer} anrufen`} />
+        <figcaption>Scannen und anrufen</figcaption>
+      </figure>
     </li>
   ))}
 </ul>
@@ -34,7 +43,8 @@ const personen = [
 
 <style>
   /* Nach verfügbarem Platz (Container), nicht nach Bildschirmbreite: schmal untereinander mit Linie oben,
-     ab 26 rem Platz nebeneinander mit Linie links. Der Fuß ist am Computer nur eine schmale Spalte. */
+     nebeneinander mit Linie links ab 26 rem Platz (Finger) bzw. 38 rem (Maus, wegen der QR-Codes).
+     Der Fuß ist am Computer nur eine schmale Spalte, dort stehen sie daher untereinander. */
   .partner-rahmen {
     container-type: inline-size;
   }
@@ -46,35 +56,110 @@ const personen = [
     gap: var(--a-3);
   }
   .partner__person {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--a-4);
+  }
+  .partner--gross .partner__person {
+    gap: var(--a-4);
+  }
+  .partner__text {
     display: grid;
     justify-items: start;
     align-content: start;
     gap: 0.15rem;
   }
+  /* QR-Code zum Anrufen, nur mit Maus (.nur-maus) */
+  .partner__code {
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    margin: 0;
+    flex: none;
+    font-size: 0.875rem;
+    line-height: 1.2;
+    color: var(--leise);
+    text-align: center;
+  }
+  .partner__code :global(.qr) {
+    width: 5.25rem;
+    padding: 0.4rem;
+    border-radius: 0.6rem;
+    background: var(--papier);
+    box-shadow: inset 0 0 0 1px var(--linie-zart);
+  }
+  .partner__code figcaption {
+    max-width: 6rem;
+  }
+  .partner--gross .partner__code :global(.qr) {
+    width: 5.5rem;
+  }
+  .partner--hell .partner__code {
+    color: var(--auf-tanne);
+  }
+  .partner--hell .partner__code :global(.qr) {
+    box-shadow: none;
+  }
   .partner__person + .partner__person {
     padding-top: var(--a-3);
     border-top: 1px solid var(--linie);
   }
-  @container (min-width: 26rem) {
-    .partner {
-      grid-template-columns: repeat(2, minmax(0, max-content));
-      gap: 0;
-    }
-    .partner__person {
-      padding-right: var(--a-4);
-    }
-    .partner__person + .partner__person {
-      padding: 0 0 0 var(--a-4);
-      border-top: 0;
-      border-left: 1px solid var(--linie);
+  @media not ((hover: hover) and (pointer: fine)) {
+    @container (min-width: 26rem) {
+      .partner {
+        grid-template-columns: repeat(2, minmax(0, max-content));
+        gap: 0;
+      }
+      .partner__person {
+        padding-right: var(--a-4);
+      }
+      .partner__person + .partner__person {
+        padding: 0 0 0 var(--a-4);
+        border-top: 0;
+        border-left: 1px solid var(--linie);
+      }
     }
   }
-  @container (min-width: 34rem) {
+  @media (hover: hover) and (pointer: fine) {
+    @container (min-width: 38rem) {
+      .partner:not(.partner--gross) {
+        grid-template-columns: repeat(2, minmax(0, max-content));
+        gap: 0;
+      }
+      .partner:not(.partner--gross) .partner__person {
+        padding-right: var(--a-4);
+      }
+      .partner:not(.partner--gross) .partner__person + .partner__person {
+        padding: 0 0 0 var(--a-4);
+        border-top: 0;
+        border-left: 1px solid var(--linie);
+      }
+    }
+  }
+  /* Großes Band mit größeren Nummern und QR-Codes braucht mehr Platz */
+  @media (hover: hover) and (pointer: fine) {
+    @container (min-width: 56rem) {
+      .partner--gross {
+        grid-template-columns: repeat(2, minmax(0, max-content));
+        gap: 0;
+      }
+      .partner--gross .partner__person {
+        padding-right: var(--a-4);
+      }
+      .partner--gross .partner__person + .partner__person {
+        padding: 0 0 0 var(--a-4);
+        border-top: 0;
+        border-left: 1px solid var(--linie);
+      }
+    }
+  }
+  @container (min-width: 56rem) {
     .partner--gross .partner__person {
-      padding-right: var(--a-5);
+      padding-right: var(--a-6);
     }
     .partner--gross .partner__person + .partner__person {
-      padding-left: var(--a-5);
+      padding-left: var(--a-6);
     }
   }
   .partner__name {
@@ -100,6 +185,12 @@ const personen = [
   }
   .partner--gross .partner__nummer {
     font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+  }
+  /* Mit Maus stehen QR-Codes daneben: Nummern etwas kleiner, damit beide mit Luft nebeneinander passen */
+  @media (hover: hover) and (pointer: fine) {
+    .partner--gross .partner__nummer {
+      font-size: clamp(1.75rem, 1.3rem + 1vw, 2.375rem);
+    }
   }
   .partner__wa {
     display: inline-flex;
