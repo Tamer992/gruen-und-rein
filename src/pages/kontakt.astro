@@ -88,14 +88,16 @@ const vorbereitung = [
         </ul>
         <p class="leise">Alles andere klären wir gemeinsam. Auch Ihre Angehörigen können gern für Sie anrufen.</p>
       </div>
-      <aside class="gebiet" aria-labelledby="gebiet-titel" data-einblenden="2">
-        <div class="gebiet__zier" aria-hidden="true"><Dach zeichnen /></div>
-        <h2 id="gebiet-titel" class="gebiet__titel">Unterwegs in</h2>
-        <ul class="gebiet__liste">
-          {site.einsatzorte.map((ort) => <li>{ort}</li>)}
-        </ul>
-        <p class="gebiet__hinweis">Sie wohnen in einem Nachbarort? Rufen Sie einfach an und fragen Sie nach.</p>
-      </aside>
+      {site.einsatzorte.length > 0 && (
+        <aside class="gebiet" aria-labelledby="gebiet-titel" data-einblenden="2">
+          <div class="gebiet__zier" aria-hidden="true"><Dach zeichnen /></div>
+          <h2 id="gebiet-titel" class="gebiet__titel">Unterwegs in</h2>
+          <ul class="gebiet__liste">
+            {site.einsatzorte.map((ort) => <li>{ort}</li>)}
+          </ul>
+          <p class="gebiet__hinweis">Sie wohnen in einem Nachbarort? Rufen Sie einfach an und fragen Sie nach.</p>
+        </aside>
+      )}
     </div>
   </section>
 </Basis>

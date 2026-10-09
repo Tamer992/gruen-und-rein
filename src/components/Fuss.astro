@@ -59,7 +59,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
 
     <div class="fuss__zier" aria-hidden="true" data-einblenden="zier"><Dach /></div>
 
-    <div class="fuss__raster">
+    <div class:list={['fuss__raster', { 'fuss__raster--ohne-orte': site.einsatzorte.length === 0 }]}>
       <div class="fuss__betrieb">
         <img src={p('/logo-hell.svg') + '?v=7'} alt={site.name} width={logo.breite} height={logo.hoehe} loading="lazy" />
         <address>
@@ -68,12 +68,14 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
         </address>
       </div>
 
-      <div class="fuss__spalte">
-        <h2 class="fuss__ueber">Unterwegs in</h2>
-        <ul class="fuss__liste">
-          {site.einsatzorte.map((ort) => <li>{ort}</li>)}
-        </ul>
-      </div>
+      {site.einsatzorte.length > 0 && (
+        <div class="fuss__spalte">
+          <h2 class="fuss__ueber">Unterwegs in</h2>
+          <ul class="fuss__liste">
+            {site.einsatzorte.map((ort) => <li>{ort}</li>)}
+          </ul>
+        </div>
+      )}
 
       <nav class="fuss__spalte" aria-label="Leistungen">
         <h2 class="fuss__ueber">Leistungen</h2>
@@ -283,6 +285,10 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
     }
     .fuss__raster {
       grid-template-columns: 2fr 1fr 1.4fr 1fr;
+    }
+    /* Ohne Einsatzorte fehlt die Spalte „Unterwegs in“ */
+    .fuss__raster--ohne-orte {
+      grid-template-columns: 2fr 1.4fr 1fr;
     }
   }
   /* Platz für die feste Anrufleiste auf dem Handy */

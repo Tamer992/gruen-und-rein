@@ -49,7 +49,8 @@ const dienst = {
   description: beschreibung,
   url: new URL(leistung.pfad, site.domain).href,
   provider: { '@id': `${site.domain}/#betrieb` },
-  areaServed: site.einsatzorte.map((ort) => ({ '@type': 'City', name: ort })),
+  // Ohne Einsatzorte kein Einsatzgebiet in den Suchmaschinen-Daten
+  ...(site.einsatzorte.length > 0 && { areaServed: site.einsatzorte.map((ort) => ({ '@type': 'City', name: ort })) }),
 };
 ---
 <Basis titel={titel} beschreibung={beschreibung} ruhig={ruhig}>

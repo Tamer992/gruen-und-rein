@@ -48,14 +48,16 @@ export const site = {
   // Hauptort für Überschriften und Seitentitel
   ort: 'Heppenheim',
 
-  // [PLATZHALTER: Einsatzorte] Ein Eintrag je Ort, zum Beispiel Heppenheim, Bensheim, Lorsch
-  einsatzorte: ['Heppenheim und Umgebung'],
+  // Einsatzorte, ein Eintrag je Ort. Auf Tamers Wunsch (09.10.2026) leer: „Heppenheim und Umgebung“ steht nicht mehr
+  // auf der Seite. Solange die Liste leer ist, fallen Etikett im Einstieg, „Unterwegs in“ (Fuß, Kontakt, Steckbriefe)
+  // und das Einsatzgebiet in den Suchmaschinen-Daten weg.
+  einsatzorte: [] as string[],
 
-  // Erreichbarkeit, so steht es auf der Seite (Montag bis Samstag, laut Rückmeldung vom 03.10.2026)
-  erreichbarkeit: 'Montag bis Samstag, 8 bis 18 Uhr',
-  erreichbarkeitKurz: 'Mo bis Sa, 8 bis 18 Uhr',
-  // Dieselben Zeiten für Suchmaschinen. Tage: Mo Tu We Th Fr Sa Su
-  oeffnungszeiten: [{ tage: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'], von: '08:00', bis: '18:00' }],
+  // Erreichbarkeit, so steht es auf der Seite: rund um die Uhr, Montag bis Sonntag (Tamer, 09.10.2026)
+  erreichbarkeit: 'Montag bis Sonntag, 24 Stunden',
+  erreichbarkeitKurz: 'Mo bis So, 24 Stunden',
+  // Dieselben Zeiten für Suchmaschinen. Tage: Mo Tu We Th Fr Sa Su (00:00 bis 23:59 heißt bei Google „rund um die Uhr“)
+  oeffnungszeiten: [{ tage: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'], von: '00:00', bis: '23:59' }],
 
   // Abrechnung über die Pflegekasse (Entlastungsbetrag nach § 45b SGB XI) für Alltagsbegleitung,
   // Hauswirtschaft und Trauerbegleitung. Laut Hussain und Ali möglich (03.10.2026).

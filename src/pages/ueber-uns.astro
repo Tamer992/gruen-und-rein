@@ -97,10 +97,12 @@ const werte = [
             <dt>Sitz</dt>
             <dd>{site.adresse.strasse}, {site.adresse.plz} {site.adresse.ort}</dd>
           </div>
-          <div>
-            <dt>Unterwegs in</dt>
-            <dd>{site.einsatzorte.join(', ')}</dd>
-          </div>
+          {site.einsatzorte.length > 0 && (
+            <div>
+              <dt>Unterwegs in</dt>
+              <dd>{site.einsatzorte.join(', ')}</dd>
+            </div>
+          )}
           <div>
             <dt>Erreichbar</dt>
             <dd>{site.erreichbarkeit}</dd>

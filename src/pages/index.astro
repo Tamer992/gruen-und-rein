@@ -97,10 +97,10 @@ const groessen = [
   <section class="einstieg" aria-labelledby="einstieg-titel">
     <div class="behaelter einstieg__raster">
       <div class="einstieg__text">
-        <p class="etikett">{site.einsatzorte.join(', ')}</p>
+        {site.einsatzorte.length > 0 && <p class="etikett">{site.einsatzorte.join(', ')}</p>}
         <h1 id="einstieg-titel"><span class="einstieg__zeile">Alltag. Zuhause.</span> <span class="einstieg__zeile einstieg__zeile--gruen">Sauber. Gepflegt.</span></h1>
         <p class="einleitung">
-          Wir begleiten Sie zum Arzt, helfen im Haushalt, putzen und machen den Garten. In {site.ort} und Umgebung.
+          Wir begleiten Sie zum Arzt, helfen im Haushalt, putzen und machen den Garten.
         </p>
         <div class="einstieg__handeln">
           <Kontaktwege />
@@ -352,10 +352,12 @@ const groessen = [
             <dt>{site.inhaberTitel}</dt>
             <dd>{site.inhaberin}</dd>
           </div>
-          <div>
-            <dt>Unterwegs in</dt>
-            <dd>{site.einsatzorte.join(', ')}</dd>
-          </div>
+          {site.einsatzorte.length > 0 && (
+            <div>
+              <dt>Unterwegs in</dt>
+              <dd>{site.einsatzorte.join(', ')}</dd>
+            </div>
+          )}
           <div>
             <dt>Erreichbar</dt>
             <dd>{site.erreichbarkeit}</dd>
