@@ -29,7 +29,8 @@ jobs:
       - run: npm run build
         env:
           SITE: https://tamer992.github.io
-          BASE: /gruen-und-rein/
+          # Pfad = Name des Repos, passt sich beim Umbenennen von selbst an (09.10.2026: gruen-und-rein -> herz-und-glanz)
+          BASE: /${{ github.event.repository.name }}/
           PUBLIC_VORSCHAU: '1'
       - uses: actions/upload-pages-artifact@v3
         with:
