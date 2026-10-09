@@ -1,0 +1,137 @@
+---
+// Zwei Inhaber, zwei Nummern, beide mit WhatsApp (Tamer, 09.10.2026): gleichwertig nebeneinander statt
+// Haupt- und „Zweite Nummer“. Je Person Vorname, Nummer (zum Antippen) und ein ruhiger WhatsApp-Link.
+// „hell“ für dunkle Flächen (Fuß), „gross“ für größere Nummern (Telefonband auf der Kontaktseite). Ohne zweite Nummer steht nur die erste Person da.
+import { site } from '../site.config';
+import Symbol from './Symbol.astro';
+interface Props {
+  hell?: boolean;
+  gross?: boolean;
+}
+const { hell = false, gross = false } = Astro.props;
+const personen = [
+  { name: site.telefonName, nummer: site.telefon, tel: site.telefonLink, wa: site.whatsappLink },
+  ...(site.telefon2
+    ? [{ name: site.telefon2Name, nummer: site.telefon2, tel: site.telefon2Link, wa: site.whatsapp2Link }]
+    : []),
+];
+---
+<div class="partner-rahmen">
+<ul class:list={['partner', { 'partner--hell': hell, 'partner--gross': gross }]} aria-label="Ihre Ansprechpartner">
+  {personen.map((p) => (
+    <li class="partner__person">
+      <p class="partner__name">{p.name}</p>
+      <a class="partner__nummer nummer" href={`tel:${p.tel}`} aria-label={`${p.name} anrufen: ${p.nummer}`}>{p.nummer}</a>
+      {p.wa && (
+        <a class="partner__wa" href={`https://wa.me/${p.wa}`} aria-label={`${p.name} per WhatsApp schreiben`}>
+          <Symbol name="whatsapp" /> WhatsApp
+        </a>
+      )}
+    </li>
+  ))}
+</ul>
+</div>
+
+<style>
+  /* Nach verfügbarem Platz (Container), nicht nach Bildschirmbreite: schmal untereinander mit Linie oben,
+     ab 26 rem Platz nebeneinander mit Linie links. Der Fuß ist am Computer nur eine schmale Spalte. */
+  .partner-rahmen {
+    container-type: inline-size;
+  }
+  .partner {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--a-3);
+  }
+  .partner__person {
+    display: grid;
+    justify-items: start;
+    align-content: start;
+    gap: 0.15rem;
+  }
+  .partner__person + .partner__person {
+    padding-top: var(--a-3);
+    border-top: 1px solid var(--linie);
+  }
+  @container (min-width: 26rem) {
+    .partner {
+      grid-template-columns: repeat(2, minmax(0, max-content));
+      gap: 0;
+    }
+    .partner__person {
+      padding-right: var(--a-4);
+    }
+    .partner__person + .partner__person {
+      padding: 0 0 0 var(--a-4);
+      border-top: 0;
+      border-left: 1px solid var(--linie);
+    }
+  }
+  @container (min-width: 34rem) {
+    .partner--gross .partner__person {
+      padding-right: var(--a-5);
+    }
+    .partner--gross .partner__person + .partner__person {
+      padding-left: var(--a-5);
+    }
+  }
+  .partner__name {
+    margin: 0;
+    font-size: var(--text-klein);
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--messing-text);
+  }
+  .partner__nummer {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: clamp(1.5rem, 1.25rem + 0.6vw, 1.875rem);
+    color: var(--tinte);
+    text-decoration: none;
+  }
+  .partner__nummer:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+  .partner--gross .partner__nummer {
+    font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+  }
+  .partner__wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    color: var(--waldgruen);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+  }
+  .partner__wa :global(.symbol) {
+    width: 1.2em;
+    height: 1.2em;
+  }
+
+  /* Auf Tanne (Fuß, Telefonband) */
+  .partner--hell .partner__person + .partner__person {
+    border-color: var(--linie-auf-tanne);
+  }
+  .partner--hell .partner__name {
+    color: var(--messing-hell);
+  }
+  .partner--hell .partner__nummer {
+    color: var(--hell);
+  }
+  .partner--hell .partner__wa {
+    color: var(--auf-tanne);
+    text-decoration-color: rgb(211 219 210 / 0.35);
+  }
+  .partner--hell .partner__wa:hover {
+    color: var(--hell);
+    text-decoration-color: var(--messing-hell);
+  }
+</style>

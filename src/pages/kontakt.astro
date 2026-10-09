@@ -5,6 +5,7 @@ import Basis from '../layouts/Basis.astro';
 import Seitenkopf from '../components/Seitenkopf.astro';
 import Dach from '../components/Dach.astro';
 import Symbol from '../components/Symbol.astro';
+import Ansprechpartner from '../components/Ansprechpartner.astro';
 import { site } from '../site.config';
 import fotoKopf from '../bilder/kontakt-telefon.jpg';
 
@@ -29,28 +30,22 @@ const vorbereitung = [
     ausschnitt="mitte"
   />
 
-  {/* Alle Wege: Telefon groß, daneben WhatsApp, E-Mail und Adresse */}
+  {/* Alle Wege: Telefon und WhatsApp groß (beide Inhaber), darunter E-Mail und Adresse */}
   <section class="bereich wege flaeche-sand" aria-labelledby="wege-titel">
     <div class="behaelter">
       <div class="wege__kopf" data-einblenden>
-        <p class="etikett">So erreichen Sie uns</p>
-        <h2 id="wege-titel">Vier Wege zu uns.</h2>
+        <p class="etikett">Kontakt</p>
+        <h2 id="wege-titel">So erreichen Sie uns.</h2>
       </div>
       <div class="wege__raster">
-        <a class="weg weg--telefon flaeche-tanne" href={`tel:${site.telefonLink}`} data-einblenden>
+        {/* Telefon und WhatsApp: beide Inhaber gleichwertig (Tamer, 09.10.2026). Vorher eine Hauptnummer,
+            eine eigene WhatsApp-Karte und darunter „Zweite Nummer“. */}
+        <div class="weg weg--telefon flaeche-tanne" data-einblenden>
           <span class="weg__zeichen"><Symbol name="telefon" /></span>
-          <span class="weg__art">Telefon</span>
-          <span class="weg__wert nummer">{site.telefon}</span>
+          <span class="weg__art">Telefon und WhatsApp</span>
+          <div class="weg__wert"><Ansprechpartner hell gross /></div>
           <span class="weg__info"><Symbol name="uhr" /> {site.erreichbarkeit}</span>
-          <span class="weg__los nur-finger" aria-hidden="true">Anrufen <Symbol name="pfeil" /></span>
-        </a>
-        <a class="weg weg--whatsapp" href={`https://wa.me/${site.whatsappLink}`} data-einblenden="2">
-          <span class="weg__zeichen"><Symbol name="whatsapp" /></span>
-          <span class="weg__art">WhatsApp</span>
-          <span class="weg__wert nur-finger">Nachricht schreiben</span>
-          <span class="weg__wert nummer nur-maus">{site.whatsapp}</span>
-          <span class="weg__info">Wir melden uns schnell zurück.</span>
-        </a>
+        </div>
         <a class="weg" href={`mailto:${site.email}`} data-einblenden="2">
           <span class="weg__zeichen"><Symbol name="brief" /></span>
           <span class="weg__art">E-Mail</span>
@@ -67,12 +62,6 @@ const vorbereitung = [
           </address>
         </div>
       </div>
-      {site.telefon2 && (
-        <p class="wege__zweite">
-          {site.telefon2Name} direkt: <a href={`tel:${site.telefon2Link}`}><span class="nummer">{site.telefon2}</span></a>
-            {site.whatsapp2Link && <> · <a class="am-stueck" href={`https://wa.me/${site.whatsapp2Link}`}>auch per WhatsApp</a></>}
-        </p>
-      )}
     </div>
   </section>
 
@@ -196,14 +185,20 @@ const vorbereitung = [
   .weg--telefon .weg__info {
     color: var(--auf-tanne);
   }
+  /* Ansprechpartner im Band: normale Textschrift, die Nummern setzt die Komponente selbst */
+  .weg--telefon .weg__wert {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    margin-block: var(--a-1) var(--a-2);
+    min-width: 0;
+  }
   .weg--telefon .weg__info :global(.symbol) {
     color: var(--messing-hell);
   }
   .weg--telefon:focus-visible {
     outline-color: var(--tinte);
-  }
-  .wege__zweite {
-    margin: var(--a-4) 0 0;
   }
   @media (min-width: 48em) {
     .wege__raster {
@@ -213,44 +208,15 @@ const vorbereitung = [
       grid-column: 1 / -1;
     }
   }
-  /* Pfeil-Hinweis in der Telefonkarte: sieht aus wie ein Knopf, die ganze Karte ist der Link */
-  .weg__los {
-    display: inline-flex;
-    align-items: center;
-    justify-self: start;
-    gap: 0.5rem;
-    min-height: 3.25rem;
-    margin-top: var(--a-3);
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--r-knopf);
-    background: var(--papier);
-    color: var(--tanne);
-    font-weight: 700;
-    transition: background-color var(--uebergang);
-  }
-  .weg__los :global(.symbol) {
-    width: 1.05em;
-    height: 1.05em;
-    transition: transform var(--uebergang);
-  }
-  a.weg--telefon:hover .weg__los {
-    background: var(--sand);
-  }
-  a.weg--telefon:hover .weg__los :global(.symbol) {
-    transform: translateX(4px);
-  }
   @media (min-width: 64em) {
-    .wege__raster {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
     /* Telefon als breites Band: Nummer links, Zeiten und Knopf rechts */
     .weg--telefon {
       grid-column: 1 / -1;
-      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-columns: auto minmax(0, 1fr);
       grid-template-areas:
-        'zeichen art los'
-        'zeichen wert los'
-        'zeichen info los';
+        'zeichen art'
+        'zeichen wert'
+        'zeichen info';
       column-gap: var(--a-4);
       align-items: center;
       padding: var(--a-5) var(--a-6);
@@ -268,13 +234,6 @@ const vorbereitung = [
     .weg--telefon .weg__art { grid-area: art; }
     .weg--telefon .weg__wert { grid-area: wert; }
     .weg--telefon .weg__info { grid-area: info; }
-    .weg--telefon .weg__los {
-      grid-area: los;
-      margin: 0;
-      font-size: var(--text-gross);
-      min-height: 4rem;
-      padding-inline: 2rem;
-    }
   }
 
   /* Vorbereitung und Einsatzgebiet */
@@ -351,13 +310,6 @@ const vorbereitung = [
     }
     .gebiet {
       grid-column: 9 / -1;
-    }
-  }
-  /* Am Computer sind Telefon- und WhatsApp-Karte reine Info (Nummer, QR-Code), kein Klickziel */
-  @media (hover: hover) and (pointer: fine) {
-    .weg--telefon,
-    .weg--whatsapp {
-      pointer-events: none;
     }
   }
 </style>

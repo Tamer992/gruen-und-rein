@@ -25,6 +25,8 @@ export const site = {
   telefon: '0171 7057151',
   // Ziffern mit +49, ohne 0 vorne
   telefonLink: '+491717057151',
+  // Vorname, der über der Hauptnummer steht (Ansprechpartner.astro)
+  telefonName: 'Hussain',
   // Zweite Nummer: Alireza Moradi. Leer lassen, wenn es keine gibt.
   telefon2: '0171 6958218',
   telefon2Link: '+491716958218',

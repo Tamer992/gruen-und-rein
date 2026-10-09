@@ -2,8 +2,7 @@
 import { p } from '../pfad';
 import { site, leistungen, leistungsPfad } from '../site.config';
 import Symbol from './Symbol.astro';
-import QrCode from './QrCode.astro';
-import NummerText from './NummerText.astro';
+import Ansprechpartner from './Ansprechpartner.astro';
 import Dach from './Dach.astro';
 import logo from './logo-mass.json';
 
@@ -20,33 +19,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
         <h2 class="fuss__titel">Rufen Sie uns an. Wir nehmen uns Zeit für Ihre Fragen.</h2>
       </div>
       <div class="fuss__wege">
-        <NummerText hell whatsapp zeit={false} />
-        <div class="fuss__handeln">
-          <a class="knopf knopf--hell nur-finger neben-anrufleiste" href={`tel:${site.telefonLink}`}>
-            <Symbol name="telefon" kreis />
-            <span class="nummer">{site.telefon}</span>
-          </a>
-          <a class="knopf knopf--rahmen nur-finger neben-anrufleiste" href={`https://wa.me/${site.whatsappLink}`}>
-            <Symbol name="whatsapp" kreis />
-            WhatsApp schreiben
-          </a>
-          <div class="fuss__nummern nur-maus">
-            <figure class="fuss__code">
-              <QrCode inhalt={`tel:${site.telefonLink}`} beschriftung={`QR-Code: ${site.telefon} anrufen`} />
-              <figcaption>Scannen und anrufen</figcaption>
-            </figure>
-            <p class="fuss__liste">
-              <span class="fuss__nummer"><Symbol name="telefon" /> <span class="nummer">{site.telefon}</span></span>
-              <span class="fuss__nummer"><Symbol name="whatsapp" /> WhatsApp: <span class="nummer">{site.whatsapp}</span></span>
-            </p>
-          </div>
-        </div>
-        {site.telefon2 && (
-          <p class="fuss__zweite">
-            {site.telefon2Name} direkt: <a href={`tel:${site.telefon2Link}`}><span class="nummer">{site.telefon2}</span></a>
-            {site.whatsapp2Link && <> · <a class="am-stueck" href={`https://wa.me/${site.whatsapp2Link}`}>auch per WhatsApp</a></>}
-          </p>
-        )}
+        <Ansprechpartner hell />
         <p class="fuss__zeiten">
           <Symbol name="uhr" />
           <strong class="fuss__zeit">{site.erreichbarkeit}</strong>
@@ -125,52 +98,21 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
     max-width: 17ch;
     margin: 0;
   }
-  .fuss__handeln {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--a-2);
-    margin-bottom: var(--a-3);
-  }
-  .fuss__handeln .knopf {
-    font-size: var(--text-gross);
-    min-height: 4rem;
-  }
-  /* Am Computer: QR-Code zum Anrufen, daneben Nummern als Text statt Knöpfe */
-  .fuss__nummern {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--a-3);
-  }
-  .fuss__code {
-    display: grid;
-    justify-items: center;
-    gap: 0.4rem;
-    margin: 0;
-    font-size: var(--text-klein);
-    color: var(--auf-tanne);
-  }
-  .fuss__code :global(.qr) {
-    width: 5.5rem;
-    padding: 0.45rem;
-    border-radius: 0.6rem;
-    background: var(--papier);
-  }
+
+
+
+
+
   .fuss__liste {
     display: grid;
     gap: 0.35rem;
     margin: 0;
   }
-  .fuss__nummer {
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.6rem;
-    color: var(--hell);
-  }
-  .fuss__nummer:first-child .nummer {
-    font-size: clamp(1.6rem, 1.3rem + 0.9vw, 2.1rem);
-    color: var(--messing-hell);
+
+
+  /* Zwei Ansprechpartner (Ansprechpartner.astro), darunter Erreichbarkeit und E-Mail */
+  .fuss__wege > :global(.partner-rahmen) {
+    margin-bottom: var(--a-4);
   }
   .fuss__zeiten.fuss__mail {
     margin-top: var(--a-1);
