@@ -1,0 +1,118 @@
+---
+// Knopf mit kleiner Auswahl „Hussain oder Alireza“ (Tamer, 09.10.2026: zwei Inhaber, zwei Nummern, beide mit WhatsApp).
+// Für Stellen, an denen nur ein Knopf Platz hat: Anrufleiste am Handy, Anrufknopf im Kopf am Tablet.
+// Funktioniert ohne JavaScript (details/summary); seite.js schließt sie beim Tippen daneben, mit Esc
+// und wenn eine andere aufgeht. „art“: anruf oder whatsapp. „richtung“: oben (Anrufleiste) oder unten (Kopf).
+// „klasse“ gestaltet den Knopf selbst. Ohne zweite Nummer ist es ein ganz normaler Link.
+import { site } from '../site.config';
+interface Props {
+  art?: 'anruf' | 'whatsapp';
+  richtung?: 'oben' | 'unten';
+  klasse?: string;
+  ausrichtung?: 'links' | 'rechts';
+}
+const { art = 'anruf', richtung = 'oben', klasse, ausrichtung = 'links' } = Astro.props;
+const personen = [
+  { name: site.telefonName, nummer: site.telefon, tel: site.telefonLink, wa: site.whatsappLink },
+  ...(site.telefon2
+    ? [{ name: site.telefon2Name, nummer: site.telefon2, tel: site.telefon2Link, wa: site.whatsapp2Link }]
+    : []),
+].filter((p) => (art === 'whatsapp' ? p.wa : p.tel));
+const ziel = (p: (typeof personen)[number]) => (art === 'whatsapp' ? `https://wa.me/${p.wa}` : `tel:${p.tel}`);
+const frage = art === 'whatsapp' ? 'Wem möchten Sie schreiben?' : 'Wen möchten Sie anrufen?';
+---
+{personen.length > 1 ? (
+  <details class:list={['anrufwahl', `anrufwahl--${richtung}`, `anrufwahl--${ausrichtung}`]}>
+    <summary class={klasse}><slot /></summary>
+    <div class="anrufwahl__feld">
+      <p class="anrufwahl__frage">{frage}</p>
+      <ul class="anrufwahl__liste">
+        {personen.map((p) => (
+          <li>
+            <a class="anrufwahl__weg" href={ziel(p)}>
+              <span class="anrufwahl__name">{p.name}</span>
+              <span class="anrufwahl__nummer nummer">{p.nummer}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </details>
+) : (
+  <a class={klasse} href={ziel(personen[0])}><slot /></a>
+)}
+
+<style>
+  .anrufwahl {
+    position: relative;
+  }
+  .anrufwahl > summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+  }
+  .anrufwahl > summary::-webkit-details-marker {
+    display: none;
+  }
+  .anrufwahl__feld {
+    position: absolute;
+    z-index: 60;
+    width: max(100%, 16.5rem);
+    padding: var(--a-2);
+    border-radius: var(--r-gross);
+    background: var(--papier);
+    box-shadow: inset 0 0 0 1px var(--linie), var(--schatten-4);
+  }
+  .anrufwahl--oben .anrufwahl__feld {
+    bottom: calc(100% + 0.6rem);
+  }
+  .anrufwahl--unten .anrufwahl__feld {
+    top: calc(100% + 0.6rem);
+  }
+  .anrufwahl--links .anrufwahl__feld {
+    left: 0;
+  }
+  .anrufwahl--rechts .anrufwahl__feld {
+    right: 0;
+  }
+  .anrufwahl__frage {
+    margin: 0.25rem 0.5rem 0.5rem;
+    font-size: var(--text-klein);
+    font-weight: 700;
+    color: var(--tinte);
+  }
+  .anrufwahl__liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+  .anrufwahl__weg {
+    display: grid;
+    gap: 0.05rem;
+    min-height: 3.5rem;
+    align-content: center;
+    padding: 0.55rem 0.85rem;
+    border-radius: 0.875rem;
+    background: var(--flaeche);
+    color: var(--tinte);
+    text-decoration: none;
+    box-shadow: inset 0 0 0 1px var(--linie-zart);
+  }
+  .anrufwahl__weg:hover,
+  .anrufwahl__weg:focus-visible {
+    background: var(--salbei);
+  }
+  .anrufwahl__name {
+    font-size: var(--text-klein);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--messing-text);
+  }
+  .anrufwahl__nummer {
+    font-size: 1.375rem;
+    color: var(--waldgruen);
+  }
+</style>

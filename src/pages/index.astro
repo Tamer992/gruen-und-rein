@@ -4,10 +4,8 @@ import Basis from '../layouts/Basis.astro';
 import Bild from '../components/Bild.astro';
 import Symbol from '../components/Symbol.astro';
 import MitPfeil from '../components/MitPfeil.astro';
-import Anrufhinweis from '../components/Anrufhinweis.astro';
-import AnrufText from '../components/AnrufText.astro';
+import Ansprechpartner from '../components/Ansprechpartner.astro';
 import Kontaktwege from '../components/Kontaktwege.astro';
-import NummerText from '../components/NummerText.astro';
 import Dach from '../components/Dach.astro';
 import Siegel from '../components/Siegel.astro';
 import Bewertungen from '../components/Bewertungen.astro';
@@ -105,7 +103,6 @@ const groessen = [
         <div class="einstieg__handeln">
           <Kontaktwege />
         </div>
-        <NummerText />
       </div>
 
       <div class="einstieg__bildbereich">
@@ -254,11 +251,7 @@ const groessen = [
               Wie die Abrechnung bei Ihnen am einfachsten läuft, besprechen wir gern persönlich mit Ihnen.
               Was über den Entlastungsbetrag hinausgeht, klären wir immer vorher.
             </p>
-            <a class="knopf knopf--hell nur-finger neben-anrufleiste" href={`tel:${site.telefonLink}`}>
-              <Symbol name="telefon" kreis />
-              <AnrufText />
-            </a>
-            <Anrufhinweis hell qr />
+            <Ansprechpartner hell />
           </div>
           <div class="kasse__liste" data-einblenden="2">
             <p class="kasse__ueber">Mit Pflegegrad abrechenbar</p>
@@ -401,12 +394,6 @@ const groessen = [
     flex-wrap: wrap;
     gap: var(--a-2);
     margin-top: var(--a-5);
-  }
-  /* Auf dem Handy klebt die Anrufleiste mit denselben zwei Knöpfen unten, hier also doppelt (Tamer, 04.10.2026) */
-  @media (max-width: 47.99em) and (not ((hover: hover) and (pointer: fine))) {
-    .einstieg__handeln {
-      display: none;
-    }
   }
   /* Sehr breite Fenster (oder herausgezoomt): Foto nicht höher als 36rem, es wird dann breiter statt riesig */
   @media (min-width: 48em) {
@@ -570,9 +557,6 @@ const groessen = [
     }
   }
   @media (min-width: 48em) and (max-width: 63.99em) {
-    .einstieg__handeln .knopf {
-      flex: 1 1 100%;
-    }
     /* Seit dem quadratischen Foto liegen Sandfläche und Karte neben den Knöpfen:
        nicht nach links in die Textspalte ragen lassen (Handy in Desktop-Ansicht, Tamer 04.10.2026) */
     .einstieg__bildbereich::before {

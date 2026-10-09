@@ -1,106 +1,30 @@
 ---
 // Kontaktwege im Einstieg der Startseite und im Kopf der Unterseiten.
-// Mit Finger (Handy, Tablet): zwei Knöpfe zum Anrufen und für WhatsApp.
-// Am Computer mit Maus: die Nummer groß zum Abschreiben, daneben ein QR-Code zum Anrufen mit dem Handy,
-// weil man am Computer meist nicht telefonieren kann. Nur ein Code: zwei nebeneinander funktionierten nicht (Tamer, 04.10.2026).
+// Seit 09.10.2026 zwei Inhaber mit eigener Nummer und WhatsApp (Tamer): beide gleichwertig (Ansprechpartner.astro),
+// am Computer je ein QR-Code zum Anrufen, mit Finger Nummer und WhatsApp direkt antippen.
+// Vorher: ein Knopf „Jetzt anrufen“, ein Knopf „WhatsApp schreiben“ und ein QR-Code für eine Nummer.
 import { site } from '../site.config';
-import Symbol from './Symbol.astro';
-import QrCode from './QrCode.astro';
+import Ansprechpartner from './Ansprechpartner.astro';
 ---
 <div class="kontaktwege">
-  <div class="kontaktwege__finger">
-    <a class="knopf knopf--haupt" href={`tel:${site.telefonLink}`}>
-      <Symbol name="telefon" kreis />
-      Jetzt anrufen
-    </a>
-    <a class="knopf knopf--neben" href={`https://wa.me/${site.whatsappLink}`}>
-      <Symbol name="whatsapp" kreis />
-      WhatsApp schreiben
-    </a>
-  </div>
-
-  <div class="kontaktwege__maus">
-    <div class="kontaktwege__telefon">
-      <span class="kontaktwege__art">Rufen Sie uns an</span>
-      <a class="kontaktwege__nummer nummer" href={`tel:${site.telefonLink}`}>{site.telefon}</a>
-      <span class="kontaktwege__zeit">{site.erreichbarkeit}</span>
-    </div>
-    <figure class="kontaktwege__code">
-      <QrCode inhalt={`tel:${site.telefonLink}`} beschriftung={`QR-Code: ${site.telefon} anrufen`} />
-      <figcaption>Mit dem Handy scannen und anrufen</figcaption>
-    </figure>
-  </div>
+  <p class="kontaktwege__art">Rufen Sie uns an oder schreiben Sie uns</p>
+  <Ansprechpartner />
+  <p class="kontaktwege__zeit">{site.erreichbarkeit}</p>
 </div>
 
 <style>
-  .kontaktwege__finger {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--a-2);
-  }
-  .kontaktwege__maus {
-    display: none;
-  }
-  @media (min-width: 48em) and (max-width: 63.99em) {
-    .kontaktwege__finger .knopf {
-      flex: 1 1 100%;
-    }
-  }
-
-  /* Computer und Laptop: Maus oder Touchpad als Zeiger */
-  @media (hover: hover) and (pointer: fine) {
-    .kontaktwege__finger {
-      display: none;
-    }
-    .kontaktwege__maus {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--a-3) var(--a-5);
-    }
-  }
-
-  .kontaktwege__telefon {
+  .kontaktwege {
     display: grid;
-    gap: 0.15rem;
+    gap: var(--a-2);
+    width: 100%;
   }
   .kontaktwege__art {
+    margin: 0;
     font-weight: 700;
     color: var(--tinte);
   }
-  .kontaktwege__nummer {
-    font-size: clamp(1.9rem, 1.4rem + 1.2vw, 2.5rem);
-    line-height: 1.15;
-    color: var(--waldgruen);
-    text-decoration: none;
-  }
-  .kontaktwege__nummer:hover {
-    color: var(--waldgruen-tief);
-  }
   .kontaktwege__zeit {
-    color: var(--leise);
-  }
-
-  .kontaktwege__code {
-    display: grid;
-    grid-template-columns: 11rem;
-    justify-items: center;
-    gap: 0.5rem;
     margin: 0;
-    padding-left: var(--a-4);
-    border-left: 1px solid var(--linie);
-  }
-  .kontaktwege__code :global(.qr) {
-    width: 6.5rem;
-    padding: 0.5rem;
-    border-radius: 0.6rem;
-    background: var(--papier);
-    box-shadow: inset 0 0 0 1px var(--linie);
-  }
-  .kontaktwege__code figcaption {
-    font-size: var(--text-klein);
-    line-height: 1.35;
-    text-align: center;
     color: var(--leise);
   }
 </style>

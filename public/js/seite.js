@@ -181,3 +181,32 @@
   window.addEventListener('resize', plane);
   document.documentElement.classList.add('js-parallaxe');
 })();
+
+// Auswahl „Hussain oder Alireza“ (Anrufwahl.astro, details/summary): immer nur eine offen,
+// schließt beim Tippen daneben und mit Esc. Ohne JavaScript klappt sie trotzdem auf und zu.
+(function () {
+  var wahlen = document.querySelectorAll('details.anrufwahl');
+  if (!wahlen.length) return;
+  function schliesseAlle(ausser) {
+    wahlen.forEach(function (w) {
+      if (w !== ausser) w.open = false;
+    });
+  }
+  wahlen.forEach(function (w) {
+    w.addEventListener('toggle', function () {
+      if (w.open) schliesseAlle(w);
+    });
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('details.anrufwahl')) schliesseAlle(null);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    wahlen.forEach(function (w) {
+      if (w.open) {
+        w.open = false;
+        w.querySelector('summary').focus();
+      }
+    });
+  });
+})();

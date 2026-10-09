@@ -2,7 +2,7 @@
 import { p } from '../pfad';
 import { site, navigation } from '../site.config';
 import Symbol from './Symbol.astro';
-import AnrufText from './AnrufText.astro';
+import Anrufwahl from './Anrufwahl.astro';
 import logo from './logo-mass.json';
 
 const aktuell = Astro.url.pathname;
@@ -54,10 +54,13 @@ const aktuell = Astro.url.pathname;
         </ul>
       </nav>
 
-      <a class="knopf knopf--haupt kopf__anruf" href={`tel:${site.telefonLink}`}>
-        <Symbol name="telefon" kreis />
-        <AnrufText />
-      </a>
+      {/* Tablet mit Finger: Anrufknopf mit Auswahl Hussain oder Alireza */}
+      <div class="kopf__anruf">
+        <Anrufwahl art="anruf" richtung="unten" ausrichtung="rechts" klasse="knopf knopf--haupt kopf__anrufknopf">
+          <Symbol name="telefon" kreis />
+          Jetzt anrufen
+        </Anrufwahl>
+      </div>
 
       <button class="kopf__menue" type="button" aria-expanded="false" aria-controls="hauptnavigation">
         <span class="kopf__menue-striche" aria-hidden="true"></span>
@@ -309,6 +312,8 @@ const aktuell = Astro.url.pathname;
       display: inline-flex;
       grid-column: 2;
       grid-row: 1;
+    }
+    .kopf__anruf :global(.kopf__anrufknopf) {
       min-height: 3.25rem;
       font-size: 1.0625rem;
     }

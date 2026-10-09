@@ -11,8 +11,7 @@ import Bild from './Bild.astro';
 import Dach from './Dach.astro';
 import Symbol from './Symbol.astro';
 import MitPfeil from './MitPfeil.astro';
-import Anrufhinweis from './Anrufhinweis.astro';
-import AnrufText from './AnrufText.astro';
+import Ansprechpartner from './Ansprechpartner.astro';
 import { site, leistungen } from '../site.config';
 import { leistungsbilder } from '../leistungsbilder';
 
@@ -137,7 +136,7 @@ const dienst = {
           </>
         )}
       </div>
-      <div class="band__handeln" data-einblenden="2">
+      <div class:list={['band__handeln', { 'band__handeln--partner': !kasse }]} data-einblenden="2">
         {kasse ? (
           <a class="knopf knopf--hell" href={p('/pflegekasse/')}>
             So funktioniert es
@@ -145,11 +144,7 @@ const dienst = {
           </a>
         ) : (
           <>
-            <a class="knopf knopf--hell nur-finger neben-anrufleiste" href={`tel:${site.telefonLink}`}>
-              <Symbol name="telefon" kreis />
-              <AnrufText />
-            </a>
-            <Anrufhinweis hell qr />
+            <Ansprechpartner hell />
           </>
         )}
       </div>
@@ -340,6 +335,17 @@ const dienst = {
     .band__zeichen {
       right: 22%;
       width: 20rem;
+    }
+    /* Ohne Pflegekasse stehen hier beide Ansprechpartner mit QR-Codes: mehr Platz, Text schmaler */
+    .band__raster:has(.band__handeln--partner) .band__text {
+      grid-column: 1 / span 6;
+    }
+    .band__handeln--partner {
+      grid-column: 8 / -1;
+      justify-self: stretch;
+    }
+    .band__raster:has(.band__handeln--partner) .band__zeichen {
+      display: none;
     }
   }
 

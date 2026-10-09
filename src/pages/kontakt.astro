@@ -17,8 +17,8 @@ const vorbereitung = [
 ];
 ---
 <Basis
-  titel={`Kontakt: ${site.telefon} | ${site.name} in ${site.ort}`}
-  beschreibung={`So erreichen Sie ${site.name}: Telefon ${site.telefon}, WhatsApp und E-Mail. ${site.erreichbarkeit}. ${site.adresse.strasse}, ${site.adresse.plz} ${site.adresse.ort}.`}
+  titel={`Kontakt | ${site.name} in ${site.ort}`}
+  beschreibung={`So erreichen Sie ${site.name}: ${site.telefonName} ${site.telefon}${site.telefon2 ? `, ${site.telefon2Name} ${site.telefon2}` : ''}, auch per WhatsApp, und E-Mail. ${site.erreichbarkeit}. ${site.adresse.strasse}, ${site.adresse.plz} ${site.adresse.ort}.`}
 >
   <Seitenkopf
     wege={[{ titel: 'Kontakt', pfad: '/kontakt/' }]}

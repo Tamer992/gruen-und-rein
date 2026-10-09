@@ -11,8 +11,7 @@ import Bild from '../components/Bild.astro';
 import Dach from '../components/Dach.astro';
 import Symbol from '../components/Symbol.astro';
 import MitPfeil from '../components/MitPfeil.astro';
-import Anrufhinweis from '../components/Anrufhinweis.astro';
-import AnrufText from '../components/AnrufText.astro';
+import Ansprechpartner from '../components/Ansprechpartner.astro';
 import { site, leistungen } from '../site.config';
 import { leistungsbilder } from '../leistungsbilder';
 
@@ -117,15 +116,7 @@ const daten = {
             Wie die Abrechnung bei Ihnen läuft, besprechen wir gern persönlich mit Ihnen.
           </p>
           <div class="kassenkopf__handeln">
-            <a class="knopf knopf--hell nur-finger neben-anrufleiste" href={`tel:${site.telefonLink}`}>
-              <Symbol name="telefon" kreis />
-              <AnrufText />
-            </a>
-            <a class="knopf knopf--rahmen nur-finger neben-anrufleiste" href={`https://wa.me/${site.whatsappLink}`}>
-              <Symbol name="whatsapp" kreis />
-              WhatsApp schreiben
-            </a>
-            <Anrufhinweis hell qr />
+            <Ansprechpartner hell />
           </div>
         </div>
       </div>

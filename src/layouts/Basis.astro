@@ -46,6 +46,11 @@ const betrieb = {
   description: 'Alltagsbegleitung, Hauswirtschaft, Reinigung, Gartenpflege und Trauerbegleitung für ältere Menschen und ihre Familien.',
   url: `${site.domain}/`,
   telephone: site.telefonLink,
+  // Beide Inhaber mit eigener Nummer (09.10.2026)
+  contactPoint: [
+    { '@type': 'ContactPoint', name: site.telefonName, telephone: site.telefonLink, contactType: 'customer service' },
+    ...(site.telefon2 ? [{ '@type': 'ContactPoint', name: site.telefon2Name, telephone: site.telefon2Link, contactType: 'customer service' }] : []),
+  ],
   email: site.email,
   image: vorschaubild,
   logo: new URL('/icon-512.png', site.domain).href,

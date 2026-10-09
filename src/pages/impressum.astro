@@ -20,7 +20,8 @@ import { site } from '../site.config';
 
   <h2>Kontakt</h2>
   <p>
-    Telefon: <a href={`tel:${site.telefonLink}`}><span class="nummer">{site.telefon}</span></a><br />
+    Telefon {site.telefonName}: <a href={`tel:${site.telefonLink}`}><span class="nummer">{site.telefon}</span></a><br />
+    {site.telefon2 && <>Telefon {site.telefon2Name}: <a href={`tel:${site.telefon2Link}`}><span class="nummer">{site.telefon2}</span></a><br /></>}
     E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
   </p>
 

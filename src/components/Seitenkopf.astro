@@ -7,7 +7,6 @@ import { site } from '../site.config';
 import Bild from './Bild.astro';
 import Symbol from './Symbol.astro';
 import Kontaktwege from './Kontaktwege.astro';
-import NummerText from './NummerText.astro';
 import Krumen from './Krumen.astro';
 
 interface Props {
@@ -32,7 +31,6 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
       <div class="seitenkopf__handeln">
         <Kontaktwege />
       </div>
-      <NummerText />
     </div>
     <div class="seitenkopf__bildbereich">
       <Bild
@@ -77,12 +75,6 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
     flex-wrap: wrap;
     gap: var(--a-2);
     margin-top: var(--a-5);
-  }
-  /* Auf dem Handy klebt die Anrufleiste mit denselben zwei Knöpfen unten, hier also doppelt (Tamer, 04.10.2026) */
-  @media (max-width: 47.99em) and (not ((hover: hover) and (pointer: fine))) {
-    .seitenkopf__handeln {
-      display: none;
-    }
   }
   /* Sehr breite Fenster (oder herausgezoomt): Foto nicht höher als 36rem, es wird dann breiter statt riesig */
   @media (min-width: 48em) {
@@ -138,9 +130,6 @@ const { wege, etikett, ueberschrift, einleitung, bild, alt, ausschnitt = 'mitte'
     }
   }
   @media (min-width: 48em) and (max-width: 63.99em) {
-    .seitenkopf__handeln .knopf {
-      flex: 1 1 100%;
-    }
     /* Sandfläche nicht in die Textspalte und an die Knöpfe ragen lassen */
     .seitenkopf__bildbereich::before {
       left: 0;
