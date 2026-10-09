@@ -43,7 +43,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
         </div>
         {site.telefon2 && (
           <p class="fuss__zweite">
-            Zweite Nummer: <a href={`tel:${site.telefon2Link}`}><span class="nummer">{site.telefon2}</span></a>
+            {site.telefon2Name} direkt: <a href={`tel:${site.telefon2Link}`}><span class="nummer">{site.telefon2}</span></a>
           </p>
         )}
         <p class="fuss__zeiten">
@@ -61,7 +61,7 @@ const kontakt = site.unterseiten ? '/kontakt/' : '/#kontakt';
 
     <div class="fuss__raster">
       <div class="fuss__betrieb">
-        <img src={p('/logo-hell.svg') + '?v=6'} alt={site.name} width={logo.breite} height={logo.hoehe} loading="lazy" />
+        <img src={p('/logo-hell.svg') + '?v=7'} alt={site.name} width={logo.breite} height={logo.hoehe} loading="lazy" />
         <address>
           {site.adresse.strasse}<br />
           {site.adresse.plz} {site.adresse.ort}

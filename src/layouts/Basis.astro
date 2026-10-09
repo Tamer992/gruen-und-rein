@@ -49,7 +49,7 @@ const betrieb = {
   email: site.email,
   image: vorschaubild,
   logo: new URL('/icon-512.png', site.domain).href,
-  founder: { '@type': 'Person', name: site.inhaberin },
+  founder: site.inhaberVoll.split(' und ').map((name) => ({ '@type': 'Person', name })),
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.adresse.strasse,

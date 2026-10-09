@@ -7,31 +7,35 @@
 // Übersicht aller Stellen: npm run platzhalter
 
 export const site = {
-  name: 'Grün & Rein',
-  // [PLATZHALTER: echte Domain] Volle Adresse, ohne Schrägstrich am Ende
-  domain: 'https://platzhalter-domain.de',
+  // Neuer Name seit 09.10.2026 (vorher „Herz & Glanz“)
+  name: 'Herz & Glanz Service',
+  // Domain aus der E-Mail-Adresse abgeleitet (09.10.2026). [PLATZHALTER: Domain bestätigen] Ist sie schon registriert?
+  domain: 'https://herzglanz-service.de',
 
-  // [PLATZHALTER: Schreibweise der Vornamen und Nachnamen bestätigen]
+  // Kurz, so sprechen die Inhaber ihre Kundschaft an
   inhaberin: 'Hussain und Ali',
+  // Volle Namen für Impressum, Datenschutz und Suchmaschinen (von Tamer am 09.10.2026)
+  inhaberVoll: 'Mohammad Hussain Zafari und Alireza Moradi',
   inhaberinVorname: 'Hussain und Ali',
   // „Inhaberin“, „Inhaber“ oder „Inhaber“ (Mehrzahl)
   inhaberTitel: 'Inhaber',
   mehrereInhaber: true,
 
-  // [PLATZHALTER: Telefonnummer] So wird die Nummer angezeigt
-  telefon: '0000 000 000',
-  // [PLATZHALTER: Telefonnummer für den Anruf-Link] Ziffern mit +49, ohne 0 vorne
-  telefonLink: '+49000000000',
-  // [PLATZHALTER: zweite Telefonnummer] Leer lassen, wenn es keine gibt.
-  // Auf dem Flyer stehen 0160 1234567 und 0176 98765432. Das sind vermutlich Beispielnummern, bitte prüfen.
-  telefon2: '',
-  telefon2Link: '',
-  // [PLATZHALTER: WhatsApp-Nummer] Ziffern mit 49 vorne, ohne + und ohne 0
-  whatsappLink: '49000000000',
-  // [PLATZHALTER: WhatsApp-Nummer zur Anzeige] Am Computer steht sie als Text statt des WhatsApp-Knopfs
-  whatsapp: '0000 000 000',
-  // [PLATZHALTER: E-Mail-Adresse] Achtung: gruenundrein.de gehört einer anderen Firma (Grün und Rein GbR, Pforzheim)
-  email: 'name@beispiel.de',
+  // Telefon Hussain (Mohammad Hussain Zafari), von Tamer am 09.10.2026. So wird die Nummer angezeigt
+  telefon: '0171 7057151',
+  // Ziffern mit +49, ohne 0 vorne
+  telefonLink: '+491717057151',
+  // Zweite Nummer: Ali (Alireza Moradi). Leer lassen, wenn es keine gibt.
+  telefon2: '0171 6958218',
+  telefon2Link: '+491716958218',
+  // Vorname, der vor der zweiten Nummer steht
+  telefon2Name: 'Ali',
+  // [PLATZHALTER: WhatsApp-Nummer bestätigen] Vorläufig Hussains Handynummer. Ziffern mit 49 vorne, ohne + und ohne 0
+  whatsappLink: '491717057151',
+  // Am Computer steht sie als Text statt des WhatsApp-Knopfs
+  whatsapp: '0171 7057151',
+  // Von Tamer am 09.10.2026
+  email: 'info@herzglanz-service.de',
 
   adresse: {
     // Vom Flyer übernommen

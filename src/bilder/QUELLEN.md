@@ -1,7 +1,7 @@
 # Fotos: Herkunft
 
 Alle Fotos stammen von Unsplash (https://unsplash.com/license): kostenlose Nutzung, auch gewerblich,
-ohne Namensnennung. Sie sind ein Übergang, bis eigene Fotos von Grün & Rein vorliegen.
+ohne Namensnennung. Sie sind ein Übergang, bis eigene Fotos von Herz & Glanz vorliegen.
 
 | Datei | Unsplash |
 |---|---|

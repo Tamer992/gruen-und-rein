@@ -5,10 +5,10 @@ import os
 FS = "node_modules/@fontsource-variable/"
 os.makedirs("scripts/_instanzen", exist_ok=True)
 for quelle, ziel, achsen in [
-    # Wortmarke im Logo
-    (FS + "hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2", "wort.ttf", {"wght": 500}),
-    # Zeile unter der Wortmarke („Zuverlässig · mit Herz · individuell“), etwas leichter
-    (FS + "hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2", "zeile.ttf", {"wght": 450}),
+    # Wortmarke im Logo „HERZ & GLANZ“: Serifenschrift wie im Logo der Inhaber (09.10.2026)
+    (FS + "literata/files/literata-latin-opsz-normal.woff2", "wort.ttf", {"wght": 600, "opsz": 36}),
+    # Zeile „SERVICE“ unter der Wortmarke
+    (FS + "hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2", "zeile.ttf", {"wght": 500}),
     # Überschriftenschrift für das Vorschaubild, wie auf der Seite
     (FS + "literata/files/literata-latin-opsz-normal.woff2", "titel.ttf", {"wght": 500, "opsz": 72}),
 ]:
