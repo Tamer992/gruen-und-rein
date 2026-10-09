@@ -9,7 +9,7 @@
 export const site = {
   // Neuer Name seit 09.10.2026 (vorher „Herz & Glanz“)
   name: 'Herz & Glanz Service',
-  // Domain aus der E-Mail-Adresse abgeleitet (09.10.2026). [PLATZHALTER: Domain bestätigen] Ist sie schon registriert?
+  // Domain ist registriert (Tamer, 09.10.2026). Hosting steht noch aus
   domain: 'https://herzglanz-service.de',
 
   // Kurz, so sprechen die Inhaber ihre Kundschaft an
